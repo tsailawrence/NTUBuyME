@@ -14,7 +14,7 @@ function App() {
             {login ? (
                 <MainPage />
             ) : register ? (
-                <Register setRegister={setRegister} />
+                <Register setLogin={setLogin} setRegister={setRegister} />
             ) : (
                 <Login setLogin={setLogin} setRegister={setRegister} />
             )}

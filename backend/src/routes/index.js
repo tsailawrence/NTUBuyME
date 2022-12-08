@@ -1,6 +1,7 @@
 // * ////////////////////////////////////////////////////////////////////////
 // *
 import loginRoute from './login'
+import registerRoute from './register'
 
 const wrap =
     (fn) =>
@@ -9,6 +10,7 @@ const wrap =
 
 function main(app) {
     app.post('/api/login', wrap(loginRoute.UserLogin))
+    app.post('/api/register', wrap(registerRoute.UserRegister))
 }
 
 export default main

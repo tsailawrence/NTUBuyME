@@ -4,17 +4,13 @@ import { useApp } from '../UseApp'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { useState } from 'react'
 import axios from 'axios'
+
 const bcrypt = require('bcryptjs')
+const saltRounds = 10
 
 const instance = axios.create({
     baseURL: 'http://localhost:4000/api',
 })
-
-const encryptPassword = async (password) => {
-    const salt = await bcrypt.genSalt(saltRounds)
-    const hash = await bcrypt.hash(password, salt)
-    return hash
-}
 
 const Login = ({ setLogin, setRegister }) => {
     const { me, setMe, status, setStatus } = useApp()
@@ -37,7 +33,6 @@ const Login = ({ setLogin, setRegister }) => {
                 data: { message, content },
             } = await instance.post('/login', {
                 userId: id,
-                password: await encryptPassword(password),
             })
 
             switch (message) {
@@ -48,10 +43,19 @@ const Login = ({ setLogin, setRegister }) => {
                     })
                     break
                 case 'success':
-                    setStatus({
-                        type: 'success',
-                        msg: content,
-                    })
+                    const result = bcrypt.compareSync(password, content)
+                    if (result) {
+                        setLogin(true)
+                        setStatus({
+                            type: 'success',
+                            msg: 'Login successfully!',
+                        })
+                    } else {
+                        setStatus({
+                            type: 'error',
+                            msg: 'Wrong password!',
+                        })
+                    }
                     break
             }
         }
@@ -120,6 +124,7 @@ const Login = ({ setLogin, setRegister }) => {
                             margin: 5,
                             width: 80,
                         }}
+                        onClick={() => setRegister(true)}
                     >
                         Register
                     </Button>

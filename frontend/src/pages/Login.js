@@ -1,8 +1,20 @@
 import React from 'react';
 import '../index.css';
 import { Button, Checkbox, Form, Input } from 'antd';
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
-function Login({ setLogin }) {
+function Login({ login, setLogin }) {
+    const navigate = useNavigate();
+
+    const navigateToMainPage = () => {
+        navigate('/');
+    }
+
+    const navigateToRegister = () => {
+        navigate('/register')
+    }
+
     const onFinish = (values: any) => {
         console.log('Success:', values);
     };
@@ -20,7 +32,7 @@ function Login({ setLogin }) {
                 wrapperCol={{ span: 16 }}
                 initialValues={{ remember: true }}
                 autoComplete="off"
-                onSubmitCapture={() => { setLogin(true) }}
+                onSubmitCapture={() => { navigateToMainPage() }}
             >
                 <Form.Item
                     label="Username"
@@ -52,7 +64,8 @@ function Login({ setLogin }) {
                     <Button type="default" htmlType="submit" style={{
                         margin: 5,
                         width: 80
-                    }}>
+                    }}
+                        onClick={navigateToRegister}>
                         Register
                     </Button>
                 </Form.Item>

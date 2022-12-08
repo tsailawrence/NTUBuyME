@@ -3,6 +3,7 @@ import '../index.css'
 import { useApp } from '../UseApp'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const bcrypt = require('bcryptjs')
@@ -16,6 +17,16 @@ const Login = ({ setLogin, setRegister }) => {
     const { me, setMe, status, setStatus } = useApp()
     const [id, setId] = useState('123')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate();
+
+    const navigateToMainPage = () => {
+        navigate('/');
+    }
+
+    const navigateToRegister = () => {
+        navigate('/register')
+    }
+
 
     const handleLogin = async () => {
         if (!id) {
@@ -45,7 +56,7 @@ const Login = ({ setLogin, setRegister }) => {
                 case 'success':
                     const result = bcrypt.compareSync(password, content)
                     if (result) {
-                        setLogin(true)
+                        navigateToMainPage()
                         setStatus({
                             type: 'success',
                             msg: 'Login successfully!',
@@ -118,14 +129,12 @@ const Login = ({ setLogin, setRegister }) => {
                     >
                         Submit
                     </Button>
-                    <Button
-                        type="default"
-                        style={{
-                            margin: 5,
-                            width: 80,
-                        }}
-                        onClick={() => setRegister(true)}
-                    >
+                    <Button type="default" htmlType="submit" style={{
+                        margin: 5,
+                        width: 80
+                    }}
+                        onClick={navigateToRegister}>
+
                         Register
                     </Button>
                 </Form.Item>

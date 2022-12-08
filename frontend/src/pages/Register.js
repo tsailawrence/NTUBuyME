@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useApp } from '../UseApp'
 import { Button, Form, Input } from 'antd'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 const layout = {
     labelCol: {
@@ -27,6 +28,12 @@ const Register = ({ setLogin, setRegister }) => {
     const [password, setPassword] = useState('')
     const { setStatus } = useApp()
     const [form] = Form.useForm()
+    
+    const navigate = useNavigate();
+
+    const navigateToMainPage = () => {
+        navigate('/');
+    }
 
     const onFinish = async (value) => {
         console.log(123)
@@ -40,7 +47,7 @@ const Register = ({ setLogin, setRegister }) => {
             type: message,
             msg: content,
         })
-        if (message === 'success') setLogin(true)
+        if (message === 'success') navigateToMainPage()
         form.resetFields()
     }
     return (
@@ -98,6 +105,7 @@ const Register = ({ setLogin, setRegister }) => {
                 </Form.Item>
             </Form>
         </div>
+
     )
 }
 

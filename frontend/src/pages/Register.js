@@ -1,65 +1,112 @@
-import React from 'react';
-import '../index.css';
-import { Button, Checkbox, Form, Input } from 'antd';
+import React from 'react'
+import { useState } from 'react'
+import { useApp } from '../UseApp'
+import { Button, Form, Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+const layout = {
+    labelCol: {
+        span: 8,
+    },
+    wrapperCol: {
+        span: 16,
+    },
+}
 
-function Register() {
+const instance = axios.create({ baseURL: 'http://localhost:4000/api' })
+
+const bcrypt = require('bcryptjs')
+const saltRounds = 10
+
+const encryptPassword = async (password) => {
+    const salt = await bcrypt.genSalt(saltRounds)
+    const hash = await bcrypt.hash(password, salt)
+    return hash
+}
+
+const Register = ({ setLogin, setRegister }) => {
+    const [password, setPassword] = useState('')
+    const { setStatus } = useApp()
+    const [form] = Form.useForm()
+    
     const navigate = useNavigate();
 
     const navigateToMainPage = () => {
         navigate('/');
     }
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
-    };
+    const onFinish = async (value) => {
+        console.log(123)
+        const password = value.user.password
+        value.user.password = await encryptPassword(password)
+        const {
+            data: { message, content },
+        } = await instance.post('/register', value)
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
+        setStatus({
+            type: message,
+            msg: content,
+        })
+        if (message === 'success') navigateToMainPage()
+        form.resetFields()
+    }
     return (
-        <div className='loginFormContainer'>
+        <div className="loginFormContainer">
             <Form
-                name="basic"
-                className='loginForm'
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                initialValues={{ remember: true }}
-                autoComplete="off"
-                onSubmitCapture={() => { navigateToMainPage() }}
+                {...layout}
+                name="nest-messages"
+                onFinish={onFinish}
+                form={form}
             >
                 <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                    name={['user', 'name']}
+                    label="Name"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
                 >
                     <Input />
                 </Form.Item>
-
                 <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
+                    name={['user', 'id']}
+                    label="Id"
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
                 >
-                    <Input.Password />
+                    <Input />
                 </Form.Item>
-
-                <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                    <Checkbox>Remember me</Checkbox>
+                <Form.Item
+                    name={['user', 'password']}
+                    label="Password"
+                    rules={[
+                        {
+                            type: 'password',
+                            required: true,
+                        },
+                    ]}
+                >
+                    <Input
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                 </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit" style={{
-                        margin: 5,
-                        width: 80
-                    }}>
-                        Register
+                <Form.Item name={['user', 'bankaccount']} label="Bank acocunt">
+                    <Input />
+                </Form.Item>
+                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                    <Button type="primary" htmlType="submit">
+                        Submit
                     </Button>
                 </Form.Item>
             </Form>
         </div>
-    );
+
+    )
 }
 
 export default Register

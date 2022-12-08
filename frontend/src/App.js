@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import './index.css';
 import Login from './pages/Login';
@@ -27,4 +26,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

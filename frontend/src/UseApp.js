@@ -8,7 +8,7 @@ const AppProvider = (props) => {
     const [status, setStatus] = useState([])
 
     useEffect(() => {
-        console.log(status)
+        // console.log(status)
     }, [status])
 
     return (

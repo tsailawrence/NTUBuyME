@@ -19,6 +19,15 @@ import { Layout, Menu } from 'antd';
 
 const { Header, Sider, Content } = Layout;
 
+<<<<<<< Updated upstream
+=======
+function App() {
+    const [login, setLogin] = useState(false)
+    const [collapsed, setCollapsed] = useState(false)
+    const [key, setKey] = useState(1)
+    const { pathname } = useLocation()
+
+>>>>>>> Stashed changes
 
 function App() {
   const [login, setLogin] = useState(false);

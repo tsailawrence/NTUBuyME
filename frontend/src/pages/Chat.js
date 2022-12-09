@@ -25,11 +25,11 @@ function Chat({ collapsed, setCollapsed }) {
                 <div>
                     <h1>Chat</h1>
                     {array.map((element, key) => (
-                        <Card title={element} style={{ margin: 20 }}></Card>
+                        <Card title={element} style={{ margin: 20 }} key={key}></Card>
                     ))}
                 </div>
             </Content>
-        </Layout>
+        </Layout >
     )
 }
 

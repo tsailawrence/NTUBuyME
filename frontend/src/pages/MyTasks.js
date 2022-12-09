@@ -92,17 +92,19 @@ function MyTasks({ collapsed, setCollapsed }) {
                                 title={<a href={item.href}>{item.title}</a>}
                                 description={item.description}
                             />
-                        }
-                    >
-                        <List.Item.Meta
-                            avatar={<Avatar src={item.avatar} />}
-                            title={<a href={item.href}>{item.title}</a>}
-                            description={item.description}
-                        />
-                        {item.content}
-                    </List.Item>
+
+
+                            <List.Item.Meta
+                                avatar={<Avatar src={item.avatar} />}
+                                title={<a href={item.href}>{item.title}</a>}
+                                description={item.description}
+                            />
+                            {item.content}
+                        </List.Item>
+                    )}
+                />
             </Content>
-        </Layout>
+        </Layout >
     )
 }
 export default MyTasks

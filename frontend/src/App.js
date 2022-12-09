@@ -19,7 +19,7 @@ function App() {
     const [key, setKey] = useState(1)
     const { pathname } = useLocation()
 
-    console.log(pathname)
+    // console.log(pathname)
 
     return (
         <Layout>

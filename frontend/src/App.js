@@ -1,47 +1,95 @@
-import React, { useState, useEffect } from 'react';
-import './index.css';
-import Login from './pages/Login';
-import MainPage from './pages/MainPage';
+import React, { useState } from 'react'
+import './index.css'
+import Login from './pages/Login'
+import Chat from './pages/Chat'
+import Transfer from './pages/Transfer'
+import Account from './pages/Account'
+import MainPage from './pages/MainPage'
 import Register from './pages/Register'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import MyTasks from './pages/MyTasks';
-import NavBar from './pages/NavBar';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-  MessageOutlined,
-  TransactionOutlined,
-  CoffeeOutlined,
-  SolutionOutlined
-} from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import NavBar from './pages/NavBar'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import MyTasks from './pages/MyTasks'
 
-const { Header, Sider, Content } = Layout;
 
-<<<<<<< Updated upstream
-=======
+import { Layout } from 'antd'
+
 function App() {
     const [login, setLogin] = useState(false)
     const [collapsed, setCollapsed] = useState(false)
     const [key, setKey] = useState(1)
     const { pathname } = useLocation()
 
->>>>>>> Stashed changes
+    console.log(pathname)
 
-function App() {
-  const [login, setLogin] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
-  const [key, setKey] = useState(1);
+    return (
+        <Layout>
+            {pathname !== '/login' && pathname !== '/register' && (
+                <NavBar setKey={setKey} collapsed={collapsed} />
+            )}
+            <Routes>
+                <Route
+                    path="/login"
+                    element={
+                        <Login
+                            setLogin={setLogin}
+                            setCollapsed={setCollapsed}
+                        />
+                    }
+                />
+                <Route
+                    path="/"
+                    element={
+                        <MainPage
+                            collapsed={collapsed}
+                            setCollapsed={setCollapsed}
+                            login={login}
+                        ></MainPage>
+                    }
+                />
 
-  return (
-    <Router>
-      <Layout>
-        <NavBar setKey={setKey} collapsed={collapsed} />
-        <MainPage collapsed={collapsed} setCollapsed={setCollapsed} />
-      </Layout>
-    </Router>
-  )
+                <Route
+                    path="/register"
+                    element={<Register setLogin={setLogin} />}
+                />
+                <Route
+                    path="/mytasks"
+                    element={
+                        <MyTasks
+                            collapsed={collapsed}
+                            setCollapsed={setCollapsed}
+                        />
+                    }
+                />
+                <Route
+                    path="/chat"
+                    element={
+                        <Chat
+                            collapsed={collapsed}
+                            setCollapsed={setCollapsed}
+                        />
+                    }
+                />
+                <Route
+                    path="/transfer"
+                    element={
+                        <Transfer
+                            collapsed={collapsed}
+                            setCollapsed={setCollapsed}
+                        />
+                    }
+                />
+                <Route
+                    path="/account"
+                    element={
+                        <Account
+                            collapsed={collapsed}
+                            setCollapsed={setCollapsed}
+                        />
+                    }
+                />
+            </Routes>
+        </Layout>
+    )
 }
 
 export default App

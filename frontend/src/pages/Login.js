@@ -6,32 +6,20 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const bcrypt = require('bcryptjs')
-const saltRounds = 10
-
 const instance = axios.create({
     baseURL: 'http://localhost:4000/api',
 })
 
-const Login = ({ setLogin, setRegister }) => {
+const Login = ({ setLogin, setCollapsed }) => {
     const { me, setMe, status, setStatus } = useApp()
     const [id, setId] = useState('')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
-    const navigateToMainPage = () => {
-        navigate('/');
-    }
-
-<<<<<<< Updated upstream
-    const navigateToRegister = () => {
-        navigate('/register')
-    }
-=======
     useEffect(() => {
         if (id === "" || password === "") document.getElementById("submit").disabled = true
         else document.getElementById("submit").disabled = false
     }, [id, password])
->>>>>>> Stashed changes
 
 
     const handleLogin = async () => {
@@ -54,6 +42,8 @@ const Login = ({ setLogin, setRegister }) => {
             })
 
             switch (message) {
+                default:
+                    break
                 case 'error':
                     setStatus({
                         type: 'error',
@@ -62,18 +52,21 @@ const Login = ({ setLogin, setRegister }) => {
                     alert(content)
                     break
                 case 'success':
-                    const result = bcrypt.compareSync(password, content)
+                    const result = bcrypt.compareSync(
+                        password,
+                        content.password
+                    )
                     if (result) {
-                        navigateToMainPage()
+                        setMe(content.name)
+                        setLogin(true)
                         setStatus({
                             type: 'success',
                             msg: 'Login successfully!',
                         })
-<<<<<<< Updated upstream
-=======
+
                         setCollapsed(false)
                         navigate('/')
->>>>>>> Stashed changes
+
                     } else {
                         setStatus({
                             type: 'error',
@@ -84,6 +77,7 @@ const Login = ({ setLogin, setRegister }) => {
             }
         }
     }
+
     return (
         <div style={{
             display: "flex",
@@ -146,21 +140,6 @@ const Login = ({ setLogin, setRegister }) => {
                         valuePropName="checked"
                         wrapperCol={{ offset: 8, span: 16 }}
                     >
-<<<<<<< Updated upstream
-                        Submit
-                    </Button>
-                    <Button type="default" htmlType="submit" style={{
-                        margin: 5,
-                        width: 80
-                    }}
-                        onClick={navigateToRegister}>
-
-                        Register
-                    </Button>
-                </Form.Item>
-            </Form>
-        </div>
-=======
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
@@ -192,7 +171,6 @@ const Login = ({ setLogin, setRegister }) => {
                 </Form>
             </div>
         </div >
->>>>>>> Stashed changes
     )
 }
 

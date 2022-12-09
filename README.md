@@ -8,6 +8,9 @@
 
 1. Login + Register
 
+## Bug
+登入以後要能記住 status
+
 ## Reminder Log
 
 1. frontend 裡有一個 UseApp 的 Hook, 可以在裡面定義需要在 component 間傳送的 State, 裡面已經定義好的 State 有 :

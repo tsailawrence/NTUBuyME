@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
-import { Input, Space } from 'antd';
+import React from 'react'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import { Input, Layout } from 'antd'
 
-const { Search } = Input;
+const { Header, Content } = Layout
+const { Search } = Input
 
-function Transfer() {
+function Transfer({ collapsed, setCollapsed }) {
     return (
-        <>
-            <h1>Transfer</h1>
-            <Search placeholder="Input Student ID" enterButton />
-        </>
-    );
-
+        <Layout className="site-layout">
+            <Header className="site-layout-background" style={{ padding: 0 }}>
+                {React.createElement(
+                    collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+                    {
+                        className: 'trigger',
+                        onClick: () => setCollapsed(!collapsed),
+                    }
+                )}
+            </Header>
+            <Content
+                className="site-layout-background"
+                style={{ margin: '24px 16px', padding: 24, minHeight: 280 }}
+            >
+                <h1>Transfer</h1>
+                <Search placeholder="Input Student ID" enterButton />
+            </Content>
+        </Layout>
+    )
 }
 
-export default Transfer;
+export default Transfer

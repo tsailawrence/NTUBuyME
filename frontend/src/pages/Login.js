@@ -11,7 +11,7 @@ const instance = axios.create({
     baseURL: 'http://localhost:4000/api',
 })
 
-const Login = ({ setLogin }) => {
+const Login = ({ setLogin, setCollapsed }) => {
     const { me, setMe, status, setStatus } = useApp()
     const [id, setId] = useState('123')
     const [password, setPassword] = useState('')
@@ -43,6 +43,8 @@ const Login = ({ setLogin }) => {
             })
 
             switch (message) {
+                default:
+                    break
                 case 'error':
                     setStatus({
                         type: 'error',
@@ -61,6 +63,7 @@ const Login = ({ setLogin }) => {
                             type: 'success',
                             msg: 'Login successfully!',
                         })
+                        setCollapsed(false)
                         navigateToMainPage()
                     } else {
                         setStatus({
@@ -72,6 +75,7 @@ const Login = ({ setLogin }) => {
             }
         }
     }
+
     return (
         <div className="loginFormContainer">
             <Form

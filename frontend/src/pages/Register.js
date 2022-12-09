@@ -24,19 +24,18 @@ const encryptPassword = async (password) => {
     return hash
 }
 
-const Register = ({ setLogin, setRegister }) => {
+const Register = ({ setLogin }) => {
     const [password, setPassword] = useState('')
-    const { setStatus } = useApp()
+    const { setStatus, setMe } = useApp()
     const [form] = Form.useForm()
-    
-    const navigate = useNavigate();
+
+    const navigate = useNavigate()
 
     const navigateToMainPage = () => {
-        navigate('/');
+        navigate('/')
     }
 
     const onFinish = async (value) => {
-        console.log(123)
         const password = value.user.password
         value.user.password = await encryptPassword(password)
         const {
@@ -47,7 +46,11 @@ const Register = ({ setLogin, setRegister }) => {
             type: message,
             msg: content,
         })
-        if (message === 'success') navigateToMainPage()
+        if (message === 'success') {
+            setMe(value.user.name)
+            setLogin(true)
+            navigateToMainPage()
+        }
         form.resetFields()
     }
     return (
@@ -105,7 +108,6 @@ const Register = ({ setLogin, setRegister }) => {
                 </Form.Item>
             </Form>
         </div>
-
     )
 }
 

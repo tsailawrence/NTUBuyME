@@ -7,26 +7,22 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const bcrypt = require('bcryptjs')
-const saltRounds = 10
-
 const instance = axios.create({
     baseURL: 'http://localhost:4000/api',
 })
 
-const Login = ({ setLogin, setRegister }) => {
+const Login = ({ setLogin }) => {
     const { me, setMe, status, setStatus } = useApp()
     const [id, setId] = useState('123')
     const [password, setPassword] = useState('')
-    const navigate = useNavigate();
-
-    const navigateToMainPage = () => {
-        navigate('/');
-    }
+    const navigate = useNavigate()
 
     const navigateToRegister = () => {
         navigate('/register')
     }
-
+    const navigateToMainPage = () => {
+        navigate('/')
+    }
 
     const handleLogin = async () => {
         if (!id) {
@@ -54,13 +50,18 @@ const Login = ({ setLogin, setRegister }) => {
                     })
                     break
                 case 'success':
-                    const result = bcrypt.compareSync(password, content)
+                    const result = bcrypt.compareSync(
+                        password,
+                        content.password
+                    )
                     if (result) {
-                        navigateToMainPage()
+                        setMe(content.name)
+                        setLogin(true)
                         setStatus({
                             type: 'success',
                             msg: 'Login successfully!',
                         })
+                        navigateToMainPage()
                     } else {
                         setStatus({
                             type: 'error',
@@ -129,12 +130,15 @@ const Login = ({ setLogin, setRegister }) => {
                     >
                         Submit
                     </Button>
-                    <Button type="default" htmlType="submit" style={{
-                        margin: 5,
-                        width: 80
-                    }}
-                        onClick={navigateToRegister}>
-
+                    <Button
+                        type="default"
+                        htmlType="submit"
+                        style={{
+                            margin: 5,
+                            width: 80,
+                        }}
+                        onClick={navigateToRegister}
+                    >
                         Register
                     </Button>
                 </Form.Item>

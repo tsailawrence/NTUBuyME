@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -18,7 +18,8 @@ import Register from './Register'
 import MyTasks from './MyTasks';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
-const { Header, Sider, Content } = Layout;
+
+const { Header, Sider, Content } = Layout
 
 function MainPage({ collapsed, setCollapsed }) {
 
@@ -45,8 +46,9 @@ function MainPage({ collapsed, setCollapsed }) {
                 </Routes>
             </Content>
         </Layout>
-    );
-
+    ) : (
+        <Navigate to="/login" replace={true} />
+    )
 }
 
-export default MainPage;
+export default MainPage

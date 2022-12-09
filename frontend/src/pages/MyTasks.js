@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
-import { Avatar, List, Space } from 'antd';
+import { Avatar, List, Space, Layout } from 'antd';
+import NavBar from './NavBar';
 
 const data = Array.from({ length: 23 }).map((_, i) => ({
     href: 'https://ant.design',
@@ -19,10 +20,13 @@ const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
 );
 
 
-function MyTasks() {
+const { Header, Sider, Content } = Layout;
+
+function MyTasks({ key, setKey, collapsed, setCollapsed }) {
 
     return (
-        <><h1>MyTasks</h1>
+        <>
+            <h1>MyTasks</h1>
             <List
                 itemLayout="vertical"
                 size="large"

@@ -4,25 +4,34 @@ import Login from './pages/Login';
 import MainPage from './pages/MainPage';
 import Register from './pages/Register'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import MyTasks from './pages/MyTasks';
+import NavBar from './pages/NavBar';
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+  MessageOutlined,
+  TransactionOutlined,
+  CoffeeOutlined,
+  SolutionOutlined
+} from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
+
+const { Header, Sider, Content } = Layout;
 
 
 function App() {
   const [login, setLogin] = useState(false);
-  // console.log(login)
+  const [collapsed, setCollapsed] = useState(false);
+  const [key, setKey] = useState(1);
 
   return (
-    <>
-      <Router>
-        <Routes>
-          {/* {login ? <MainPage /> : <Login setLogin={setLogin} />} */}
-          {/* <Route path="/" element={login ? <MainPage /> : <Navigate path="/login" />} /> */}
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<Login login={login} setLogin={setLogin} />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </Router>
-
-    </>
+    <Router>
+      <Layout>
+        <NavBar setKey={setKey} collapsed={collapsed} />
+        <MainPage collapsed={collapsed} setCollapsed={setCollapsed} />
+      </Layout>
+    </Router>
   )
 }
 

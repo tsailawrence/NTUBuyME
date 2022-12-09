@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import '../index.css'
 import { useApp } from '../UseApp'
 import { Button, Checkbox, Form, Input } from 'antd'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -13,28 +12,28 @@ const instance = axios.create({
 
 const Login = ({ setLogin, setCollapsed }) => {
     const { me, setMe, status, setStatus } = useApp()
-    const [id, setId] = useState('123')
+    const [id, setId] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
 
-    const navigateToRegister = () => {
-        navigate('/register')
-    }
-    const navigateToMainPage = () => {
-        navigate('/')
-    }
+    useEffect(() => {
+        if (id === "" || password === "") document.getElementById("submit").disabled = true
+        else document.getElementById("submit").disabled = false
+    }, [id, password])
+
 
     const handleLogin = async () => {
         if (!id) {
             setStatus({
                 type: 'error',
-                msg: 'Missing user name',
+                msg: 'Missing student ID',
             })
         } else if (!password) {
             setStatus({
                 type: 'error',
                 msg: 'Missing password',
             })
+            alert('Missing password')
         } else {
             const {
                 data: { message, content },
@@ -50,6 +49,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                         type: 'error',
                         msg: content,
                     })
+                    alert(content)
                     break
                 case 'success':
                     const result = bcrypt.compareSync(
@@ -63,8 +63,10 @@ const Login = ({ setLogin, setCollapsed }) => {
                             type: 'success',
                             msg: 'Login successfully!',
                         })
+
                         setCollapsed(false)
-                        navigateToMainPage()
+                        navigate('/')
+
                     } else {
                         setStatus({
                             type: 'error',
@@ -77,77 +79,98 @@ const Login = ({ setLogin, setCollapsed }) => {
     }
 
     return (
-        <div className="loginFormContainer">
-            <Form
-                name="basic"
-                className="loginForm"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                initialValues={{ remember: true }}
-                autoComplete="off"
-            >
-                <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your username!',
-                        },
-                    ]}
+        <div style={{
+            display: "flex",
+            justifyContent: "center",
+            height: "100vh"
+        }}>
+            <div className="loginFormContainer">
+                <img src={require('../img/LogoTitle.png')} alt="Logo" style={{
+                    width: "300px",
+                    marginTop: "-100px",
+                    marginBottom: "50px"
+                }} />
+                <Form
+                    name="basic"
+                    className="loginForm"
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 16 }}
+                    initialValues={{ remember: true }}
+                    autoComplete="off"
                 >
-                    <Input value={id} onChange={(e) => setId(e.target.value)} />
-                </Form.Item>
 
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
-                >
-                    <Input.Password
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </Form.Item>
-
-                <Form.Item
-                    name="remember"
-                    valuePropName="checked"
-                    wrapperCol={{ offset: 8, span: 16 }}
-                >
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button
-                        type="primary"
-                        style={{
-                            margin: 5,
-                            width: 80,
-                        }}
-                        onClick={handleLogin}
+                    <Form.Item
+                        label="Student ID"
+                        name="Student ID"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your student ID!',
+                            },
+                        ]}
                     >
-                        Submit
-                    </Button>
-                    <Button
-                        type="default"
-                        htmlType="submit"
-                        style={{
-                            margin: 5,
-                            width: 80,
-                        }}
-                        onClick={navigateToRegister}
+                        <Input
+                            value={id}
+                            id="userID"
+                            onChange={(e) => {
+                                setId(e.target.value)
+                            }} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Password"
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
                     >
-                        Register
-                    </Button>
-                </Form.Item>
-            </Form>
-        </div>
+                        <Input.Password
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="remember"
+                        valuePropName="checked"
+                        wrapperCol={{ offset: 8, span: 16 }}
+                    >
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+
+                    <Form.Item wrapperCol={{ offset: 4, span: 16 }}
+                    >
+                        <Button
+                            id='submit'
+                            type="primary"
+                            htmlType="submit"
+                            style={{
+                                margin: 5,
+                                width: 80,
+                            }}
+                            onClick={handleLogin}
+                        >
+                            Submit
+                        </Button>
+                        <Button
+                            type="default"
+                            style={{
+                                margin: 5,
+                                width: 80,
+                            }}
+                            onClick={() => navigate('/register')}
+                        >
+                            Register
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
+        </div >
     )
 }
 

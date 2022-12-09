@@ -28,6 +28,7 @@ const { Header, Content } = Layout
 
 function MyTasks({ collapsed, setCollapsed }) {
     return (
+
         <Layout className="site-layout">
             <Header className="site-layout-background" style={{ padding: 0 }}>
                 {React.createElement(
@@ -48,7 +49,7 @@ function MyTasks({ collapsed, setCollapsed }) {
                     size="large"
                     pagination={{
                         onChange: (page) => {
-                            console.log(page)
+                            // console.log(page)
                         },
                         pageSize: 3,
                     }}
@@ -91,10 +92,15 @@ function MyTasks({ collapsed, setCollapsed }) {
                                 title={<a href={item.href}>{item.title}</a>}
                                 description={item.description}
                             />
-                            {item.content}
-                        </List.Item>
-                    )}
-                />
+                        }
+                    >
+                        <List.Item.Meta
+                            avatar={<Avatar src={item.avatar} />}
+                            title={<a href={item.href}>{item.title}</a>}
+                            description={item.description}
+                        />
+                        {item.content}
+                    </List.Item>
             </Content>
         </Layout>
     )

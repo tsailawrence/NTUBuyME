@@ -8,7 +8,7 @@ exports.UserLogin = async (req, res) => {
     if (!user) {
         res.status(200).send({
             message: 'error',
-            content: 'User does nor exist!',
+            content: 'User does not exist!',
         })
     } else {
         res.status(200).send({

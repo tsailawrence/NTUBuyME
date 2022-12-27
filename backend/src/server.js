@@ -2,11 +2,17 @@ import express from 'express'
 import cors from 'cors'
 import routes from './routes'
 import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
+
 require('dotenv').config()
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use(bodyParser.json())
+// app.use('/', routes);
+
+
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
     res.header(

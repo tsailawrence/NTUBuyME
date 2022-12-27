@@ -1,11 +1,21 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 
-const AppContext = createContext({})
+const AppContext = createContext({
+    status: {},
+    me: "",
+    signIn: false,
+    // getAccount: () => {},
+})
 
 const AppProvider = (props) => {
     const [me, setMe] = useState('')
     const [signIn, setSignIn] = useState(false)
     const [status, setStatus] = useState([])
+
+    // const getAccount = (me) => {
+    //     if(!me) throw new Error('Account ID required!');
+
+    // }
 
     useEffect(() => {
         // console.log(status)

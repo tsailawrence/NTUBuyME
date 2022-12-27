@@ -13,7 +13,7 @@ exports.UserLogin = async (req, res) => {
     } else {
         res.status(200).send({
             message: 'success',
-            content: { password: user.password, name: user.name },
+            content: { password: user.password, name: user.name, id: user.user_id },
         })
     }
 }

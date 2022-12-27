@@ -2,7 +2,7 @@ import { UserModel } from '../models/BuyMe'
 
 exports.UserRegister = async (req, res) => {
     const {
-        user: { name, id, password },
+        user: { name, id, password, bankaccount },
     } = req.body
 
     const user = await UserModel.findOne({ user_id: id }).exec()
@@ -12,6 +12,7 @@ exports.UserRegister = async (req, res) => {
             user_id: id,
             name: name,
             password: password,
+            bankaccount: bankaccount,
         })
         await user.save()
         res.status(200).send({

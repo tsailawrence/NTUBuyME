@@ -4,10 +4,11 @@ const Schema = mongoose.Schema
 
 const UserSchema = Schema(
     {
-        user_id: { type: String, required: true },
+        user_id: { type: String, required: true, unique: true},
         name: { type: String, required: true },
         password: { type: String, required: true },
         tasks: [{ type: mongoose.Types.ObjectId, ref: 'Task' }],
+        bankaccount: {type: String },
     },
     { timestamps: true }
 )

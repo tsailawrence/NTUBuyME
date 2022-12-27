@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { useApp } from '../UseApp'
 import { Button, Form, Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import instance from '../api'
+
 const layout = {
     labelCol: {
         span: 8,
@@ -12,8 +13,6 @@ const layout = {
         span: 16,
     },
 }
-
-const instance = axios.create({ baseURL: 'http://localhost:4000/api' })
 
 const bcrypt = require('bcryptjs')
 const saltRounds = 10
@@ -47,7 +46,7 @@ const Register = ({ setLogin }) => {
             msg: content,
         })
         if (message === 'success') {
-            setMe(value.user.name)
+            setMe(value.user.id)
             setLogin(true)
             navigateToMainPage()
         }
@@ -98,7 +97,7 @@ const Register = ({ setLogin }) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Item>
-                <Form.Item name={['user', 'bankaccount']} label="Bank acocunt">
+                <Form.Item name={['user', 'bankaccount']} label="Bank account">
                     <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

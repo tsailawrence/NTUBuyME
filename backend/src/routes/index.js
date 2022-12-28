@@ -1,8 +1,7 @@
-// * ////////////////////////////////////////////////////////////////////////
-// *
 import loginRoute from './login'
 import registerRoute from './register'
 import accountRoute from './account'
+import transferRoute from './transfer'
 
 const wrap =
     (fn) =>
@@ -15,7 +14,7 @@ function main(app) {
     app.get('/api/account', wrap(accountRoute.GetUserAccount))
     app.post('/api/account', wrap(accountRoute.EditUserAccount))
     app.post('/api/changePassword', wrap(accountRoute.ChangePassword))
-
+    app.get('/api/transfer', wrap(transferRoute.GetTransferAccount))
 }
 
 export default main

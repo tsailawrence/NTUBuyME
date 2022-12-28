@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 
+
 const AppContext = createContext({
     status: {},
     me: "",
@@ -12,14 +13,16 @@ const AppProvider = (props) => {
     const [signIn, setSignIn] = useState(false)
     const [status, setStatus] = useState([])
 
+
+    useEffect(() => {
+        // console.log(status)
+    }, [status])
     // const getAccount = (me) => {
     //     if(!me) throw new Error('Account ID required!');
 
     // }
 
-    useEffect(() => {
-        // console.log(status)
-    }, [status])
+    useEffect(() => {}, [status])
 
     return (
         <AppContext.Provider

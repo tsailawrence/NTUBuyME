@@ -3,8 +3,10 @@ import '../index.css'
 import { useApp } from '../UseApp'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import instance from '../api'
 
+//import axios from 'axios'
+
+import instance from '../api'
 
 const bcrypt = require('bcryptjs')
 
@@ -15,10 +17,10 @@ const Login = ({ setLogin, setCollapsed }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (id === "" || password === "") document.getElementById("submit").disabled = true
-        else document.getElementById("submit").disabled = false
+        if (id === '' || password === '')
+            document.getElementById('submit').disabled = true
+        else document.getElementById('submit').disabled = false
     }, [id, password])
-
 
     const handleLogin = async () => {
         if (!id) {
@@ -65,7 +67,6 @@ const Login = ({ setLogin, setCollapsed }) => {
 
                         setCollapsed(false)
                         navigate('/')
-
                     } else {
                         setStatus({
                             type: 'error',
@@ -78,17 +79,23 @@ const Login = ({ setLogin, setCollapsed }) => {
     }
 
     return (
-        <div style={{
-            display: "flex",
-            justifyContent: "center",
-            height: "100vh"
-        }}>
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                height: '100vh',
+            }}
+        >
             <div className="loginFormContainer">
-                <img src={require('../img/LogoTitle.png')} alt="Logo" style={{
-                    width: "300px",
-                    marginTop: "-100px",
-                    marginBottom: "50px"
-                }} />
+                <img
+                    src={require('../img/LogoTitle.png')}
+                    alt="Logo"
+                    style={{
+                        width: '300px',
+                        marginTop: '-100px',
+                        marginBottom: '50px',
+                    }}
+                />
                 <Form
                     name="basic"
                     className="loginForm"
@@ -97,7 +104,6 @@ const Login = ({ setLogin, setCollapsed }) => {
                     initialValues={{ remember: true }}
                     autoComplete="off"
                 >
-
                     <Form.Item
                         label="Student ID"
                         name="Student ID"
@@ -113,7 +119,8 @@ const Login = ({ setLogin, setCollapsed }) => {
                             id="userID"
                             onChange={(e) => {
                                 setId(e.target.value)
-                            }} />
+                            }}
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -142,10 +149,9 @@ const Login = ({ setLogin, setCollapsed }) => {
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 4, span: 16 }}
-                    >
+                    <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
                         <Button
-                            id='submit'
+                            id="submit"
                             type="primary"
                             htmlType="submit"
                             style={{
@@ -169,7 +175,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                     </Form.Item>
                 </Form>
             </div>
-        </div >
+        </div>
     )
 }
 

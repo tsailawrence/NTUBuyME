@@ -3,12 +3,16 @@
 ## TODO:
 
 1. Status modal
+2. Transfer modal
+3. Chat modal
 
 ## Done
 
 1. Login + Register
+2. Account
 
 ## Bug
+
 登入以後要能記住 status
 
 ## Reminder Log
@@ -26,3 +30,5 @@
     }
 
 `
+
+2. 規定一下使用的 typing format，像是要 user_id, userID, userId 還是什麼

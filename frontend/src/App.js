@@ -9,7 +9,7 @@ import Register from './pages/Register'
 import NavBar from './pages/NavBar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import MyTasks from './pages/MyTasks'
-
+import { useApp } from './UseApp'
 
 import { Layout } from 'antd'
 
@@ -18,8 +18,7 @@ function App() {
     const [collapsed, setCollapsed] = useState(false)
     const [key, setKey] = useState(1)
     const { pathname } = useLocation()
-
-    // console.log(pathname)
+    const { me } = useApp()
 
     return (
         <Layout>
@@ -84,6 +83,7 @@ function App() {
                         <Account
                             collapsed={collapsed}
                             setCollapsed={setCollapsed}
+                            me={me}
                         />
                     }
                 />

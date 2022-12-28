@@ -9,15 +9,17 @@ const { Search } = Input
 function Transfer({ collapsed, setCollapsed }) {
     const [id, setId] = useState()
 
-    const searchId = async () => {
+    const searchId = async (id) => {
+        // console.log(id)
         const {
-            data: { account },
-        } = await axios.get('/transfer', { id })
+            data: { user },
+        } = await axios.get('/transfer', {
+            params: {
+                userId: id,
+            },
+        })
+        console.log(user)
     }
-
-    // useEffect(() => {
-    //     console.log(id)
-    // }, [id])
 
     return (
         <Layout className="site-layout">
@@ -38,11 +40,8 @@ function Transfer({ collapsed, setCollapsed }) {
                 <Search
                     placeholder="Input Student ID"
                     enterButton
-                    onClick={searchId}
                     value={id}
-                    onChange={(e) => {
-                        setId(e.target.value)
-                    }}
+                    onSearch={searchId}
                 />
             </Content>
         </Layout>

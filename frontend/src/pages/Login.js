@@ -13,11 +13,11 @@ const Login = ({ setLogin, setCollapsed }) => {
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (id === '' || password === '')
-            document.getElementById('submit').disabled = true
-        else document.getElementById('submit').disabled = false
-    }, [id, password])
+    // useEffect(() => {
+    //     if (id === '' || password === '')
+    //         document.getElementById('submit').disabled = true
+    //     else document.getElementById('submit').disabled = false
+    // }, [id, password])
 
     const handleLogin = async () => {
         if (!id) {

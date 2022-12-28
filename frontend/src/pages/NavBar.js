@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import logo from '../img/LogoTitle.png'
 
 const { Sider } = Layout
 
@@ -45,21 +46,24 @@ function NavBar({ setKey, collapsed }) {
                     left: 0,
                     top: 0,
                     bottom: 0,
+                    background: '#ffdaab',
                 }}
             >
                 <div
                     className="logo"
                     style={{
-                        color: 'white',
                         display: 'flex',
-                        alignItems: 'center',
                         justifyContent: 'Center',
+                        height: 70,
+                        margin: 10,
                     }}
                 >
-                    <h1>NTU BuyMe</h1>
+                    <img src={logo}></img>
                 </div>
                 <Menu
-                    theme="dark"
+                    style={{
+                        background: '#ffdaab',
+                    }}
                     mode="inline"
                     defaultSelectedKeys={['1']}
                     onClick={(e) => navigatePage(e.key)}

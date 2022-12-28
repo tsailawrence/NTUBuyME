@@ -18,10 +18,7 @@ function App() {
     const [collapsed, setCollapsed] = useState(false)
     const [key, setKey] = useState(1)
     const { pathname } = useLocation()
-    const {me} = useApp();
-
-
-    // console.log(pathname)
+    const { me } = useApp()
 
     return (
         <Layout>

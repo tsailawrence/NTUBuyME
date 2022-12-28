@@ -1,15 +1,33 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 
+<<<<<<< Updated upstream
 const AppContext = createContext({})
+=======
+const AppContext = createContext({
+    status: {},
+    me: '',
+    signIn: false,
+    // getAccount: () => {},
+})
+>>>>>>> Stashed changes
 
 const AppProvider = (props) => {
     const [me, setMe] = useState('')
     const [signIn, setSignIn] = useState(false)
     const [status, setStatus] = useState([])
 
+<<<<<<< Updated upstream
     useEffect(() => {
         // console.log(status)
     }, [status])
+=======
+    // const getAccount = (me) => {
+    //     if(!me) throw new Error('Account ID required!');
+
+    // }
+
+    useEffect(() => {}, [status])
+>>>>>>> Stashed changes
 
     return (
         <AppContext.Provider

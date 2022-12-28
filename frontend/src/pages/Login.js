@@ -3,9 +3,6 @@ import '../index.css'
 import { useApp } from '../UseApp'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
-
-//import axios from 'axios'
-
 import instance from '../api'
 
 const bcrypt = require('bcryptjs')
@@ -52,13 +49,12 @@ const Login = ({ setLogin, setCollapsed }) => {
                     alert(content)
                     break
                 case 'success':
-                   
                     const result = bcrypt.compareSync(
                         password,
                         content.password
                     )
                     if (result) {
-                        setMe(content.id)
+                        setMe(content.name)
                         setLogin(true)
                         setStatus({
                             type: 'success',

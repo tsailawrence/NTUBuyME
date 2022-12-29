@@ -16,12 +16,7 @@ const Account = ({ collapsed, setCollapsed, me }) => {
     // Get Account
     useEffect(() => {
         getAccount(me)
-<<<<<<< Updated upstream
-    });
-
-=======
     })
->>>>>>> Stashed changes
 
     const getAccount = async (user_id) => {
         const { data: account } = await instance.get('/account', {

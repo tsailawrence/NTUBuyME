@@ -4,11 +4,12 @@ const Schema = mongoose.Schema
 
 const UserSchema = Schema(
     {
-        user_id: { type: String, required: true, unique: true},
+        user_id: { type: String, required: true, unique: true },
         name: { type: String, required: true },
         password: { type: String, required: true },
         tasks: [{ type: mongoose.Types.ObjectId, ref: 'Task' }],
-        bankaccount: {type: String },
+        bankaccount: { bank_id:{  type: String },
+                        bankaccount_id: {type: String}, },
     },
     { timestamps: true }
 )
@@ -27,6 +28,8 @@ const TaskSchema = Schema(
         items: { type: String, required: true },
         note: { type: String, required: true },
         created_at: { type: Date, required: true },
+        due_start: { type: Date, required: true },
+        due_end: { type: Date, required: true },
     },
     { timestamps: true }
 )

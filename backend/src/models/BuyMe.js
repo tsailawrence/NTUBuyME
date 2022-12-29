@@ -8,7 +8,8 @@ const UserSchema = Schema(
         name: { type: String, required: true },
         password: { type: String, required: true },
         tasks: [{ type: mongoose.Types.ObjectId, ref: 'Task' }],
-        bankaccount: { type: String },
+        bankaccount: { bank_id:{  type: String },
+                        bankaccount_id: {type: String}, },
     },
     { timestamps: true }
 )

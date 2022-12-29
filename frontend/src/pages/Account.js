@@ -45,6 +45,7 @@ const Account = ({ collapsed, setCollapsed, me }) => {
         })
     }
 
+
     // Change Password
     const bcrypt = require('bcryptjs')
     const saltRounds = 10
@@ -86,8 +87,6 @@ const Account = ({ collapsed, setCollapsed, me }) => {
                         user_id,
                         newPasswordEncrypted
                     })
-                    console.log(message)
-                    console.log(content)
 
                 }else{
                     window.alert('Retype new password does not match new password!')
@@ -122,28 +121,36 @@ const Account = ({ collapsed, setCollapsed, me }) => {
                     size="large"
                     bordered
                 >
-                     <List.Item style={{display: 'flex', justifyContent: 'space-between'}}> 
+                     <List.Item> 
                         <Space direction='column' >
-                            <b>Student ID</b>{accountInfo.user_id}
+                            <b>Student ID:</b>{accountInfo.user_id}
                         </Space>
                     </List.Item>
                     
-                    <List.Item style={{display: 'flex', justifyContent: 'space-between'}}> 
+                    <List.Item > 
                         <Space direction='column' align='center'>
-                            <b>Name</b>{accountInfo.name}
+                            <b>Name:</b>{accountInfo.name}
+                        </Space>    
                             <Button onClick={() =>{
                                 setEditAccModalOpen(true)
                                 setOnClickItem('name')}}>Edit</Button>
-                        </Space>
+                        
                     </List.Item>
 
-                    <List.Item style={{display: 'flex', justifyContent: 'space-between'}}> 
-                        <Space direction='column' align='center'>
-                            <b>Bank Account</b>{accountInfo.bankaccount}
+                    <List.Item style={{display: 'flex', alignItems: 'flex-end', flexDirection: 'row', }}> 
+                            <Space style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column', }}>
+                            <b>Bank Account</b>
+                            <Space direction='column' align='center'>
+                            <b>Bank id:</b>{Object(accountInfo.bankaccount).bank_id}
+                            </Space>
+                            <Space direction='column' align='center'>
+                            <b>Bank Account id:</b>{Object(accountInfo.bankaccount).bankaccount_id}
+                            </Space>
+                            </Space>
+
                             <Button onClick={() => {
                                 setEditAccModalOpen(true)
                                 setOnClickItem('bankaccount')}}>Edit</Button>
-                        </Space>
                     </List.Item>
                    
                     <List.Item>
@@ -155,7 +162,7 @@ const Account = ({ collapsed, setCollapsed, me }) => {
                 user={accountInfo} 
                 open={EditAccModalOpen} 
                 onCreate={(values)=>{
-                    editAccount(me, Object.keys(values.user)[0], Object.values(values.user)[0])
+                    editAccount(me, Object.keys(values.user), Object.values(values.user))
                     setEditAccModalOpen(false);
                 }}
                 onCancel={()=>setEditAccModalOpen(false)}

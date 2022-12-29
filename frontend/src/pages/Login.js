@@ -95,7 +95,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                 <Form
                     name="basic"
                     className="loginForm"
-                    labelCol={{ span: 8 }}
+                    labelCol={{ span: 10 }}
                     wrapperCol={{ span: 16 }}
                     initialValues={{ remember: true }}
                     autoComplete="off"

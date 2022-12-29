@@ -7,7 +7,7 @@ import instance from '../api'
 
 const layout = {
     labelCol: {
-        span: 8,
+        span: 10,
     },
     wrapperCol: {
         span: 16,
@@ -98,7 +98,11 @@ const Register = ({ setLogin }) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Item>
-                <Form.Item name={['user', 'bankaccount']} label="Bank account">
+                <Form.Item label="Bank account"/>
+                <Form.Item name={['user', 'bank_id']} label="Bank id">
+                    <Input />
+                </Form.Item>
+                <Form.Item name={['user', 'bankaccount_id']} label="Bank account id">
                     <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

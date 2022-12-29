@@ -5,8 +5,18 @@ exports.GetTransferAccount = async (req, res) => {
     // console.log(userId)
     let user = await UserModel.findOne({ user_id: userId })
     if (!user) {
-        console.log('not found')
-        // throw new Error('User ID not found!')
+        // console.log('not found')
+        res.status(200).send({
+            message: 'error',
+            content: 'Cannot find user with this ID!',
+        })
+    } else {
+        res.status(200).send({
+            message: 'success',
+            content: {
+                name: user.name,
+                id: user.user_id,
+            },
+        })
     }
-    res.send({ data: user })
 }

@@ -3,6 +3,11 @@
 ## TODO:
 
 1. Status modal
+<<<<<<< Updated upstream
+=======
+2. Transfer modal，前後端串起來了，但是還要想辦法讓 db 顯示圖片
+3. Chat modal
+>>>>>>> Stashed changes
 
 ## Done
 

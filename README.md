@@ -6,6 +6,9 @@
 
 2. Transfer modal，前後端串起來了，但是還要想辦法讓 db 顯示圖片
 3. Chat modal
+4. add new task
+5. my tasks 取回該 user 的 task
+6. 菜單欄顏色調整
 
 ## Done
 
@@ -14,7 +17,7 @@
 
 ## Bug
 
-登入以後要能記住 status
+1. 登入以後要能記住 status
 
 ## Reminder Log
 

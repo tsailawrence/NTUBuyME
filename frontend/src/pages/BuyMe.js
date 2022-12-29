@@ -17,8 +17,8 @@ const IconText = ({ icon, text }) => (
         {text}
     </Space>
 )
-
 function BuyMe() {
+    const createTask = () => {}
     return (
         <>
             <div
@@ -33,8 +33,8 @@ function BuyMe() {
                     style={{
                         marginRight: 50,
                         backgroundColor: '#ffdaab',
-                        height: 40,
                     }}
+                    onClick={createTask}
                 >
                     + Add New Task
                 </Button>

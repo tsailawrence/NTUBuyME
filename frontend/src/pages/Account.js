@@ -21,6 +21,7 @@ const Account = ({ collapsed, setCollapsed, me }) => {
     });
 
 
+
     const getAccount = async (user_id) => {
         const {
             data: account

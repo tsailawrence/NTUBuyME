@@ -25,7 +25,7 @@ const encryptPassword = async (password) => {
 
 const Register = ({ setLogin }) => {
     const [password, setPassword] = useState('')
-    const { setStatus, setMe } = useApp()
+    const { setStatus, setMe, setSignIn } = useApp()
     const [form] = Form.useForm()
 
     const navigate = useNavigate()
@@ -47,6 +47,7 @@ const Register = ({ setLogin }) => {
         })
         if (message === 'success') {
             setMe(value.user.id)
+            setSignIn(true)
             setLogin(true)
             navigateToMainPage()
         }

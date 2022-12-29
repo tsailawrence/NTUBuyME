@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons'
-import { Avatar, List, Space } from 'antd'
+import { Avatar, List, Space, Button } from 'antd'
 
 const data = Array.from({ length: 23 }).map((_, i) => ({
     href: 'https://ant.design',
@@ -21,14 +21,28 @@ const IconText = ({ icon, text }) => (
 function BuyMe() {
     return (
         <>
-            <h1>BuyMe</h1>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                }}
+            >
+                <h1>BuyMe</h1>
+                <Button
+                    style={{
+                        marginRight: 50,
+                        backgroundColor: '#ffdaab',
+                        height: 40,
+                    }}
+                >
+                    + Add New Task
+                </Button>
+            </div>
             <List
                 itemLayout="vertical"
                 size="large"
                 pagination={{
-                    onChange: (page) => {
-                        // console.log(page)
-                    },
                     pageSize: 3,
                 }}
                 dataSource={data}

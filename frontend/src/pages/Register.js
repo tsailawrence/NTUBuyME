@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useApp } from '../UseApp'
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Select } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import instance from '../api'
 
@@ -100,7 +100,29 @@ const Register = ({ setLogin }) => {
                 </Form.Item>
                 <Form.Item label="Bank account"/>
                 <Form.Item name={['user', 'bank_id']} label="Bank id">
-                    <Input />
+                <Select
+                style={{
+                    width: 155,
+                }}
+                options={[
+                    {
+                    value: '812',
+                    label: '812 台新銀行',
+                    },
+                    {
+                    value: '822',
+                    label: '822 中國信託',
+                    },
+                    {
+                    value: '007',
+                    label: '007 第一銀行',
+                    },
+                    {
+                    value: '012',
+                    label: '012 台北富邦',
+                    },
+                ]}
+                />
                 </Form.Item>
                 <Form.Item name={['user', 'bankaccount_id']} label="Bank account id">
                     <Input />

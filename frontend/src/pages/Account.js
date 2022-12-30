@@ -15,8 +15,7 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
 
     // Get Account
     useEffect(() => {
-        console.log(id)
-        getAccount(id)
+        getAccount(me)
     }, [])
 
     const getAccount = async (user_id) => {
@@ -31,12 +30,13 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
     // Edit Account
     const editAccount = async (user_id, item, newValue) => {
         const {
-            data: { message, content },
+            data: { message, contents }
         } = await instance.post('/account', {
             user_id,
             item,
             newValue,
         })
+        setAccountInfo(contents)
     }
 
     // Change Password
@@ -116,14 +116,14 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
                 <List size="large" bordered>
                     <List.Item>
                         <Space direction="column">
-                            <b>Student ID:</b>
+                            <b>學號:</b>
                             {accountInfo.user_id}
                         </Space>
                     </List.Item>
 
                     <List.Item>
                         <Space direction="column" align="center">
-                            <b>Name:</b>
+                            <b>姓名:</b>
                             {accountInfo.name}
                         </Space>
                         <Button
@@ -132,7 +132,7 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
                                 setOnClickItem('name')
                             }}
                         >
-                            Edit
+                            編輯
                         </Button>
                     </List.Item>
 
@@ -150,13 +150,13 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
                                 flexDirection: 'column',
                             }}
                         >
-                            <b>Bank Account</b>
+                            <b>銀行帳號</b>
                             <Space direction="column" align="center">
-                                <b>Bank id:</b>
+                                <b>銀行代碼:</b>
                                 {Object(accountInfo.bankaccount).bank_id}
                             </Space>
                             <Space direction="column" align="center">
-                                <b>Bank Account id:</b>
+                                <b>戶頭帳號:</b>
                                 {Object(accountInfo.bankaccount).bankaccount_id}
                             </Space>
                         </Space>
@@ -167,13 +167,13 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
                                 setOnClickItem('bankaccount')
                             }}
                         >
-                            Edit
+                            編輯
                         </Button>
                     </List.Item>
 
                     <List.Item>
                         <Button onClick={() => setChangePwdModalOpen(true)}>
-                            Change Password
+                            更改密碼
                         </Button>
                     </List.Item>
                 </List>

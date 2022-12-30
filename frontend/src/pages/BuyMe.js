@@ -41,8 +41,11 @@ const items = [
         label: 'Other',
     },
 ]
-
 const BuyMe = () => {
+
+    const createTask = () => {
+        console.log('create task')
+    }
     const [tasks, setTasks] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [nPerPage, setNPerPage] = useState(7)
@@ -151,6 +154,39 @@ const BuyMe = () => {
                 >
                     + Create New Task
                 </Button>
+                <Button
+                    style={{
+                        marginRight: 50,
+                        backgroundColor: '#ffdaab',
+                    }}
+                    onClick={AddDummyTasks}
+                >
+                    + Add Dummy
+                </Button>
+                <Button
+                    style={{
+                        marginRight: 50,
+                        backgroundColor: '#ffdaab',
+                    }}
+                    onClick={DeleteAllTasks}
+                >
+                    - Delete All
+                </Button>
+                <Dropdown
+                    menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['Due Start Time'],
+                        onClick,
+                    }}
+                >
+                    <Typography.Link onClick={(e) => e.preventDefault()}>
+                        <Space>
+                            Filter By
+                            <DownOutlined />
+                        </Space>
+                    </Typography.Link>
+                </Dropdown>
                 <CreateTaskModal
                     open={CreateTaskModalOpen}
                     onCreate={(values) => {
@@ -241,7 +277,7 @@ const BuyMe = () => {
                         </Button>
                     </Card>
                 )}
-            />
+            ></List>
         </>
     )
 }

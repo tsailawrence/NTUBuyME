@@ -1,47 +1,146 @@
 import React from 'react'
 import {
-    LikeOutlined,
-    MessageOutlined,
-    StarOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
+    DownCircleOutlined,
 } from '@ant-design/icons'
-import { Avatar, List, Space, Layout, Button } from 'antd'
+import { List, Space, Layout, Button, Tabs, Card, Divider } from 'antd'
 import { useState, useEffect } from 'react'
 import instance from '../api'
 import { useApp } from '../UseApp'
+// import styled from "styled-components"
 
 const { Header, Content } = Layout
 
+// const TasksWrapper = styled(Tabs)`
+//     width: 100%;
+//     height: 300px;
+//     background: #eeeeee52;
+//     border-radius: 10px;
+//     margin: 20px;
+//     padding: 20px;
+//     overflow: auto;
+// `;
+
 function MyTasks({ collapsed, setCollapsed }) {
-    const [ tasks, setTasks ] = useState([])
-    const [ currentPage, setCurrentPage ] = useState(1)
-    const [ nPerPage, setNPerPage] = useState(3)
-    const [ maxPageN, setMaxPageN ] = useState(2)
-    const [ taskOverload, setTaskOverload ] = useState(false)
+    const [addedTasks, setAddedTasks] = useState([])
+    const [acceptedTasks, setAcceptedTasks] = useState([])
+    const [currentTab, setCurrentTab] = useState('')
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [nPerPage, setNPerPage] = useState(10)
+    const [maxPageN, setMaxPageN] = useState(2)
+    const [taskOverload, setTaskOverload] = useState(false)
     const { me } = useApp()
 
-    useEffect(() => {
-        getMyTasks(currentPage, nPerPage, maxPageN)
-    }, [currentPage]);
+    useEffect(() => setCurrentTab('1'))
 
-    const getMyTasks = async( me, currentPage, nPerPage, maxPageN ) => {
-        const { data: {myTasks, taskOverload} }
-        = await instance.get('myTasks', { params:{
-            currentPage, nPerPage, maxPageN
-        }})
-        // console.log(myTasks)
-        // console.log(taskOverload)
-        setTasks(myTasks)
+    useEffect(() => {
+        if (currentTab === '1') {
+            getMyAddedTasks(me, currentPage, nPerPage, maxPageN)
+        } else {
+            getMyAcceptedTasks(me, currentPage, nPerPage, maxPageN)
+        }
+    }, [currentTab])
+
+    const getMyAddedTasks = async (me, currentPage, nPerPage, maxPageN) => {
+        const {
+            data: { myTasks, taskOverload },
+        } = await instance.get('myAddedTasks', {
+            params: {
+                me,
+                currentPage,
+                nPerPage,
+                maxPageN,
+            },
+        })
+        setAddedTasks(displayTasks(myTasks))
         setTaskOverload(taskOverload)
     }
 
-    const moreDetail = async () => {
+    const getMyAcceptedTasks = async (me, currentPage, nPerPage, maxPageN) => {
+        const {
+            data: { myTasks, taskOverload },
+        } = await instance.get('myAcceptedTasks', {
+            params: {
+                me,
+                currentPage,
+                nPerPage,
+                maxPageN,
+            },
+        })
+        setAcceptedTasks(displayTasks(myTasks))
+        setTaskOverload(taskOverload)
+    }
 
+    const displayTasks = (taskArray) => {
+        return (
+            <List
+                itemLayout="vertical"
+                size="large"
+                pagination={{
+                    onChange: (page) => {
+                        setCurrentPage(page)
+                    },
+                    pageSize: nPerPage,
+                }}
+                dataSource={taskArray}
+                renderItem={(item) => (
+                    <Card>
+                        <DownCircleOutlined
+                            style={{
+                                fontSize: '15px',
+                                color:
+                                    item.status === 'accepted'
+                                        ? '#b20000'
+                                        : '#808080',
+                            }}
+                        />
+                        <b style={{ fontSize: '15px' }}> {item.title}</b>
+                        <Divider />
+                        <Space
+                            style={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                flexDirection: 'column',
+                            }}
+                        >
+                            <Space>
+                                <b>餐廳名稱: </b>
+                                {item.restaurantName}
+                            </Space>
+                            <Space>
+                                <b>任務內容: </b>
+                                {item.taskContent}
+                            </Space>
+                            <Space>
+                                <b>截止日期: </b>
+                                {item.due_start}~{item.due_end}
+                            </Space>
+                            <Space>
+                                <b>外送費: </b>
+                                {item.fee}
+                            </Space>
+                        </Space>
+                        <Divider />
+                        <Button onClick={() => seeChat(item._id)}>
+                            查看聊天室
+                        </Button>
+                    </Card>
+                )}
+            />
+        )
+    }
+
+    const onChange = (key) => {
+        setCurrentTab(key)
+    }
+
+    const seeChat = async (id) => {
+        console.log(id)
     }
 
     return (
-
         <Layout className="site-layout">
             <Header className="site-layout-background" style={{ padding: 0 }}>
                 {React.createElement(
@@ -52,33 +151,31 @@ function MyTasks({ collapsed, setCollapsed }) {
                     }
                 )}
             </Header>
+
             <Content
                 className="site-layout-background"
                 style={{ margin: '24px 16px', padding: 24, minHeight: 280 }}
             >
                 <h1>MyTasks</h1>
-                <List
-                itemLayout="vertical"
-                size="large"
-                pagination={{
-                    onChange: (page) => {
-                        setCurrentPage(page)
-                    },
-                    pageSize: nPerPage,
-                }}
-                dataSource={tasks}
-                renderItem={(item) => (
-                    <List.Item style={{display: 'flex', alignItems: 'flex-end', flexDirection: 'row',}}>
-                        <Space style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column',}}>
-                        <b>{item.items}</b>
-                        {item.note}
-                        </Space>
-                        <Button onClick={moreDetail(item._id)}>More Detail</Button>
-                    </List.Item>
-                )}
-            />
+
+                <Tabs
+                    defaultActiveKey="1"
+                    onChange={onChange}
+                    items={[
+                        {
+                            label: `Tasks I added`,
+                            key: '1',
+                            children: addedTasks,
+                        },
+                        {
+                            label: `Tasks I accepted`,
+                            key: '2',
+                            children: acceptedTasks,
+                        },
+                    ]}
+                />
             </Content>
-        </Layout >
+        </Layout>
     )
 }
 export default MyTasks

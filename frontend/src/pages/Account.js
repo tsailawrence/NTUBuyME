@@ -89,123 +89,119 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
                             'Retype new password does not match new password!'
                         )
                     }
-                    break
+                } else {
+                    window.alert('Current password is not correct!')
                 }
+                break
             }
         }
+    }
 
-        return (
-            <Layout className="site-layout">
-                <Header
-                    className="site-layout-background"
-                    style={{ padding: 0 }}
-                >
-                    {React.createElement(
-                        collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-                        {
-                            className: 'trigger',
-                            onClick: () => setCollapsed(!collapsed),
-                        }
-                    )}
-                </Header>
-                <Content
-                    className="site-layout-background"
-                    style={{ margin: '24px 16px', padding: 24, minHeight: 280 }}
-                >
-                    <h1>Account</h1>
-                    <List size="large" bordered>
-                        <List.Item>
-                            <Space direction="column">
-                                <b>Student ID:</b>
-                                {accountInfo.user_id}
-                            </Space>
-                        </List.Item>
+    return (
+        <Layout className="site-layout">
+            <Header className="site-layout-background" style={{ padding: 0 }}>
+                {React.createElement(
+                    collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+                    {
+                        className: 'trigger',
+                        onClick: () => setCollapsed(!collapsed),
+                    }
+                )}
+            </Header>
+            <Content
+                className="site-layout-background"
+                style={{ margin: '24px 16px', padding: 24, minHeight: 280 }}
+            >
+                <h1>Account</h1>
+                <List size="large" bordered>
+                    <List.Item>
+                        <Space direction="column">
+                            <b>Student ID:</b>
+                            {accountInfo.user_id}
+                        </Space>
+                    </List.Item>
 
-                        <List.Item>
-                            <Space direction="column" align="center">
-                                <b>Name:</b>
-                                {accountInfo.name}
-                            </Space>
-                            <Button
-                                onClick={() => {
-                                    setEditAccModalOpen(true)
-                                    setOnClickItem('name')
-                                }}
-                            >
-                                Edit
-                            </Button>
-                        </List.Item>
-
-                        <List.Item
-                            style={{
-                                display: 'flex',
-                                alignItems: 'flex-end',
-                                flexDirection: 'row',
+                    <List.Item>
+                        <Space direction="column" align="center">
+                            <b>Name:</b>
+                            {accountInfo.name}
+                        </Space>
+                        <Button
+                            onClick={() => {
+                                setEditAccModalOpen(true)
+                                setOnClickItem('name')
                             }}
                         >
-                            <Space
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'flex-start',
-                                    flexDirection: 'column',
-                                }}
-                            >
-                                <b>Bank Account</b>
-                                <Space direction="column" align="center">
-                                    <b>Bank id:</b>
-                                    {Object(accountInfo.bankaccount).bank_id}
-                                </Space>
-                                <Space direction="column" align="center">
-                                    <b>Bank Account id:</b>
-                                    {
-                                        Object(accountInfo.bankaccount)
-                                            .bankaccount_id
-                                    }
-                                </Space>
+                            Edit
+                        </Button>
+                    </List.Item>
+
+                    <List.Item
+                        style={{
+                            display: 'flex',
+                            alignItems: 'flex-end',
+                            flexDirection: 'row',
+                        }}
+                    >
+                        <Space
+                            style={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                flexDirection: 'column',
+                            }}
+                        >
+                            <b>Bank Account</b>
+                            <Space direction="column" align="center">
+                                <b>Bank id:</b>
+                                {Object(accountInfo.bankaccount).bank_id}
                             </Space>
+                            <Space direction="column" align="center">
+                                <b>Bank Account id:</b>
+                                {Object(accountInfo.bankaccount).bankaccount_id}
+                            </Space>
+                        </Space>
 
-                            <Button
-                                onClick={() => {
-                                    setEditAccModalOpen(true)
-                                    setOnClickItem('bankaccount')
-                                }}
-                            >
-                                Edit
-                            </Button>
-                        </List.Item>
+                        <Button
+                            onClick={() => {
+                                setEditAccModalOpen(true)
+                                setOnClickItem('bankaccount')
+                            }}
+                        >
+                            Edit
+                        </Button>
+                    </List.Item>
 
-                        <List.Item>
-                            <Button onClick={() => setChangePwdModalOpen(true)}>
-                                Change Password
-                            </Button>
-                        </List.Item>
-                    </List>
-                </Content>
-                <EditAccModal
-                    user={accountInfo}
-                    open={EditAccModalOpen}
-                    onCreate={(values) => {
-                        editAccount(
-                            me,
-                            Object.keys(values.user),
-                            Object.values(values.user)
-                        )
-                        setEditAccModalOpen(false)
-                    }}
-                    onCancel={() => setEditAccModalOpen(false)}
-                    item={onClickItem}
-                />
-                <ChangePwdModal
-                    user_id={me}
-                    open={ChangePwdModalOpen}
-                    onCreate={(value) => {
-                        changePassword(me, value)
-                        setChangePwdModalOpen(false)
-                    }}
-                    onCancel={() => setChangePwdModalOpen(false)}
-                />
-            </Layout>
-        )
-    }
+                    <List.Item>
+                        <Button onClick={() => setChangePwdModalOpen(true)}>
+                            Change Password
+                        </Button>
+                    </List.Item>
+                </List>
+            </Content>
+            <EditAccModal
+                user={accountInfo}
+                open={EditAccModalOpen}
+                onCreate={(values) => {
+                    editAccount(
+                        me,
+                        Object.keys(values.user),
+                        Object.values(values.user)
+                    )
+                    setEditAccModalOpen(false)
+                }}
+                onCancel={() => setEditAccModalOpen(false)}
+                item={onClickItem}
+            />
+            <ChangePwdModal
+                user_id={me}
+                open={ChangePwdModalOpen}
+                onCreate={(value) => {
+                    changePassword(me, value)
+                    setChangePwdModalOpen(false)
+                }}
+                onCancel={() => setChangePwdModalOpen(false)}
+            />
+        </Layout>
+    )
 }
 export default Account

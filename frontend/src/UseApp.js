@@ -7,6 +7,9 @@ const AppContext = createContext({
     // getAccount: () => {},
 })
 
+const LOCALSTORAGE_KEY = 'save-me'
+const savedMe = localStorage.getItem(LOCALSTORAGE_KEY)
+
 const AppProvider = (props) => {
     const [me, setMe] = useState(savedMe || '')
     const [signIn, setSignIn] = useState(false)

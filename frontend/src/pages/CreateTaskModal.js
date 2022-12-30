@@ -25,7 +25,7 @@ const CreateTaskModal = ({ open, onCreate, onCancel }) => {
             width={800}
             onOk={() => {
                 form.validateFields().then((values) => {
-                    form.resetFields()
+                    // form.resetFields()
                     onCreate(values)
                 })
                 // .catch((e) => {

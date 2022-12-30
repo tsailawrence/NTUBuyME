@@ -42,6 +42,7 @@ function App() {
                             collapsed={collapsed}
                             setCollapsed={setCollapsed}
                             login={login}
+                            me={me}
                         ></MainPage>
                     }
                 />

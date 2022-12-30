@@ -41,7 +41,7 @@ const items = [
         label: 'Other',
     },
 ]
-const BuyMe = () => {
+const BuyMe = ({ me }) => {
     const [tasks, setTasks] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [nPerPage, setNPerPage] = useState(7)
@@ -120,6 +120,7 @@ const BuyMe = () => {
         const {
             data: { message, content },
         } = await instance.post('/createTask', {
+            me,
             title,
             restaurant,
             fee,

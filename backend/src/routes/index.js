@@ -25,6 +25,7 @@ function main(app) {
     app.get('/api/taskNum', wrap(buymeRoute.GetTaskNum))
     app.get('/api/myAddedTasks', wrap(buymeRoute.GetMyAddedTasks))
     app.get('/api/myAcceptedTasks', wrap(buymeRoute.GetMyAcceptedTasks))
+    app.post('/api/createTask', wrap(buymeRoute.CreateTask))
 }
 
 export default main

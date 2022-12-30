@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons'
-import { Avatar, List, Space, Button } from 'antd'
+import {
+    LikeOutlined,
+    MessageOutlined,
+    StarOutlined,
+    DownOutlined,
+} from '@ant-design/icons'
+import { Avatar, List, Space, Button, Dropdown, Typography } from 'antd'
 import instance from '../api'
 import { all } from 'axios'
-
 
 // const data = Array.from({ length: 23 }).map((_, i) => ({
 //     href: 'https://ant.design',
@@ -20,43 +24,93 @@ const IconText = ({ icon, text }) => (
         {text}
     </Space>
 )
-function BuyMe() {
-    const createTask = () => {}
-    const [ tasks, setTasks ] = useState([])
-    const [ currentPage, setCurrentPage ] = useState(1)
-    const [ nPerPage, setNPerPage] = useState(3)
-    const [ maxPageN, setMaxPageN ] = useState(2)
-    const [ taskOverload, setTaskOverload ] = useState(false)
 
-    useEffect(()=>{
-        // getTaskNum()
-    })
+const items = [
+    {
+        key: 'Due Start Time',
+        label: 'Due Start Time',
+    },
+    {
+        key: 'Fee',
+        label: 'Fee ',
+    },
+    {
+        key: 'Other',
+        label: 'Other',
+    },
+]
+function BuyMe() {
+    const createTask = () => {
+        console.log('create task')
+    }
+    const [tasks, setTasks] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const [nPerPage, setNPerPage] = useState(7)
+    const [maxPageN, setMaxPageN] = useState(10)
+    const [filter, setFilter] = useState('allTasksByDuestart')
+    // const [taskOverload, setTaskOverload] = useState(false)
 
     useEffect(() => {
-        getAllTasks(currentPage, nPerPage, maxPageN)
-    }, [currentPage]);
+        const twoDayTasks = getTaskNum()
+        setMaxPageN(twoDayTasks / nPerPage)
+    }, [])
 
-    const getAllTasks = async( currentPage, nPerPage, maxPageN ) => {
-        const { data: {allTasks, taskOverload} }
-        = await instance.get('allTasks', { params:{
-            currentPage, nPerPage, maxPageN
-        }})
-        // console.log(allTasks)
-        // console.log(taskOverload)
+    useEffect(() => {
+        console.log(filter)
+        getAllTasks(currentPage, nPerPage, maxPageN)
+    }, [currentPage, filter])
+
+    const getAllTasks = async (currentPage, nPerPage, maxPageN) => {
+        const {
+            data: { allTasks },
+        } = await instance.get(filter, {
+            params: {
+                currentPage,
+                nPerPage,
+                maxPageN,
+            },
+        })
+
         setTasks(allTasks)
-        setTaskOverload(taskOverload)
+        // setTaskOverload(taskOverload)
     }
 
-    const getTaskNum = async() => {
-        const {
-            data: taskNum
-        } = await instance.get('taskNum')
+    const getTaskNum = async () => {
+        const { data: taskNum } = await instance.get('taskNum')
         // console.log(taskNum)
+    }
+
+    const AddDummyTasks = async () => {
+        const {
+            data: { success },
+        } = await instance.post('addTasks')
+        console.log(success)
     }
 
     const acceptTask = (id) => {
         console.log(id)
         // navigate to chatbox
+    }
+
+    const DeleteAllTasks = async () => {
+        const {
+            data: { success },
+        } = await instance.post('delete')
+        console.log(success)
+    }
+
+    const onClick = ({ key }) => {
+        switch (key) {
+            case 'Due Start Time':
+                setFilter('allTasksByDueStart')
+                break
+            case 'Fee':
+                setFilter('allTasksByFee')
+                break
+            case 'Other':
+                setFilter('allTasksByDueStart')
+                break
+        }
     }
 
     return (
@@ -78,6 +132,39 @@ function BuyMe() {
                 >
                     + Add New Task
                 </Button>
+                <Button
+                    style={{
+                        marginRight: 50,
+                        backgroundColor: '#ffdaab',
+                    }}
+                    onClick={AddDummyTasks}
+                >
+                    + Add Dummy
+                </Button>
+                <Button
+                    style={{
+                        marginRight: 50,
+                        backgroundColor: '#ffdaab',
+                    }}
+                    onClick={DeleteAllTasks}
+                >
+                    - Delete All
+                </Button>
+                <Dropdown
+                    menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['Due Start Time'],
+                        onClick,
+                    }}
+                >
+                    <Typography.Link onClick={(e) => e.preventDefault()}>
+                        <Space>
+                            Filter By
+                            <DownOutlined />
+                        </Space>
+                    </Typography.Link>
+                </Dropdown>
             </div>
             <List
                 itemLayout="vertical"
@@ -90,12 +177,27 @@ function BuyMe() {
                 }}
                 dataSource={tasks}
                 renderItem={(item) => (
-                    <List.Item style={{display: 'flex', alignItems: 'flex-end', flexDirection: 'row',}}>
-                        <Space style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column',}}>
-                        <b>{item.items}</b>
-                        {item.note}
+                    <List.Item
+                        style={{
+                            display: 'flex',
+                            alignItems: 'flex-end',
+                            flexDirection: 'row',
+                        }}
+                    >
+                        <Space
+                            style={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                flexDirection: 'column',
+                            }}
+                        >
+                            <b>{item.title}</b>
+                            {item.fee}
+                            {item.due_start}
                         </Space>
-                        <Button onClick={() => acceptTask(item._id)}>Accept Task</Button>
+                        <Button onClick={() => acceptTask(item._id)}>
+                            Accept Task
+                        </Button>
                     </List.Item>
                 )}
             />

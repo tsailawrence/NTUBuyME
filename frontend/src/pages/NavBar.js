@@ -50,6 +50,8 @@ function NavBar({ setKey, collapsed }) {
                 collapsed={collapsed}
                 style={{
                     overflow: 'auto',
+                    position: '-webkit-sticky',
+                    position: 'sticky',
                     height: '100vh',
                     left: 0,
                     top: 0,

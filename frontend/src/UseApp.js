@@ -1,9 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 
-
 const AppContext = createContext({
     status: {},
-    me: "",
+    me: '',
     signIn: false,
     // getAccount: () => {},
 })
@@ -12,7 +11,7 @@ const AppProvider = (props) => {
     const [me, setMe] = useState('')
     const [signIn, setSignIn] = useState(false)
     const [status, setStatus] = useState([])
-
+    const [id, setId] = useState('')
 
     useEffect(() => {
         // console.log(status)
@@ -29,6 +28,8 @@ const AppProvider = (props) => {
             value={{
                 me,
                 setMe,
+                id,
+                setId,
                 signIn,
                 setSignIn,
                 status,

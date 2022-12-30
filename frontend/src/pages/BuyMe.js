@@ -42,10 +42,6 @@ const items = [
     },
 ]
 const BuyMe = () => {
-
-    const createTask = () => {
-        console.log('create task')
-    }
     const [tasks, setTasks] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [nPerPage, setNPerPage] = useState(7)

@@ -230,6 +230,10 @@ function BuyMe() {
                                 <b>Due Time: </b>
                                 {item.due_start}~{item.due_end}
                             </Space>
+                            <Space>
+                                <b>Fee: </b>
+                                {item.fee}
+                            </Space>
                         </Space>
                         <Divider />
                         <Button onClick={() => acceptTask(item._id)}>

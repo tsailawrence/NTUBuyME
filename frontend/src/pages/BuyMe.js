@@ -20,15 +20,6 @@ import instance from '../api'
 import { all } from 'axios'
 import CreateTaskModal from './CreateTaskModal'
 
-// const data = Array.from({ length: 23 }).map((_, i) => ({
-//     href: 'https://ant.design',
-//     title: `ant design part ${i}`,
-//     avatar: 'https://joeschmoe.io/api/v1/random',
-//     description:
-//         'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-//     content:
-//         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-// }))
 const IconText = ({ icon, text }) => (
     <Space>
         {React.createElement(icon)}
@@ -60,7 +51,6 @@ function BuyMe() {
     const [maxPageN, setMaxPageN] = useState(10)
     const [filter, setFilter] = useState('allTasksByDuestart')
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
-    // const [taskOverload, setTaskOverload] = useState(false)
 
     useEffect(() => {
         const twoDayTasks = getTaskNum()
@@ -84,12 +74,10 @@ function BuyMe() {
         })
 
         setTasks(allTasks)
-        // setTaskOverload(taskOverload)
     }
 
     const getTaskNum = async () => {
         const { data: taskNum } = await instance.get('taskNum')
-        // console.log(taskNum)
     }
 
     const AddDummyTasks = async () => {
@@ -219,25 +207,25 @@ function BuyMe() {
                             }}
                         >
                             <Space>
-                                <b>Restaurant Name: </b>
+                                <b>餐廳名稱: </b>
                                 {item.restaurantName}
                             </Space>
                             <Space>
-                                <b>Task: </b>
+                                <b>任務內容: </b>
                                 {item.taskContent}
                             </Space>
                             <Space>
-                                <b>Due Time: </b>
+                                <b>截止日期: </b>
                                 {item.due_start}~{item.due_end}
                             </Space>
                             <Space>
-                                <b>Fee: </b>
+                                <b>外送費: </b>
                                 {item.fee}
                             </Space>
                         </Space>
                         <Divider />
                         <Button onClick={() => acceptTask(item._id)}>
-                            Accept Task
+                            接任務
                         </Button>
                     </Card>
                 )}

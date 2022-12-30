@@ -35,6 +35,11 @@ html {
     background-color: #db9683 !important;
 }
 
+.ant-btn-primary {
+    background-color: #fac898 !important;
+    color: black;
+}
+
 .ant-btn:hover {
     color: #db9683 !important;
     border-color: #db9683 !important;

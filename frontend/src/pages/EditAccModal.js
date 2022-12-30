@@ -1,3 +1,4 @@
+
 import { Modal, Form, Input, Space, Button, Select } from "antd";
 import { useState } from "react";
 
@@ -13,13 +14,15 @@ const layout = {
 const EditAccModal = ({ user, item, open, onCreate, onCancel }) => {
     const [form] = Form.useForm()
     return (
-        <Modal open={open}
+        <Modal
+            open={open}
             title="Edit Account Details"
             okText="Save Changes"
             cancelText="Cancel"
             onCancel={onCancel}
             onOk={() => {
                 form.validateFields()
+
                 .then((values)=>{
                     form.resetFields();
                     onCreate(values);
@@ -75,4 +78,4 @@ const EditAccModal = ({ user, item, open, onCreate, onCancel }) => {
     )
 }
 
-export default EditAccModal;
+export default EditAccModal

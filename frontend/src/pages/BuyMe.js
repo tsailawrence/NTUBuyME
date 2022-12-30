@@ -41,7 +41,8 @@ const items = [
         label: 'Other',
     },
 ]
-function BuyMe() {
+const BuyMe = () => {
+
     const createTask = () => {
         console.log('create task')
     }
@@ -113,6 +114,25 @@ function BuyMe() {
         }
     }
 
+    const createTask = async (values) => {
+        let title = values.title
+        let restaurant = values.restaurant
+        let fee = values.fee
+        let arrivalStart = values.arrivalStart
+        let arrivalEnd = values.arrivalEnd
+        let taskContent = values.content
+        const {
+            data: { message, content },
+        } = await instance.post('/createTask', {
+            title,
+            restaurant,
+            fee,
+            arrivalStart,
+            arrivalEnd,
+            taskContent,
+        })
+    }
+
     return (
         <>
             <div
@@ -168,19 +188,47 @@ function BuyMe() {
                     </Typography.Link>
                 </Dropdown>
                 <CreateTaskModal
-                    // user={accountInfo}
-                    // open={EditAccModalOpen}
+                    open={CreateTaskModalOpen}
                     onCreate={(values) => {
-                        // editAccount(
-                        //     me,
-                        //     Object.keys(values.user),
-                        //     Object.values(values.user)
-                        // )
-                        CreateTaskModalOpen(false)
+                        createTask(values)
+                        setCreateTaskModalOpen(false)
                     }}
-                    onCancel={() => CreateTaskModalOpen(false)}
+                    onCancel={() => setCreateTaskModalOpen(false)}
                     // item={onClickItem}
                 />
+                <Button
+                    style={{
+                        marginRight: 50,
+                        backgroundColor: '#ffdaab',
+                    }}
+                    onClick={AddDummyTasks}
+                >
+                    + Add Dummy
+                </Button>
+                <Button
+                    style={{
+                        marginRight: 50,
+                        backgroundColor: '#ffdaab',
+                    }}
+                    onClick={DeleteAllTasks}
+                >
+                    - Delete All
+                </Button>
+                <Dropdown
+                    menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['Due Start Time'],
+                        onClick,
+                    }}
+                >
+                    <Typography.Link onClick={(e) => e.preventDefault()}>
+                        <Space>
+                            Filter By
+                            <DownOutlined />
+                        </Space>
+                    </Typography.Link>
+                </Dropdown>
             </div>
             <List
                 itemLayout="vertical"

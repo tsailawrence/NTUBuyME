@@ -7,7 +7,7 @@ import instance from '../api'
 
 const layout = {
     labelCol: {
-        span: 8,
+        span: 10,
     },
     wrapperCol: {
         span: 16,
@@ -25,7 +25,7 @@ const encryptPassword = async (password) => {
 
 const Register = ({ setLogin }) => {
     const [password, setPassword] = useState('')
-    const { setStatus, setMe } = useApp()
+    const { setStatus, setMe, setSignIn } = useApp()
     const [form] = Form.useForm()
 
     const navigate = useNavigate()
@@ -47,6 +47,7 @@ const Register = ({ setLogin }) => {
         })
         if (message === 'success') {
             setMe(value.user.id)
+            setSignIn(true)
             setLogin(true)
             navigateToMainPage()
         }
@@ -97,7 +98,11 @@ const Register = ({ setLogin }) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Item>
-                <Form.Item name={['user', 'bankaccount']} label="Bank account">
+                <Form.Item label="Bank account"/>
+                <Form.Item name={['user', 'bank_id']} label="Bank id">
+                    <Input />
+                </Form.Item>
+                <Form.Item name={['user', 'bankaccount_id']} label="Bank account id">
                     <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

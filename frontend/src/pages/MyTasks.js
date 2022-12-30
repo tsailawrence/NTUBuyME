@@ -6,27 +6,40 @@ import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
 } from '@ant-design/icons'
-import { Avatar, List, Space, Layout } from 'antd'
-
-const data = Array.from({ length: 23 }).map((_, i) => ({
-    href: 'https://ant.design',
-    title: `ant design part ${i}`,
-    avatar: 'https://joeschmoe.io/api/v1/random',
-    description:
-        'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-        'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-}))
-const IconText = ({ icon, text }) => (
-    <Space>
-        {React.createElement(icon)}
-        {text}
-    </Space>
-)
+import { Avatar, List, Space, Layout, Button } from 'antd'
+import { useState, useEffect } from 'react'
+import instance from '../api'
+import { useApp } from '../UseApp'
 
 const { Header, Content } = Layout
 
 function MyTasks({ collapsed, setCollapsed }) {
+    const [ tasks, setTasks ] = useState([])
+    const [ currentPage, setCurrentPage ] = useState(1)
+    const [ nPerPage, setNPerPage] = useState(3)
+    const [ maxPageN, setMaxPageN ] = useState(2)
+    const [ taskOverload, setTaskOverload ] = useState(false)
+    const { me } = useApp()
+
+    useEffect(() => {
+        getMyTasks(currentPage, nPerPage, maxPageN)
+    }, [currentPage]);
+
+    const getMyTasks = async( me, currentPage, nPerPage, maxPageN ) => {
+        const { data: {myTasks, taskOverload} }
+        = await instance.get('myTasks', { params:{
+            currentPage, nPerPage, maxPageN
+        }})
+        // console.log(myTasks)
+        // console.log(taskOverload)
+        setTasks(myTasks)
+        setTaskOverload(taskOverload)
+    }
+
+    const moreDetail = async () => {
+
+    }
+
     return (
 
         <Layout className="site-layout">
@@ -45,64 +58,25 @@ function MyTasks({ collapsed, setCollapsed }) {
             >
                 <h1>MyTasks</h1>
                 <List
-                    itemLayout="vertical"
-                    size="large"
-                    pagination={{
-                        onChange: (page) => {
-                            // console.log(page)
-                        },
-                        pageSize: 3,
-                    }}
-                    dataSource={data}
-                    footer={
-                        <div>
-                            <b>ant design</b> footer part
-                        </div>
-                    }
-                    renderItem={(item) => (
-                        <List.Item
-                            key={item.title}
-                            actions={[
-                                <IconText
-                                    icon={StarOutlined}
-                                    text="156"
-                                    key="list-vertical-star-o"
-                                />,
-                                <IconText
-                                    icon={LikeOutlined}
-                                    text="156"
-                                    key="list-vertical-like-o"
-                                />,
-                                <IconText
-                                    icon={MessageOutlined}
-                                    text="2"
-                                    key="list-vertical-message"
-                                />,
-                            ]}
-                            extra={
-                                <img
-                                    width={272}
-                                    alt="logo"
-                                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                                />
-                            }
-                        >
-                            <List.Item.Meta
-                                avatar={<Avatar src={item.avatar} />}
-                                title={<a href={item.href}>{item.title}</a>}
-                                description={item.description}
-                            />
-
-
-                            <List.Item.Meta
-                                avatar={<Avatar src={item.avatar} />}
-                                title={<a href={item.href}>{item.title}</a>}
-                                description={item.description}
-                            />
-                            {item.content}
-                        </List.Item>
-                    )}
-                />
+                itemLayout="vertical"
+                size="large"
+                pagination={{
+                    onChange: (page) => {
+                        setCurrentPage(page)
+                    },
+                    pageSize: nPerPage,
+                }}
+                dataSource={tasks}
+                renderItem={(item) => (
+                    <List.Item style={{display: 'flex', alignItems: 'flex-end', flexDirection: 'row',}}>
+                        <Space style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column',}}>
+                        <b>{item.items}</b>
+                        {item.note}
+                        </Space>
+                        <Button onClick={moreDetail(item._id)}>More Detail</Button>
+                    </List.Item>
+                )}
+            />
             </Content>
         </Layout >
     )

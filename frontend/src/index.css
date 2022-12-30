@@ -21,6 +21,15 @@
     align-items: center;
 }
 
+.ant-menu-item-active {
+    background-color: #fac898 !important;
+}
+
 .ant-menu-item-selected {
     background-color: #db9683 !important;
+}
+
+.ant-btn:hover {
+    color: #db9683 !important;
+    border-color: #db9683 !important;
 }

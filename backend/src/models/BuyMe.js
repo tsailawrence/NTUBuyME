@@ -24,6 +24,10 @@ const TaskSchema = Schema(
         receiver: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
+<<<<<<< HEAD
+=======
+            required: false,
+>>>>>>> 7c7bae093942a371bd1d7a0892cd14bc4dc0a5a7
         },
 
         created_at: { type: Date, required: true },
@@ -33,7 +37,11 @@ const TaskSchema = Schema(
         due_start: { type: Date, required: true },
         due_end: { type: Date, required: true },
         fee: { type: Number, required: true },
+<<<<<<< HEAD
         status: { type: String, required: true },
+=======
+        status: { type: String, required: true }, // 'open', 'accepted', 'completed'
+>>>>>>> 7c7bae093942a371bd1d7a0892cd14bc4dc0a5a7
     },
     { timestamps: true }
 )

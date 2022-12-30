@@ -22,6 +22,9 @@ function main(app) {
     app.get('/api/taskNum', wrap(buymeRoute.GetTaskNum))
     app.get('/api/myTasks', wrap(buymeRoute.GetMyTasks))
     app.post('/api/addTasks', wrap(buymeRoute.AddDummyTasks))
+    app.get('/api/taskNum', wrap(buymeRoute.GetTaskNum))
+    app.get('/api/myAddedTasks', wrap(buymeRoute.GetMyAddedTasks))
+    app.get('/api/myAcceptedTasks', wrap(buymeRoute.GetMyAcceptedTasks))
 }
 
 export default main

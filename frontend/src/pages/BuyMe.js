@@ -4,10 +4,21 @@ import {
     MessageOutlined,
     StarOutlined,
     DownOutlined,
+    DownCircleOutlined,
 } from '@ant-design/icons'
-import { Avatar, List, Space, Button, Dropdown, Typography } from 'antd'
+import {
+    Avatar,
+    List,
+    Space,
+    Button,
+    Dropdown,
+    Typography,
+    Card,
+    Divider,
+} from 'antd'
 import instance from '../api'
 import { all } from 'axios'
+import CreateTaskModal from './CreateTaskModal'
 
 // const data = Array.from({ length: 23 }).map((_, i) => ({
 //     href: 'https://ant.design',
@@ -48,6 +59,7 @@ function BuyMe() {
     const [nPerPage, setNPerPage] = useState(7)
     const [maxPageN, setMaxPageN] = useState(10)
     const [filter, setFilter] = useState('allTasksByDuestart')
+    const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
     // const [taskOverload, setTaskOverload] = useState(false)
 
     useEffect(() => {
@@ -128,9 +140,11 @@ function BuyMe() {
                         marginRight: 50,
                         backgroundColor: '#ffdaab',
                     }}
-                    onClick={createTask}
+                    onClick={() => {
+                        setCreateTaskModalOpen(true)
+                    }}
                 >
-                    + Add New Task
+                    + Create New Task
                 </Button>
                 <Button
                     style={{
@@ -165,6 +179,20 @@ function BuyMe() {
                         </Space>
                     </Typography.Link>
                 </Dropdown>
+                <CreateTaskModal
+                    // user={accountInfo}
+                    // open={EditAccModalOpen}
+                    onCreate={(values) => {
+                        // editAccount(
+                        //     me,
+                        //     Object.keys(values.user),
+                        //     Object.values(values.user)
+                        // )
+                        CreateTaskModalOpen(false)
+                    }}
+                    onCancel={() => CreateTaskModalOpen(false)}
+                    // item={onClickItem}
+                />
             </div>
             <List
                 itemLayout="vertical"
@@ -177,13 +205,12 @@ function BuyMe() {
                 }}
                 dataSource={tasks}
                 renderItem={(item) => (
-                    <List.Item
-                        style={{
-                            display: 'flex',
-                            alignItems: 'flex-end',
-                            flexDirection: 'row',
-                        }}
-                    >
+                    <Card>
+                        <DownCircleOutlined
+                            style={{ fontSize: '15px', color: '#228B22' }}
+                        />
+                        <b style={{ fontSize: '15px' }}> {item.title}</b>
+                        <Divider />
                         <Space
                             style={{
                                 display: 'flex',
@@ -191,16 +218,26 @@ function BuyMe() {
                                 flexDirection: 'column',
                             }}
                         >
-                            <b>{item.title}</b>
-                            {item.fee}
-                            {item.due_start}
+                            <Space>
+                                <b>Restaurant Name: </b>
+                                {item.restaurantName}
+                            </Space>
+                            <Space>
+                                <b>Task: </b>
+                                {item.taskContent}
+                            </Space>
+                            <Space>
+                                <b>Due Time: </b>
+                                {item.due_start}~{item.due_end}
+                            </Space>
                         </Space>
+                        <Divider />
                         <Button onClick={() => acceptTask(item._id)}>
                             Accept Task
                         </Button>
-                    </List.Item>
+                    </Card>
                 )}
-            />
+            ></List>
         </>
     )
 }

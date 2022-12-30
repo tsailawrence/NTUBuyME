@@ -24,12 +24,15 @@ const TaskSchema = Schema(
             ref: 'User',
             required: true,
         },
-        fee: { type: Number, required: true },
-        items: { type: String, required: true },
-        note: { type: String, required: true },
+
         created_at: { type: Date, required: true },
+        title: { type: String, required: true },
+        restaurantName: { type: String, required: true },
+        taskContent: { type: String, required: true },
         due_start: { type: Date, required: true },
         due_end: { type: Date, required: true },
+        fee: { type: Number, required: true },
+        status: { type: Number, required: true },
     },
     { timestamps: true }
 )

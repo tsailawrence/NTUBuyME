@@ -5,15 +5,18 @@ import {
     TransactionOutlined,
     CoffeeOutlined,
     SolutionOutlined,
+    UserDeleteOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import logo from '../img/LogoTitle.png'
+import { useApp } from '../UseApp'
 
 const { Sider } = Layout
 
 function NavBar({ setKey, collapsed }) {
     const navigate = useNavigate()
+    const { setSignedIn } = useApp()
     function navigatePage(key) {
         setKey(key)
         switch (key) {
@@ -28,6 +31,11 @@ function NavBar({ setKey, collapsed }) {
                 break
             case '5':
                 navigate('/account')
+                break
+            case '6':
+                //Logout
+                setSignedIn(false)
+                navigate('/login')
                 break
             default:
                 navigate('/')
@@ -92,6 +100,11 @@ function NavBar({ setKey, collapsed }) {
                             key: '5',
                             icon: <UserOutlined />,
                             label: 'Account',
+                        },
+                        {
+                            key: '6',
+                            icon: <UserDeleteOutlined />,
+                            label: 'Log Out',
                         },
                     ]}
                 />

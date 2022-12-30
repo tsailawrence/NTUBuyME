@@ -22,7 +22,7 @@ const TaskSchema = Schema(
         receiver: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
-            required: true,
+            required: false,
         },
 
         created_at: { type: Date, required: true },
@@ -32,7 +32,7 @@ const TaskSchema = Schema(
         due_start: { type: Date, required: true },
         due_end: { type: Date, required: true },
         fee: { type: Number, required: true },
-        status: { type: Number, required: true },
+        status: { type: String, required: true }, // 'open', 'accepted', 'completed'
     },
     { timestamps: true }
 )

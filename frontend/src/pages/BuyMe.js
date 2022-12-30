@@ -1,28 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons'
-import { Avatar, List, Space, Button } from 'antd'
+import { LikeOutlined, MessageOutlined, StarOutlined,DownCircleOutlined } from '@ant-design/icons'
+import { List, Space,  Button, Card, Divider } from 'antd'
 import instance from '../api'
 import { all } from 'axios'
 
 
-// const data = Array.from({ length: 23 }).map((_, i) => ({
-//     href: 'https://ant.design',
-//     title: `ant design part ${i}`,
-//     avatar: 'https://joeschmoe.io/api/v1/random',
-//     description:
-//         'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-//     content:
-//         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-// }))
-const IconText = ({ icon, text }) => (
-    <Space>
-        {React.createElement(icon)}
-        {text}
-    </Space>
-)
 function BuyMe() {
     const createTask = () => {}
     const [ tasks, setTasks ] = useState([])
+    
     const [ currentPage, setCurrentPage ] = useState(1)
     const [ nPerPage, setNPerPage] = useState(3)
     const [ maxPageN, setMaxPageN ] = useState(2)
@@ -90,13 +76,19 @@ function BuyMe() {
                 }}
                 dataSource={tasks}
                 renderItem={(item) => (
-                    <List.Item style={{display: 'flex', alignItems: 'flex-end', flexDirection: 'row',}}>
-                        <Space style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column',}}>
-                        <b>{item.items}</b>
-                        {item.note}
-                        </Space>
-                        <Button onClick={() => acceptTask(item._id)}>Accept Task</Button>
-                    </List.Item>
+                     <Card>
+                     <DownCircleOutlined style={{ fontSize: '15px', color:'#228B22'}}/>
+                     <b style={{ fontSize: '15px'}}>  {item.title}</b>
+                     <Divider />
+                     <Space style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column',}}>
+                     <Space><b>Restaurant Name: </b>{item.restaurantName}</Space>
+                     <Space><b>Task: </b>{item.taskContent}</Space>
+                     <Space><b>Due Time: </b>{item.due_start}~{item.due_end}</Space>
+                     </Space>
+                     <Divider />
+                     <Button onClick={() => acceptTask(item._id)}>Accept Task</Button>
+
+                 </Card>
                 )}
             />
         </>

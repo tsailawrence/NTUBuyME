@@ -3,16 +3,15 @@
 ## TODO:
 
 1. Status modal
-
 2. Transfer modal，前後端串起來了，但是還要想辦法讓 db 顯示圖片
 3. Chat modal
-4. add new task
-5. my tasks 取回該 user 的 task
+4. my tasks 取回該 user 的 task
 
 ## Done
 
 1. Login + Register
 2. Account
+3. createTask
 
 ## Bug
 

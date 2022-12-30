@@ -23,18 +23,6 @@ function BuyMe() {
         getAllTasks(currentPage, nPerPage, maxPageN)
     }, [currentPage])
 
-    const getAllTasks = async (currentPage, nPerPage, maxPageN) => {
-        const {
-            data: { allTasks, taskOverload },
-        } = await instance.get('allTasks', {
-            params: {
-                currentPage,
-                nPerPage,
-                maxPageN,
-            },
-        })
-    }, [currentPage]);
-
     const getAllTasks = async( currentPage, nPerPage, maxPageN ) => {
         const { data: {allTasks, taskOverload} }
         = await instance.get('allTasks', { params:{

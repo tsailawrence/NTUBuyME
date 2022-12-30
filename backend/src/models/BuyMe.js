@@ -8,8 +8,10 @@ const UserSchema = Schema(
         name: { type: String, required: true },
         password: { type: String, required: true },
         tasks: [{ type: mongoose.Types.ObjectId, ref: 'Task' }],
-        bankaccount: { bank_id:{  type: String },
-                        bankaccount_id: {type: String}, },
+        bankaccount: {
+            bank_id: { type: String },
+            bankaccount_id: { type: String },
+        },
     },
     { timestamps: true }
 )
@@ -22,7 +24,6 @@ const TaskSchema = Schema(
         receiver: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
-            required: false,
         },
 
         created_at: { type: Date, required: true },
@@ -34,6 +35,7 @@ const TaskSchema = Schema(
         fee: { type: Number, required: true },
         status: { type: String, required: true }, // 'open', 'accepted', 'completed'
     },
+
     { timestamps: true }
 )
 

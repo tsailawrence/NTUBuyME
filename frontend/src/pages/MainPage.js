@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom'
 
 const { Header, Content } = Layout
 
-function MainPage({ collapsed, setCollapsed, login }) {
+function MainPage({ collapsed, setCollapsed, login, me, id }) {
     return login ? (
         <Layout className="site-layout">
             <Header className="site-layout-background" style={{ padding: 0 }}>
@@ -22,7 +22,7 @@ function MainPage({ collapsed, setCollapsed, login }) {
                 className="site-layout-background"
                 style={{ margin: '24px 16px', padding: 24, minHeight: 280 }}
             >
-                <BuyMe />
+                <BuyMe me={me} />
             </Content>
         </Layout>
     ) : (

@@ -71,8 +71,7 @@ exports.GetMyAddedTasks = async (req, res) => {
     const myTasks = await TaskModel.find({
         sender: myUserModel,
         status: { $in: ['accepted', 'completed'] },
-    }) 
-    .sort({ status: 1, due_end: 1 })
+    }).sort({ status: 1, due_end: 1 })
     const taskOverload = myTasks.length === maxPageN * nPerPage + 1
     res.send({ myTasks, taskOverload })
 }
@@ -86,9 +85,35 @@ exports.GetMyAcceptedTasks = async (req, res) => {
     const myTasks = await TaskModel.find({
         receiver: myUserModel,
         status: { $in: ['accepted', 'completed'] },
-    }) 
-        .sort({ status: 1, due_end: 1 })
+    }).sort({ status: 1, due_end: 1 })
 
     const taskOverload = myTasks.length === maxPageN * nPerPage + 1
     res.send({ myTasks, taskOverload })
+}
+
+exports.CreateTask = async (req, res) => {
+    const {
+        me,
+        title,
+        restaurant,
+        fee,
+        arrivalStart,
+        arrivalEnd,
+        taskContent,
+    } = req.body
+
+    const myUserModel = await UserModel.findOne({ user_id: me })
+
+    const newTask = new TaskModel({
+        sender: myUserModel,
+        created_at: new Date(Date.now()),
+        title: title,
+        restaurantName: restaurant,
+        taskContent: taskContent,
+        due_start: arrivalStart,
+        due_end: arrivalEnd,
+        fee: fee,
+        status: 'open',
+    })
+    await newTask.save()
 }

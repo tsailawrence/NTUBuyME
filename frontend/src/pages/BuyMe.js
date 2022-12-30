@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons'
 import { Avatar, List, Space, Button } from 'antd'
+
 import instance from '../api'
 import { all } from 'axios'
+import CreateTaskModal from './CreateTaskModal'
 
 
 // const data = Array.from({ length: 23 }).map((_, i) => ({
@@ -21,19 +23,28 @@ const IconText = ({ icon, text }) => (
     </Space>
 )
 function BuyMe() {
-    const createTask = () => {}
-    const [ tasks, setTasks ] = useState([])
-    const [ currentPage, setCurrentPage ] = useState(1)
-    const [ nPerPage, setNPerPage] = useState(3)
-    const [ maxPageN, setMaxPageN ] = useState(2)
-    const [ taskOverload, setTaskOverload ] = useState(false)
+    const [tasks, setTasks] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const [nPerPage, setNPerPage] = useState(3)
+    const [maxPageN, setMaxPageN] = useState(2)
+    const [taskOverload, setTaskOverload] = useState(false)
+    const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
 
-    useEffect(()=>{
-        // getTaskNum()
-    })
 
     useEffect(() => {
         getAllTasks(currentPage, nPerPage, maxPageN)
+    }, [currentPage])
+
+    const getAllTasks = async (currentPage, nPerPage, maxPageN) => {
+        const {
+            data: { allTasks, taskOverload },
+        } = await instance.get('allTasks', {
+            params: {
+                currentPage,
+                nPerPage,
+                maxPageN,
+            },
+        })
     }, [currentPage]);
 
     const getAllTasks = async( currentPage, nPerPage, maxPageN ) => {
@@ -47,10 +58,8 @@ function BuyMe() {
         setTaskOverload(taskOverload)
     }
 
-    const getTaskNum = async() => {
-        const {
-            data: taskNum
-        } = await instance.get('taskNum')
+    const getTaskNum = async () => {
+        const { data: taskNum } = await instance.get('taskNum')
         // console.log(taskNum)
     }
 
@@ -74,10 +83,26 @@ function BuyMe() {
                         marginRight: 50,
                         backgroundColor: '#ffdaab',
                     }}
-                    onClick={createTask}
+                    onClick={() => {
+                        setCreateTaskModalOpen(true)
+                    }}
                 >
-                    + Add New Task
+                    + Create New Task
                 </Button>
+                <CreateTaskModal
+                    // user={accountInfo}
+                    // open={EditAccModalOpen}
+                    onCreate={(values) => {
+                        // editAccount(
+                        //     me,
+                        //     Object.keys(values.user),
+                        //     Object.values(values.user)
+                        // )
+                        CreateTaskModalOpen(false)
+                    }}
+                    onCancel={() => CreateTaskModalOpen(false)}
+                    // item={onClickItem}
+                />
             </div>
             <List
                 itemLayout="vertical"
@@ -90,6 +115,26 @@ function BuyMe() {
                 }}
                 dataSource={tasks}
                 renderItem={(item) => (
+                    <List.Item
+                        style={{
+                            display: 'flex',
+                            alignItems: 'flex-end',
+                            flexDirection: 'row',
+                        }}
+                    >
+                        <Space
+                            style={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                flexDirection: 'column',
+                            }}
+                        >
+                            <b>{item.items}</b>
+                            {item.note}
+                        </Space>
+                        <Button onClick={() => acceptTask(item._id)}>
+                            Accept Task
+                        </Button>
                     <List.Item style={{display: 'flex', alignItems: 'flex-end', flexDirection: 'row',}}>
                         <Space style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column',}}>
                         <b>{item.items}</b>

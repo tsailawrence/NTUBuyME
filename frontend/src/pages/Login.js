@@ -8,8 +8,7 @@ import instance from '../api'
 const bcrypt = require('bcryptjs')
 
 const Login = ({ setLogin, setCollapsed }) => {
-    const { me, setMe, status, setStatus, setSignIn } = useApp()
-    const [id, setId] = useState('')
+    const { me, setMe, status, setStatus, setSignIn, id, setId } = useApp()
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
 

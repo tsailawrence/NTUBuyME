@@ -1,21 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons'
 import { Avatar, List, Space, Button } from 'antd'
-<<<<<<< Updated upstream
 
-const data = Array.from({ length: 23 }).map((_, i) => ({
-    href: 'https://ant.design',
-    title: `ant design part ${i}`,
-    avatar: 'https://joeschmoe.io/api/v1/random',
-    description:
-        'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-        'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-}))
-=======
 import instance from '../api'
 import { all } from 'axios'
 import CreateTaskModal from './CreateTaskModal'
+
 
 // const data = Array.from({ length: 23 }).map((_, i) => ({
 //     href: 'https://ant.design',
@@ -26,7 +16,6 @@ import CreateTaskModal from './CreateTaskModal'
 //     content:
 //         'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
 // }))
->>>>>>> Stashed changes
 const IconText = ({ icon, text }) => (
     <Space>
         {React.createElement(icon)}
@@ -34,9 +23,6 @@ const IconText = ({ icon, text }) => (
     </Space>
 )
 function BuyMe() {
-    const createTask = () => {}
-<<<<<<< Updated upstream
-=======
     const [tasks, setTasks] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [nPerPage, setNPerPage] = useState(3)
@@ -44,9 +30,6 @@ function BuyMe() {
     const [taskOverload, setTaskOverload] = useState(false)
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
 
-    useEffect(() => {
-        // getTaskNum()
-    })
 
     useEffect(() => {
         getAllTasks(currentPage, nPerPage, maxPageN)
@@ -62,6 +45,13 @@ function BuyMe() {
                 maxPageN,
             },
         })
+    }, [currentPage]);
+
+    const getAllTasks = async( currentPage, nPerPage, maxPageN ) => {
+        const { data: {allTasks, taskOverload} }
+        = await instance.get('allTasks', { params:{
+            currentPage, nPerPage, maxPageN
+        }})
         // console.log(allTasks)
         // console.log(taskOverload)
         setTasks(allTasks)
@@ -78,7 +68,6 @@ function BuyMe() {
         // navigate to chatbox
     }
 
->>>>>>> Stashed changes
     return (
         <>
             <div
@@ -119,50 +108,14 @@ function BuyMe() {
                 itemLayout="vertical"
                 size="large"
                 pagination={{
-                    pageSize: 3,
+                    onChange: (page) => {
+                        setCurrentPage(page)
+                    },
+                    pageSize: nPerPage,
                 }}
-                dataSource={data}
-                footer={
-                    <div>
-                        <b>ant design</b> footer part
-                    </div>
-                }
+                dataSource={tasks}
                 renderItem={(item) => (
                     <List.Item
-<<<<<<< Updated upstream
-                        key={item.title}
-                        actions={[
-                            <IconText
-                                icon={StarOutlined}
-                                text="156"
-                                key="list-vertical-star-o"
-                            />,
-                            <IconText
-                                icon={LikeOutlined}
-                                text="156"
-                                key="list-vertical-like-o"
-                            />,
-                            <IconText
-                                icon={MessageOutlined}
-                                text="2"
-                                key="list-vertical-message"
-                            />,
-                        ]}
-                        extra={
-                            <img
-                                width={272}
-                                alt="logo"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                            />
-                        }
-                    >
-                        <List.Item.Meta
-                            avatar={<Avatar src={item.avatar} />}
-                            title={<a href={item.href}>{item.title}</a>}
-                            description={item.description}
-                        />
-                        {item.content}
-=======
                         style={{
                             display: 'flex',
                             alignItems: 'flex-end',
@@ -182,7 +135,12 @@ function BuyMe() {
                         <Button onClick={() => acceptTask(item._id)}>
                             Accept Task
                         </Button>
->>>>>>> Stashed changes
+                    <List.Item style={{display: 'flex', alignItems: 'flex-end', flexDirection: 'row',}}>
+                        <Space style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column',}}>
+                        <b>{item.items}</b>
+                        {item.note}
+                        </Space>
+                        <Button onClick={() => acceptTask(item._id)}>Accept Task</Button>
                     </List.Item>
                 )}
             />

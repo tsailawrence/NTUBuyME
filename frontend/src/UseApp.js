@@ -1,20 +1,20 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 
-const LOCALSTORAGE_KEY = "save-me";
-const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
-
 const AppContext = createContext({
     status: {},
-    me: "",
+    me: '',
     signIn: false,
     // getAccount: () => {},
 })
+
+const LOCALSTORAGE_KEY = 'save-me'
+const savedMe = localStorage.getItem(LOCALSTORAGE_KEY)
 
 const AppProvider = (props) => {
     const [me, setMe] = useState(savedMe || '')
     const [signIn, setSignIn] = useState(false)
     const [status, setStatus] = useState([])
-
+    const [id, setId] = useState('')
 
     useEffect(() => {
         // console.log(status)
@@ -27,16 +27,18 @@ const AppProvider = (props) => {
     useEffect(() => {}, [status])
 
     useEffect(() => {
-        if(signIn){
-            localStorage.setItem(LOCALSTORAGE_KEY, me);
+        if (signIn) {
+            localStorage.setItem(LOCALSTORAGE_KEY, me)
         }
-    },[signIn])
+    }, [signIn])
 
     return (
         <AppContext.Provider
             value={{
                 me,
                 setMe,
+                id,
+                setId,
                 signIn,
                 setSignIn,
                 status,

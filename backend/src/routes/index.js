@@ -18,7 +18,9 @@ function main(app) {
     app.get('/api/transfer', wrap(transferRoute.GetTransferAccount))
     app.get('/api/allTasks', wrap(buymeRoute.GetAllTasks))
     app.get('/api/taskNum',wrap(buymeRoute.GetTaskNum))
-    app.get('/api/myTasks',wrap(buymeRoute.GetMyTasks))
+    app.get('/api/myAddedTasks',wrap(buymeRoute.GetMyAddedTasks))
+    app.get('/api/myAcceptedTasks',wrap(buymeRoute.GetMyAcceptedTasks))
+
 
 }
 

@@ -16,23 +16,25 @@ exports.EditUserAccount = async (req, res) => {
     if (existing) {
         // Update UserModel
         try {
-            res.json({ message: `Updating ${item} to ${req.body.newValue}!` })
-            if (item === 'name') {
+            res.json({ message: `Updating successfully!` })
+            if (item[0] === 'name') {
+                // console.log('name OK')
                 return UserModel.findOneAndUpdate(
                     {
                         user_id: req.body.user_id,
                     },
                     {
-                        name: newValue,
+                        name: newValue[0],
                     }
                 )
-            } else if (item === 'bankaccount') {
+            } else {
                 return UserModel.findOneAndUpdate(
                     {
                         user_id: req.body.user_id,
                     },
                     {
-                        bankaccount: newValue,
+                        bankaccount:{ bank_id: newValue[0],
+                                      bankaccount_id: newValue[1]},
                     }
                 )
             }

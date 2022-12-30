@@ -10,8 +10,9 @@ const layout = {
     },
 }
 
-const EditAccModal = ({ user, item, open, onCreate, onCancel }) => {
+const EditAccModal = ({ user , item, open, onCreate, onCancel }) => {
     const [form] = Form.useForm()
+
     return (
         <Modal open={open}
             title="Edit Account Details"
@@ -33,21 +34,11 @@ const EditAccModal = ({ user, item, open, onCreate, onCancel }) => {
                 name="nest-messages"
                 form={form}
             >
-            {item==='name' ? 
-            <Form.Item name={['user', item]} label='Name'>
-                <Input placeholder={user.item}/>
-            </Form.Item>
-            :
-            <>
-            <b>Bank Account</b>
-            <Form.Item name={['user', 'bank_id']} label='Bank id'>
-                <Input placeholder={user.item}/>
-            </Form.Item>
-            <Form.Item name={['user', 'bankaccount_id']} label='Bank Account id'>
-                <Input placeholder={user.item}/>
-            </Form.Item>
-            </>
-            }
+               
+                <Form.Item name={['user', item]} label={item==='name'?'Name':'Bank Account'}>
+                    <Input placeholder={user.item}/>
+                </Form.Item>
+           
             </Form>
         </Modal>
     )

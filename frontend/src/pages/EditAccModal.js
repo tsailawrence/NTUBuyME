@@ -1,4 +1,4 @@
-import { Modal, Form, Input, Space, Button } from "antd";
+import { Modal, Form, Input, Space, Button, Select } from "antd";
 import { useState } from "react";
 
 const layout = {
@@ -41,7 +41,29 @@ const EditAccModal = ({ user, item, open, onCreate, onCancel }) => {
             <>
             <b>Bank Account</b>
             <Form.Item name={['user', 'bank_id']} label='Bank id'>
-                <Input placeholder={user.item}/>
+            <Select
+                style={{
+                    width: 155,
+                }}
+                options={[
+                    {
+                    value: '812',
+                    label: '812 台新銀行',
+                    },
+                    {
+                    value: '822',
+                    label: '822 中國信託',
+                    },
+                    {
+                    value: '007',
+                    label: '007 第一銀行',
+                    },
+                    {
+                    value: '012',
+                    label: '012 台北富邦',
+                    },
+                ]}
+                />
             </Form.Item>
             <Form.Item name={['user', 'bankaccount_id']} label='Bank Account id'>
                 <Input placeholder={user.item}/>

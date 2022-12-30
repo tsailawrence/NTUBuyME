@@ -106,21 +106,25 @@ function MyTasks({ collapsed, setCollapsed }) {
                             }}
                         >
                             <Space>
-                                <b>Restaurant Name: </b>
+                                <b>餐廳名稱: </b>
                                 {item.restaurantName}
                             </Space>
                             <Space>
-                                <b>Task: </b>
+                                <b>任務內容: </b>
                                 {item.taskContent}
                             </Space>
                             <Space>
-                                <b>Due Time: </b>
+                                <b>截止日期: </b>
                                 {item.due_start}~{item.due_end}
+                            </Space>
+                            <Space>
+                                <b>外送費: </b>
+                                {item.fee}
                             </Space>
                         </Space>
                         <Divider />
                         <Button onClick={() => seeChat(item._id)}>
-                            See Chat
+                            查看聊天室
                         </Button>
                     </Card>
                 )}

@@ -12,16 +12,6 @@ import { useApp } from '../UseApp'
 
 const { Header, Content } = Layout
 
-// const TasksWrapper = styled(Tabs)`
-//     width: 100%;
-//     height: 300px;
-//     background: #eeeeee52;
-//     border-radius: 10px;
-//     margin: 20px;
-//     padding: 20px;
-//     overflow: auto;
-// `;
-
 function MyTasks({ collapsed, setCollapsed }) {
     const [addedTasks, setAddedTasks] = useState([])
     const [acceptedTasks, setAcceptedTasks] = useState([])
@@ -137,7 +127,7 @@ function MyTasks({ collapsed, setCollapsed }) {
     }
 
     const seeChat = async (id) => {
-        console.log(id)
+        // console.log(id)
     }
 
     return (

@@ -55,7 +55,7 @@ const BuyMe = ({ me }) => {
     }, [])
 
     useEffect(() => {
-        console.log(filter)
+        // console.log(filter)
         getAllTasks(currentPage, nPerPage, maxPageN)
     }, [currentPage, filter])
 
@@ -81,11 +81,11 @@ const BuyMe = ({ me }) => {
         const {
             data: { success },
         } = await instance.post('addTasks')
-        console.log(success)
+        // console.log(success)
     }
 
     const acceptTask = (id) => {
-        console.log(id)
+        // console.log(id)
         // navigate to chatbox
     }
 
@@ -93,7 +93,7 @@ const BuyMe = ({ me }) => {
         const {
             data: { success },
         } = await instance.post('delete')
-        console.log(success)
+        // console.log(success)
     }
 
     const onClick = ({ key }) => {

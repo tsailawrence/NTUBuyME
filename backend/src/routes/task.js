@@ -31,12 +31,12 @@ exports.GetTaskNum = async (_, res) => {
     const offset = new Date(Date.now())
     const DayRange = 2
     offset.setDate(offset.getDate() - DayRange)
-    console.log(offset)
+    // console.log(offset)
     const taskNum = await TaskModel.find({
         status: 'open',
         created_at: { $gt: offset },
     }).count()
-    console.log(taskNum)
+    // console.log(taskNum)
     res.send({ taskNum })
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { Input, Layout } from 'antd'
+import { Input, Layout, Space, List, Card, Divider, Button } from 'antd'
 import { useApp } from '../UseApp'
 import axios from '../api'
 
@@ -10,9 +10,9 @@ const { Search } = Input
 function Transfer({ collapsed, setCollapsed }) {
     const { status, setStatus } = useApp()
     const [id, setId] = useState()
+    const [idList, setIdList] = useState([])
 
     const searchId = async (id) => {
-        // console.log(id)
         const {
             data: { message, content },
         } = await axios.get('/transfer', {
@@ -31,9 +31,12 @@ function Transfer({ collapsed, setCollapsed }) {
                 alert(content)
                 break
             case 'success':
-                console.log(content.name)
+                setIdList([content])
         }
     }
+    // useEffect(() => {
+    //     console.log(idList)
+    // }, [idList])
 
     return (
         <Layout className="site-layout">
@@ -57,6 +60,40 @@ function Transfer({ collapsed, setCollapsed }) {
                     value={id}
                     onSearch={searchId}
                 />
+                <List
+                    itemLayout="vertical"
+                    size="large"
+                    dataSource={idList}
+                    style={{ marginTop: 20 }}
+                    renderItem={(item) => (
+                        <Card>
+                            <Space
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    flexDirection: 'column',
+                                }}
+                            >
+                                <Space>
+                                    <b>學號: </b>
+                                    {item.id}
+                                </Space>
+                                <Space>
+                                    <b>姓名: </b>
+                                    {item.name}
+                                </Space>
+                                <Space>
+                                    <b>銀行代碼: </b>
+                                    {item.bankaccount.bank_id}
+                                </Space>
+                                <Space>
+                                    <b>戶頭帳號: </b>
+                                    {item.bankaccount.bankaccount_id}
+                                </Space>
+                            </Space>
+                        </Card>
+                    )}
+                ></List>
             </Content>
         </Layout>
     )

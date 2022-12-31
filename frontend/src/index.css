@@ -44,3 +44,7 @@ html {
     color: #db9683 !important;
     border-color: #db9683 !important;
 }
+
+h1 {
+    margin-bottom: 10px;
+}

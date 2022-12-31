@@ -205,7 +205,7 @@ const BuyMe = ({ me }) => {
                 }}
                 dataSource={tasks}
                 renderItem={(item) => (
-                    <Card>
+                    <Card style={{ marginTop: 20 }}>
                         <DownCircleOutlined
                             style={{ fontSize: '15px', color: '#228B22' }}
                         />

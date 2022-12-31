@@ -30,7 +30,7 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
     // Edit Account
     const editAccount = async (user_id, item, newValue) => {
         const {
-            data: { message, contents }
+            data: { message, contents },
         } = await instance.post('/account', {
             user_id,
             item,
@@ -116,14 +116,14 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
                 <List size="large" bordered>
                     <List.Item>
                         <Space direction="column">
-                            <b>學號:</b>
+                            <b>學號: </b>
                             {accountInfo.user_id}
                         </Space>
                     </List.Item>
 
                     <List.Item>
                         <Space direction="column" align="center">
-                            <b>姓名:</b>
+                            <b>姓名: </b>
                             {accountInfo.name}
                         </Space>
                         <Button
@@ -152,11 +152,11 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
                         >
                             <b>銀行帳號</b>
                             <Space direction="column" align="center">
-                                <b>銀行代碼:</b>
+                                <b>銀行代碼: </b>
                                 {Object(accountInfo.bankaccount).bank_id}
                             </Space>
                             <Space direction="column" align="center">
-                                <b>戶頭帳號:</b>
+                                <b>戶頭帳號: </b>
                                 {Object(accountInfo.bankaccount).bankaccount_id}
                             </Space>
                         </Space>

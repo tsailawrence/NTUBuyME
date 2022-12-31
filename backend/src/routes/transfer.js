@@ -16,6 +16,7 @@ exports.GetTransferAccount = async (req, res) => {
             content: {
                 name: user.name,
                 id: user.user_id,
+                bankaccount: user.bankaccount,
             },
         })
     }

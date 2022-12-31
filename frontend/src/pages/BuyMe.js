@@ -151,39 +151,6 @@ const BuyMe = ({ me }) => {
                 >
                     + Create New Task
                 </Button>
-                <Button
-                    style={{
-                        marginRight: 50,
-                        backgroundColor: '#ffdaab',
-                    }}
-                    onClick={AddDummyTasks}
-                >
-                    + Add Dummy
-                </Button>
-                <Button
-                    style={{
-                        marginRight: 50,
-                        backgroundColor: '#ffdaab',
-                    }}
-                    onClick={DeleteAllTasks}
-                >
-                    - Delete All
-                </Button>
-                <Dropdown
-                    menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['Due Start Time'],
-                        onClick,
-                    }}
-                >
-                    <Typography.Link onClick={(e) => e.preventDefault()}>
-                        <Space>
-                            Filter By
-                            <DownOutlined />
-                        </Space>
-                    </Typography.Link>
-                </Dropdown>
                 <CreateTaskModal
                     open={CreateTaskModalOpen}
                     onCreate={(values) => {

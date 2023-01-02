@@ -1,11 +1,131 @@
 import React from 'react'
+import instance from '../api'
+import { useEffect, useState, useRef } from 'react'
+import styled from 'styled-components'
+import { useApp } from '../UseApp'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { Layout, Card } from 'antd'
-
+import { Layout, Card, Input, Button } from 'antd'
+import Message from './Message'
 const { Header, Content } = Layout
 
+const ChatBox = styled(Card)`
+    width: 95%;
+    height: 100%;
+    background: #eeeeee52;
+    border-radius: 10px;
+    padding: 2px;
+`
+
+const ChatBoxWrapper = styled.div`
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-30%, 0);
+    height: calc(500px - 36px);
+    width: 500px;
+    background: gray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    border-radius: 30px;
+    padding: 20px;
+`
+
+const FootRef = styled.div`
+    height: 50px;
+`
+
 function Chat({ collapsed, setCollapsed }) {
-    let array = ['1', '2', '3']
+    const c = new WebSocket('ws://localhost:8080')
+    const [chats, setChats] = useState([])
+    const [messages, setMessages] = useState([])
+    const [msgSent, setMsgSent] = useState(false)
+    const [chatOpen, setChatOpen] = useState(false)
+    const [sender, setSender] = useState('')
+    const [receiver, setReceiver] = useState('')
+    const [chatBoxName, setChatBoxName] = useState('')
+    const [body, setBody] = useState('')
+    const msgFooter = useRef(null)
+    const { id, me, setStatus } = useApp()
+
+    useEffect(() => {
+        getChats(id)
+    }, [])
+
+    const OnChatRoom = (chatRoom) => {
+        setChatOpen(true)
+        setMessages(chatRoom.messages)
+        setSender(chatRoom.sender)
+        setReceiver(chatRoom.receiver)
+        setChatBoxName(chatRoom.name)
+        sendData(['CHAT', { name: chatBoxName }])
+    }
+
+    const getChats = async (id) => {
+        const {
+            data: { chatRooms },
+        } = await instance.get('getChat', { params: { id: id } })
+        setChats(chatRooms)
+    }
+
+    const displayChat = (chat) => (
+        <ChatBox>
+            {chat.length === 0 ? (
+                <p style={{ color: '#ccc' }}>No messages...</p>
+            ) : (
+                chat.map(({ name, body }, i) => (
+                    <Message
+                        name={name}
+                        isMe={name === me}
+                        message={body}
+                        key={i}
+                    />
+                ))
+            )}
+            <FootRef ref={msgFooter}></FootRef>
+        </ChatBox>
+    )
+
+    const scrollToBottom = () => {
+        msgFooter.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end',
+        })
+    }
+
+    useEffect(() => {
+        scrollToBottom()
+        setMsgSent(false)
+    }, [msgSent])
+
+    useEffect(() => {
+        console.log(chatOpen)
+    }, [chatOpen])
+
+    const sendMessage = () => {
+        sendData(['MESSAGE', { who: me, body, name: chatBoxName }])
+    }
+    const sendData = (data) => {
+        c.send(JSON.stringify(data))
+    }
+
+    c.onmessage = (byteString) => {
+        const { data } = byteString
+        const [task, payload] = JSON.parse(data)
+        switch (task) {
+            case 'chat': {
+                setChats(payload)
+                break
+            }
+
+            case 'message': {
+                console.log(payload)
+                break
+            }
+        }
+    }
 
     return (
         <Layout className="site-layout">
@@ -24,12 +144,69 @@ function Chat({ collapsed, setCollapsed }) {
             >
                 <div>
                     <h1>Chat</h1>
-                    {array.map((element, key) => (
-                        <Card title={element} style={{ margin: 20 }} key={key}></Card>
-                    ))}
+                    {chats.length !== 0 &&
+                        chats.map((element, key) => (
+                            <Card
+                                title={element.title}
+                                style={{ margin: 20 }}
+                                key={key}
+                                hoverable="true"
+                                onClick={() => OnChatRoom(element)}
+                            >
+                                <p>{element.description}</p>
+                            </Card>
+                        ))}
                 </div>
+                {chatOpen && (
+                    <ChatBoxWrapper>
+                        <div
+                            style={{
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <h1>ChatRoom</h1>
+                            <Button
+                                type="Dashed"
+                                onClick={() => setChatOpen(false)}
+                                style={{
+                                    position: 'fixed',
+                                    right: '15px',
+                                    top: '10px',
+                                }}
+                            >
+                                X
+                            </Button>
+                        </div>
+
+                        {displayChat(messages)}
+                        <FootRef ref={msgFooter}></FootRef>
+
+                        <Input.Search
+                            // ref={msgRef}
+                            enterButton="Send"
+                            placeholder="Type a message here..."
+                            value={body}
+                            onChange={(e) => setBody(e.target.value)}
+                            onSearch={(message) => {
+                                if (!message) {
+                                    setStatus({
+                                        type: 'error',
+                                        msg: 'Please enter a message body.',
+                                    })
+                                    return
+                                }
+
+                                sendMessage()
+                                setBody('')
+                                setMsgSent(true)
+                            }}
+                        />
+                    </ChatBoxWrapper>
+                )}
             </Content>
-        </Layout >
+        </Layout>
     )
 }
 

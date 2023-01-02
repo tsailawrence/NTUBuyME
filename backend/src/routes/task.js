@@ -1,5 +1,6 @@
 import { TaskModel } from '../models/BuyMe'
 import { UserModel } from '../models/BuyMe'
+import { ChatBoxModel } from '../models/BuyMe'
 
 exports.FilterTasksByDueStart = async (req, res) => {
     const nPerPage = req.query.nPerPage
@@ -24,6 +25,7 @@ exports.FilterTasksByFee = async (req, res) => {
 
 exports.DeleteAllTasks = async (_, res) => {
     await TaskModel.deleteMany({})
+    await ChatBoxModel.deleteMany({})
     res.send({ success: true })
 }
 
@@ -31,12 +33,10 @@ exports.GetTaskNum = async (_, res) => {
     const offset = new Date(Date.now())
     const DayRange = 2
     offset.setDate(offset.getDate() - DayRange)
-    // console.log(offset)
     const taskNum = await TaskModel.find({
         status: 'open',
         created_at: { $gt: offset },
     }).count()
-    // console.log(taskNum)
     res.send({ taskNum })
 }
 
@@ -68,9 +68,9 @@ exports.GetMyAddedTasks = async (req, res) => {
     const maxPageN = req.query.maxPageN
 
     const myUserModel = await UserModel.findOne({ user_id: req.query.me })
+
     const myTasks = await TaskModel.find({
         sender: myUserModel,
-        status: { $in: ['accepted', 'completed'] },
     }).sort({ status: 1, due_end: 1 })
     const taskOverload = myTasks.length === maxPageN * nPerPage + 1
     res.send({ myTasks, taskOverload })
@@ -115,5 +115,39 @@ exports.CreateTask = async (req, res) => {
         fee: fee,
         status: 'open',
     })
+
     await newTask.save()
+}
+
+exports.AcceptTasks = async (req, res) => {
+    const makeName = (name, to) => {
+        return [name, to].sort().join('_')
+    }
+
+    const { id, receiver } = req.body
+    const user = await UserModel.findOne({ user_id: receiver })
+    const task = await TaskModel.findOne({ _id: id })
+    console.log(user.name)
+    const task_populated = await task.populate({
+        path: 'sender',
+        select: 'name',
+    })
+    const chatBoxName = makeName(user.name, task_populated.sender.name)
+    await TaskModel.updateOne(
+        { _id: id },
+        { receiver: user, status: 'accepted' }
+    )
+    const newChatRoom = new ChatBoxModel({
+        name: chatBoxName,
+        title: task.title,
+        sender: task.sender,
+        receiver: user,
+        description: `period: ${task.due_start}~${task.due_end} fee: ${task.fee}`,
+    })
+
+    newChatRoom.save()
+    res.send({
+        message: 'success',
+        content: 'Task Accepted',
+    })
 }

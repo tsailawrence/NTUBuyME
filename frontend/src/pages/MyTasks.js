@@ -21,15 +21,15 @@ function MyTasks({ collapsed, setCollapsed }) {
     const [nPerPage, setNPerPage] = useState(10)
     const [maxPageN, setMaxPageN] = useState(2)
     const [taskOverload, setTaskOverload] = useState(false)
-    const { me } = useApp()
+    const { me, id } = useApp()
 
     useEffect(() => setCurrentTab('1'))
 
     useEffect(() => {
         if (currentTab === '1') {
-            getMyAddedTasks(me, currentPage, nPerPage, maxPageN)
+            getMyAddedTasks(id, currentPage, nPerPage, maxPageN)
         } else {
-            getMyAcceptedTasks(me, currentPage, nPerPage, maxPageN)
+            getMyAcceptedTasks(id, currentPage, nPerPage, maxPageN)
         }
     }, [currentTab])
 

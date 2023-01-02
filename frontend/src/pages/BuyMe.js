@@ -17,8 +17,8 @@ import {
     Divider,
 } from 'antd'
 import instance from '../api'
-import { all } from 'axios'
 import CreateTaskModal from './CreateTaskModal'
+import { useApp } from '../UseApp'
 
 const IconText = ({ icon, text }) => (
     <Space>
@@ -41,13 +41,14 @@ const items = [
         label: 'Other',
     },
 ]
-const BuyMe = ({ me }) => {
+const BuyMe = () => {
     const [tasks, setTasks] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [nPerPage, setNPerPage] = useState(7)
     const [maxPageN, setMaxPageN] = useState(10)
     const [filter, setFilter] = useState('allTasksByDuestart')
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
+    const { setStatus, me, id } = useApp()
 
     useEffect(() => {
         const twoDayTasks = getTaskNum()
@@ -84,9 +85,18 @@ const BuyMe = ({ me }) => {
         // console.log(success)
     }
 
-    const acceptTask = (id) => {
-        // console.log(id)
+    const acceptTask = async (taskId) => {
         // navigate to chatbox
+        // set receiver
+        // create chatroom
+        const {
+            data: { message, content },
+        } = await instance.post('acceptTask', { id: taskId, receiver: id })
+
+        setStatus({
+            type: message,
+            msg: content,
+        })
     }
 
     const DeleteAllTasks = async () => {

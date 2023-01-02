@@ -2,10 +2,15 @@ import express from 'express'
 import cors from 'cors'
 import routes from './routes'
 import mongoose from 'mongoose'
+import WebSocket from 'ws'
 import bodyParser from 'body-parser'
+import http from 'http'
+import wsConnect from './wsConnect'
 
 require('dotenv').config()
+
 const app = express()
+const port = process.env.PORT || 4000
 
 app.use(cors())
 app.use(express.json())
@@ -26,17 +31,27 @@ app.use(function (req, res, next) {
     next()
 })
 
-const port = process.env.PORT || 4000
-
 mongoose
     .connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         dbName: 'NTUBuyMe',
     })
-    .then((res) => console.log('mongo db connection created'))
+    .then((res) => {
+        wss.on('connection', (ws) => {
+            ws.box = ''
+            ws.onmessage = wsConnect.onMessage(wss, ws)
+        })
+    })
 
 routes(app)
 app.listen(port, () => {
     console.log(`Server is up on port ${port}.`)
+})
+
+const server = http.createServer(app)
+const wss = new WebSocket.Server({ server })
+
+server.listen(8080, () => {
+    console.log('listening on port 4000')
 })

@@ -22,7 +22,7 @@ function MainPage({ collapsed, setCollapsed, login, me, id }) {
                 className="site-layout-background"
                 style={{ margin: '24px 16px', padding: 24, minHeight: 280 }}
             >
-                <BuyMe me={me} />
+                <BuyMe me={me} id={id} />
             </Content>
         </Layout>
     ) : (

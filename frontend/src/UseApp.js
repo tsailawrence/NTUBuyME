@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { message } from 'antd'
 
 const AppContext = createContext({
     status: {},
@@ -16,15 +17,34 @@ const AppProvider = (props) => {
     const [status, setStatus] = useState([])
     const [id, setId] = useState('')
 
-    useEffect(() => {
-        // console.log(status)
-    }, [status])
     // const getAccount = (me) => {
     //     if(!me) throw new Error('Account ID required!');
 
     // }
 
-    useEffect(() => {}, [status])
+    const displayStatus = (s) => {
+        if (s.msg) {
+            const { type, msg } = s
+            const status = {
+                content: msg,
+                duration: 1,
+            }
+            switch (type) {
+                case 'success':
+                    message.success(status)
+                    break
+                case 'error':
+                default:
+                    message.error(status)
+                    break
+            }
+        }
+    }
+
+    useEffect(() => {
+        console.log(status)
+        displayStatus(status)
+    }, [status])
 
     useEffect(() => {
         if (signIn) {

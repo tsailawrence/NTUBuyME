@@ -18,7 +18,7 @@ function App() {
     const [collapsed, setCollapsed] = useState(false)
     const [key, setKey] = useState(1)
     const { pathname } = useLocation()
-    const { me, id } = useApp()
+    const { me, id, setStatus } = useApp()
 
     return (
         <Layout>
@@ -43,6 +43,7 @@ function App() {
                             setCollapsed={setCollapsed}
                             login={login}
                             me={me}
+                            setStatus={setStatus}
                         ></MainPage>
                     }
                 />

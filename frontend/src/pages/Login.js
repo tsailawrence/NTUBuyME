@@ -81,20 +81,40 @@ const Login = ({ setLogin, setCollapsed }) => {
                 height: '100vh',
             }}
         >
-            <div className="loginFormContainer">
+            <div
+                style={{
+                    display: 'flex',
+                    width: '50%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#fbf7e2',
+                }}
+            >
                 <img
-                    src={require('../img/LogoTitle.png')}
+                    src={require('../img/logo_animation.gif')}
                     alt="Logo"
                     style={{
-                        width: '300px',
+                        width: '100%',
                         marginTop: '-100px',
-                        marginBottom: '50px',
+                        // marginBottom: '50px',
                     }}
                 />
+            </div>
+            <div
+                className="loginFormContainer"
+                style={{
+                    width: '50%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <h1 className="title" style={{ marginBottom: 30 }}>
+                    Welcome to NTU Buyme!
+                </h1>
                 <Form
                     name="basic"
                     className="loginForm"
-                    labelCol={{ span: 10 }}
+                    labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
                     initialValues={{ remember: true }}
                     autoComplete="off"

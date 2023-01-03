@@ -25,7 +25,7 @@ const encryptPassword = async (password) => {
 
 const Register = ({ setLogin }) => {
     const [password, setPassword] = useState('')
-    const { setStatus, setMe, setSignIn } = useApp()
+    const { setStatus, setId, setMe, setSignIn } = useApp()
     const [form] = Form.useForm()
 
     const navigate = useNavigate()
@@ -46,7 +46,8 @@ const Register = ({ setLogin }) => {
             msg: content,
         })
         if (message === 'success') {
-            setMe(value.user.id)
+            setId(value.user.id)
+            setMe(value.user.name)
             setSignIn(true)
             setLogin(true)
             navigateToMainPage()
@@ -98,33 +99,36 @@ const Register = ({ setLogin }) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Item>
-                <Form.Item label="Bank account"/>
+                <Form.Item label="Bank account" />
                 <Form.Item name={['user', 'bank_id']} label="Bank id">
-                <Select
-                style={{
-                    width: 155,
-                }}
-                options={[
-                    {
-                    value: '812',
-                    label: '812 台新銀行',
-                    },
-                    {
-                    value: '822',
-                    label: '822 中國信託',
-                    },
-                    {
-                    value: '007',
-                    label: '007 第一銀行',
-                    },
-                    {
-                    value: '012',
-                    label: '012 台北富邦',
-                    },
-                ]}
-                />
+                    <Select
+                        style={{
+                            width: 155,
+                        }}
+                        options={[
+                            {
+                                value: '812',
+                                label: '812 台新銀行',
+                            },
+                            {
+                                value: '822',
+                                label: '822 中國信託',
+                            },
+                            {
+                                value: '007',
+                                label: '007 第一銀行',
+                            },
+                            {
+                                value: '012',
+                                label: '012 台北富邦',
+                            },
+                        ]}
+                    />
                 </Form.Item>
-                <Form.Item name={['user', 'bankaccount_id']} label="Bank account id">
+                <Form.Item
+                    name={['user', 'bankaccount_id']}
+                    label="Bank account id"
+                >
                     <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

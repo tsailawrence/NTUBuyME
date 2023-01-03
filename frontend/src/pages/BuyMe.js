@@ -17,8 +17,8 @@ import {
     Divider,
 } from 'antd'
 import instance from '../api'
-import { all } from 'axios'
 import CreateTaskModal from './CreateTaskModal'
+import { useApp } from '../UseApp'
 
 const IconText = ({ icon, text }) => (
     <Space>
@@ -41,13 +41,15 @@ const items = [
         label: 'Other',
     },
 ]
-const BuyMe = ({ me }) => {
+const BuyMe = () => {
     const [tasks, setTasks] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [nPerPage, setNPerPage] = useState(7)
     const [maxPageN, setMaxPageN] = useState(10)
     const [filter, setFilter] = useState('allTasksByDuestart')
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
+    const [reload, setReload] = useState(false)
+    const { setStatus, id } = useApp()
 
     useEffect(() => {
         const twoDayTasks = getTaskNum()
@@ -55,9 +57,16 @@ const BuyMe = ({ me }) => {
     }, [])
 
     useEffect(() => {
-        console.log(filter)
         getAllTasks(currentPage, nPerPage, maxPageN)
     }, [currentPage, filter])
+
+    useEffect(() => {
+        console.log('!')
+        setTimeout(() => {
+            getAllTasks(currentPage, nPerPage, maxPageN)
+            setReload(!reload)
+        }, 5000)
+    }, [reload])
 
     const getAllTasks = async (currentPage, nPerPage, maxPageN) => {
         const {
@@ -81,19 +90,29 @@ const BuyMe = ({ me }) => {
         const {
             data: { success },
         } = await instance.post('addTasks')
-        console.log(success)
+        getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
-    const acceptTask = (id) => {
-        console.log(id)
+    const acceptTask = async (taskId) => {
         // navigate to chatbox
+        // set receiver
+        // create chatroom
+        const {
+            data: { message, content },
+        } = await instance.post('acceptTask', { id: taskId, receiver: id })
+
+        setStatus({
+            type: message,
+            msg: content,
+        })
+        getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
     const DeleteAllTasks = async () => {
         const {
             data: { success },
         } = await instance.post('delete')
-        console.log(success)
+        getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
     const onClick = ({ key }) => {
@@ -120,7 +139,7 @@ const BuyMe = ({ me }) => {
         const {
             data: { message, content },
         } = await instance.post('/createTask', {
-            me,
+            id,
             title,
             restaurant,
             fee,
@@ -128,6 +147,8 @@ const BuyMe = ({ me }) => {
             arrivalEnd,
             taskContent,
         })
+
+        getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
     return (

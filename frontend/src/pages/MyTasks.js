@@ -12,16 +12,6 @@ import { useApp } from '../UseApp'
 
 const { Header, Content } = Layout
 
-// const TasksWrapper = styled(Tabs)`
-//     width: 100%;
-//     height: 300px;
-//     background: #eeeeee52;
-//     border-radius: 10px;
-//     margin: 20px;
-//     padding: 20px;
-//     overflow: auto;
-// `;
-
 function MyTasks({ collapsed, setCollapsed }) {
     const [addedTasks, setAddedTasks] = useState([])
     const [acceptedTasks, setAcceptedTasks] = useState([])
@@ -31,24 +21,26 @@ function MyTasks({ collapsed, setCollapsed }) {
     const [nPerPage, setNPerPage] = useState(10)
     const [maxPageN, setMaxPageN] = useState(2)
     const [taskOverload, setTaskOverload] = useState(false)
-    const { me } = useApp()
+    const { me, id } = useApp()
 
-    useEffect(() => setCurrentTab('1'))
-
+    useEffect(() => setCurrentTab('1'), [])
+    useEffect(() => {
+        console.log(id)
+    }, [id])
     useEffect(() => {
         if (currentTab === '1') {
-            getMyAddedTasks(me, currentPage, nPerPage, maxPageN)
+            getMyAddedTasks(id, currentPage, nPerPage, maxPageN)
         } else {
-            getMyAcceptedTasks(me, currentPage, nPerPage, maxPageN)
+            getMyAcceptedTasks(id, currentPage, nPerPage, maxPageN)
         }
     }, [currentTab])
 
-    const getMyAddedTasks = async (me, currentPage, nPerPage, maxPageN) => {
+    const getMyAddedTasks = async (id, currentPage, nPerPage, maxPageN) => {
         const {
             data: { myTasks, taskOverload },
         } = await instance.get('myAddedTasks', {
             params: {
-                me,
+                id,
                 currentPage,
                 nPerPage,
                 maxPageN,
@@ -58,12 +50,12 @@ function MyTasks({ collapsed, setCollapsed }) {
         setTaskOverload(taskOverload)
     }
 
-    const getMyAcceptedTasks = async (me, currentPage, nPerPage, maxPageN) => {
+    const getMyAcceptedTasks = async (id, currentPage, nPerPage, maxPageN) => {
         const {
             data: { myTasks, taskOverload },
         } = await instance.get('myAcceptedTasks', {
             params: {
-                me,
+                id,
                 currentPage,
                 nPerPage,
                 maxPageN,
@@ -137,7 +129,7 @@ function MyTasks({ collapsed, setCollapsed }) {
     }
 
     const seeChat = async (id) => {
-        console.log(id)
+        // console.log(id)
     }
 
     return (

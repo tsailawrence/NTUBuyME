@@ -1,5 +1,6 @@
-import { TaskModel } from '../models/BuyMe'
+import { MessageModel, TaskModel } from '../models/BuyMe'
 import { UserModel } from '../models/BuyMe'
+import { ChatBoxModel } from '../models/BuyMe'
 
 exports.FilterTasksByDueStart = async (req, res) => {
     const nPerPage = req.query.nPerPage
@@ -24,6 +25,8 @@ exports.FilterTasksByFee = async (req, res) => {
 
 exports.DeleteAllTasks = async (_, res) => {
     await TaskModel.deleteMany({})
+    await ChatBoxModel.deleteMany({})
+    await MessageModel.deleteMany({})
     res.send({ success: true })
 }
 
@@ -31,12 +34,10 @@ exports.GetTaskNum = async (_, res) => {
     const offset = new Date(Date.now())
     const DayRange = 2
     offset.setDate(offset.getDate() - DayRange)
-    console.log(offset)
     const taskNum = await TaskModel.find({
         status: 'open',
         created_at: { $gt: offset },
     }).count()
-    console.log(taskNum)
     res.send({ taskNum })
 }
 
@@ -66,8 +67,9 @@ exports.GetMyAddedTasks = async (req, res) => {
     const currentPage = req.query.currentPage
     const nPerPage = req.query.nPerPage
     const maxPageN = req.query.maxPageN
+    const id = req.query.id
+    const myUserModel = await UserModel.findOne({ user_id: id })
 
-    const myUserModel = await UserModel.findOne({ user_id: req.query.me })
     const myTasks = await TaskModel.find({
         sender: myUserModel,
         status: { $in: ['accepted', 'completed'] },
@@ -80,8 +82,8 @@ exports.GetMyAcceptedTasks = async (req, res) => {
     const currentPage = req.query.currentPage
     const nPerPage = req.query.nPerPage
     const maxPageN = req.query.maxPageN
-
-    const myUserModel = await UserModel.findOne({ user_id: req.query.me })
+    const id = req.query.id
+    const myUserModel = await UserModel.findOne({ user_id: id })
     const myTasks = await TaskModel.find({
         receiver: myUserModel,
         status: { $in: ['accepted', 'completed'] },
@@ -93,7 +95,7 @@ exports.GetMyAcceptedTasks = async (req, res) => {
 
 exports.CreateTask = async (req, res) => {
     const {
-        me,
+        id,
         title,
         restaurant,
         fee,
@@ -102,7 +104,9 @@ exports.CreateTask = async (req, res) => {
         taskContent,
     } = req.body
 
-    const myUserModel = await UserModel.findOne({ user_id: me })
+    const myUserModel = await UserModel.findOne({ user_id: id })
+
+    console.log(myUserModel)
 
     const newTask = new TaskModel({
         sender: myUserModel,
@@ -115,5 +119,38 @@ exports.CreateTask = async (req, res) => {
         fee: fee,
         status: 'open',
     })
+
     await newTask.save()
+}
+
+exports.AcceptTasks = async (req, res) => {
+    const makeName = (name, to) => {
+        return [name, to].sort().join('_')
+    }
+
+    const { id, receiver } = req.body
+    const user = await UserModel.findOne({ user_id: receiver })
+    const task = await TaskModel.findOne({ _id: id })
+    const task_populated = await task.populate({
+        path: 'sender',
+        select: 'name',
+    })
+    const chatBoxName = makeName(user.name, task_populated.sender.name)
+    await TaskModel.updateOne(
+        { _id: id },
+        { receiver: user, status: 'accepted' }
+    )
+    const newChatRoom = new ChatBoxModel({
+        name: chatBoxName,
+        title: task.title,
+        sender: task.sender,
+        receiver: user,
+        description: `period: ${task.due_start}~${task.due_end} fee: ${task.fee}`,
+    })
+
+    newChatRoom.save()
+    res.send({
+        message: 'success',
+        content: 'Task Accepted',
+    })
 }

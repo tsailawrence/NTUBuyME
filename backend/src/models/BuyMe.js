@@ -41,4 +41,25 @@ const TaskSchema = Schema(
 
 const TaskModel = mongoose.model('Task', TaskSchema)
 
-export { UserModel, TaskModel }
+const MessageSchema = new Schema({
+    sender: { type: String, required: true },
+    body: { type: String, required: [true, 'Body field is required!'] },
+})
+
+const MessageModel = mongoose.model('Message', MessageSchema)
+
+const ChatBoxSchema = new Schema({
+    name: { type: String, required: true },
+    sender: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
+    receiver: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+    },
+    description: { type: String, required: true },
+    title: { type: String, required: true },
+    messages: [{ type: mongoose.Types.ObjectId, ref: 'Message' }],
+})
+
+const ChatBoxModel = mongoose.model('ChatBox', ChatBoxSchema)
+
+export { UserModel, TaskModel, MessageModel, ChatBoxModel }

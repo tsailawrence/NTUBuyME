@@ -55,7 +55,7 @@ function Transfer({ collapsed, setCollapsed }) {
             >
                 <h1>Transfer</h1>
                 <Search
-                    placeholder="Input Student ID"
+                    placeholder="請輸入想要查找的學號"
                     enterButton
                     value={id}
                     onSearch={searchId}

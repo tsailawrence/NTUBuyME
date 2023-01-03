@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { message } from 'antd'
 
 const AppContext = createContext({
     status: {},
@@ -7,30 +8,61 @@ const AppContext = createContext({
     // getAccount: () => {},
 })
 
-const LOCALSTORAGE_KEY = 'save-me'
-const savedMe = localStorage.getItem(LOCALSTORAGE_KEY)
-
 const AppProvider = (props) => {
-    const [me, setMe] = useState(savedMe || '')
+    const [me, setMe] = useState('')
+    const [messages, setMessages] = useState([])
     const [signIn, setSignIn] = useState(false)
     const [status, setStatus] = useState([])
     const [id, setId] = useState('')
+    const [client, setClient] = useState()
+    const [reconnect, setReconnnect] = useState(false)
 
-    useEffect(() => {
-        // console.log(status)
-    }, [status])
     // const getAccount = (me) => {
     //     if(!me) throw new Error('Account ID required!');
 
     // }
-
-    useEffect(() => {}, [status])
+    useEffect(() => {
+        const c = new WebSocket('ws://localhost:8080')
+        setClient(c)
+    }, [])
 
     useEffect(() => {
-        if (signIn) {
-            localStorage.setItem(LOCALSTORAGE_KEY, me)
+        displayStatus(status)
+    }, [status])
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (!isOpen(client)) {
+                client.close()
+                const c = new WebSocket('ws://localhost:8080')
+                setClient(c)
+            }
+            setReconnnect(!reconnect)
+        }, 5000)
+    }, [reconnect])
+
+    const isOpen = (ws) => {
+        return ws.readyState === ws.OPEN
+    }
+
+    const displayStatus = (s) => {
+        if (s.msg) {
+            const { type, msg } = s
+            const status = {
+                content: msg,
+                duration: 1,
+            }
+            switch (type) {
+                case 'success':
+                    message.success(status)
+                    break
+                case 'error':
+                default:
+                    message.error(status)
+                    break
+            }
         }
-    }, [signIn])
+    }
 
     return (
         <AppContext.Provider
@@ -43,6 +75,9 @@ const AppProvider = (props) => {
                 setSignIn,
                 status,
                 setStatus,
+                messages,
+                setMessages,
+                client,
             }}
             {...props}
         />

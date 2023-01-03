@@ -53,7 +53,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                         content.password
                     )
                     if (result) {
-                        setMe(content.id)
+                        setMe(content.name)
                         setLogin(true)
                         setSignIn(true)
                         setStatus({

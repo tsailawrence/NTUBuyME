@@ -3,6 +3,7 @@ import registerRoute from './register'
 import accountRoute from './account'
 import transferRoute from './transfer'
 import buymeRoute from './task'
+import chatRoute from './chat'
 
 const wrap =
     (fn) =>
@@ -26,6 +27,8 @@ function main(app) {
     app.get('/api/myAddedTasks', wrap(buymeRoute.GetMyAddedTasks))
     app.get('/api/myAcceptedTasks', wrap(buymeRoute.GetMyAcceptedTasks))
     app.post('/api/createTask', wrap(buymeRoute.CreateTask))
+    app.post('/api/acceptTask', wrap(buymeRoute.AcceptTasks))
+    app.get('/api/getChat', wrap(chatRoute.GetChat))
 }
 
 export default main

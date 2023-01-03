@@ -16,7 +16,7 @@ const { Sider } = Layout
 
 function NavBar({ setKey, collapsed }) {
     const navigate = useNavigate()
-    const { setSignedIn } = useApp()
+    const { setSignIn } = useApp()
     function navigatePage(key) {
         setKey(key)
         switch (key) {
@@ -34,7 +34,7 @@ function NavBar({ setKey, collapsed }) {
                 break
             case '6':
                 //Logout
-                setSignedIn(false)
+                setSignIn(false)
                 navigate('/login')
                 break
             default:

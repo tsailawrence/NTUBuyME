@@ -13,9 +13,11 @@ const savedMe = localStorage.getItem(LOCALSTORAGE_KEY)
 
 const AppProvider = (props) => {
     const [me, setMe] = useState(savedMe || '')
+    const [messages, setMessages] = useState([])
     const [signIn, setSignIn] = useState(false)
     const [status, setStatus] = useState([])
     const [id, setId] = useState('')
+    const [client, setClient] = useState()
 
     // const getAccount = (me) => {
     //     if(!me) throw new Error('Account ID required!');
@@ -42,7 +44,11 @@ const AppProvider = (props) => {
     }
 
     useEffect(() => {
-        console.log(status)
+        const c = new WebSocket('ws://localhost:8080')
+        setClient(c)
+    }, [])
+
+    useEffect(() => {
         displayStatus(status)
     }, [status])
 
@@ -63,6 +69,9 @@ const AppProvider = (props) => {
                 setSignIn,
                 status,
                 setStatus,
+                messages,
+                setMessages,
+                client,
             }}
             {...props}
         />

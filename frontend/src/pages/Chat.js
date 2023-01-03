@@ -13,6 +13,7 @@ const ChatBox = styled(Card)`
     height: 100%;
     background: #eeeeee52;
     border-radius: 10px;
+    overflow: auto;
     padding: 2px;
 `
 
@@ -38,9 +39,7 @@ const FootRef = styled.div`
 `
 
 function Chat({ collapsed, setCollapsed }) {
-    const c = new WebSocket('ws://localhost:8080')
     const [chats, setChats] = useState([])
-    const [messages, setMessages] = useState([])
     const [msgSent, setMsgSent] = useState(false)
     const [chatOpen, setChatOpen] = useState(false)
     const [sender, setSender] = useState('')
@@ -48,11 +47,16 @@ function Chat({ collapsed, setCollapsed }) {
     const [chatBoxName, setChatBoxName] = useState('')
     const [body, setBody] = useState('')
     const msgFooter = useRef(null)
-    const { id, me, setStatus } = useApp()
+    const { id, me, setStatus, messages, setMessages, client } = useApp()
 
     useEffect(() => {
         getChats(id)
+        console.log(chats)
     }, [])
+
+    useEffect(() => {
+        console.log(messages)
+    }, [messages])
 
     const OnChatRoom = (chatRoom) => {
         setChatOpen(true)
@@ -60,7 +64,7 @@ function Chat({ collapsed, setCollapsed }) {
         setSender(chatRoom.sender)
         setReceiver(chatRoom.receiver)
         setChatBoxName(chatRoom.name)
-        sendData(['CHAT', { name: chatBoxName }])
+        sendData(['CHAT', { name: chatRoom.name }])
     }
 
     const getChats = async (id) => {
@@ -106,12 +110,14 @@ function Chat({ collapsed, setCollapsed }) {
 
     const sendMessage = () => {
         sendData(['MESSAGE', { who: me, body, name: chatBoxName }])
+        setBody('')
+        setMsgSent(true)
     }
     const sendData = (data) => {
-        c.send(JSON.stringify(data))
+        client.send(JSON.stringify(data))
     }
 
-    c.onmessage = (byteString) => {
+    client.onmessage = (byteString) => {
         const { data } = byteString
         const [task, payload] = JSON.parse(data)
         switch (task) {
@@ -121,7 +127,7 @@ function Chat({ collapsed, setCollapsed }) {
             }
 
             case 'message': {
-                console.log(payload)
+                setMessages([...messages, payload])
                 break
             }
         }
@@ -181,7 +187,6 @@ function Chat({ collapsed, setCollapsed }) {
                         </div>
 
                         {displayChat(messages)}
-                        <FootRef ref={msgFooter}></FootRef>
 
                         <Input.Search
                             // ref={msgRef}
@@ -199,8 +204,6 @@ function Chat({ collapsed, setCollapsed }) {
                                 }
 
                                 sendMessage()
-                                setBody('')
-                                setMsgSent(true)
                             }}
                         />
                     </ChatBoxWrapper>

@@ -48,7 +48,8 @@ const BuyMe = () => {
     const [maxPageN, setMaxPageN] = useState(10)
     const [filter, setFilter] = useState('allTasksByDuestart')
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
-    const { setStatus, me, id } = useApp()
+    const [reload, setReload] = useState(false)
+    const { setStatus, id } = useApp()
 
     useEffect(() => {
         const twoDayTasks = getTaskNum()
@@ -56,9 +57,16 @@ const BuyMe = () => {
     }, [])
 
     useEffect(() => {
-        // console.log(filter)
         getAllTasks(currentPage, nPerPage, maxPageN)
     }, [currentPage, filter])
+
+    useEffect(() => {
+        console.log('!')
+        setTimeout(() => {
+            getAllTasks(currentPage, nPerPage, maxPageN)
+            setReload(!reload)
+        }, 5000)
+    }, [reload])
 
     const getAllTasks = async (currentPage, nPerPage, maxPageN) => {
         const {
@@ -82,7 +90,7 @@ const BuyMe = () => {
         const {
             data: { success },
         } = await instance.post('addTasks')
-        // console.log(success)
+        getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
     const acceptTask = async (taskId) => {
@@ -97,13 +105,14 @@ const BuyMe = () => {
             type: message,
             msg: content,
         })
+        getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
     const DeleteAllTasks = async () => {
         const {
             data: { success },
         } = await instance.post('delete')
-        // console.log(success)
+        getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
     const onClick = ({ key }) => {
@@ -130,7 +139,7 @@ const BuyMe = () => {
         const {
             data: { message, content },
         } = await instance.post('/createTask', {
-            me,
+            id,
             title,
             restaurant,
             fee,
@@ -138,6 +147,8 @@ const BuyMe = () => {
             arrivalEnd,
             taskContent,
         })
+
+        getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
     return (

@@ -1,4 +1,4 @@
-import { TaskModel } from '../models/BuyMe'
+import { MessageModel, TaskModel } from '../models/BuyMe'
 import { UserModel } from '../models/BuyMe'
 import { ChatBoxModel } from '../models/BuyMe'
 
@@ -26,6 +26,7 @@ exports.FilterTasksByFee = async (req, res) => {
 exports.DeleteAllTasks = async (_, res) => {
     await TaskModel.deleteMany({})
     await ChatBoxModel.deleteMany({})
+    await MessageModel.deleteMany({})
     res.send({ success: true })
 }
 
@@ -66,11 +67,12 @@ exports.GetMyAddedTasks = async (req, res) => {
     const currentPage = req.query.currentPage
     const nPerPage = req.query.nPerPage
     const maxPageN = req.query.maxPageN
-
-    const myUserModel = await UserModel.findOne({ user_id: req.query.me })
+    const id = req.query.id
+    const myUserModel = await UserModel.findOne({ user_id: id })
 
     const myTasks = await TaskModel.find({
         sender: myUserModel,
+        status: { $in: ['accepted', 'completed'] },
     }).sort({ status: 1, due_end: 1 })
     const taskOverload = myTasks.length === maxPageN * nPerPage + 1
     res.send({ myTasks, taskOverload })
@@ -80,8 +82,8 @@ exports.GetMyAcceptedTasks = async (req, res) => {
     const currentPage = req.query.currentPage
     const nPerPage = req.query.nPerPage
     const maxPageN = req.query.maxPageN
-
-    const myUserModel = await UserModel.findOne({ user_id: req.query.me })
+    const id = req.query.me
+    const myUserModel = await UserModel.findOne({ user_id: id })
     const myTasks = await TaskModel.find({
         receiver: myUserModel,
         status: { $in: ['accepted', 'completed'] },
@@ -93,7 +95,7 @@ exports.GetMyAcceptedTasks = async (req, res) => {
 
 exports.CreateTask = async (req, res) => {
     const {
-        me,
+        id,
         title,
         restaurant,
         fee,
@@ -102,7 +104,9 @@ exports.CreateTask = async (req, res) => {
         taskContent,
     } = req.body
 
-    const myUserModel = await UserModel.findOne({ user_id: me })
+    const myUserModel = await UserModel.findOne({ user_id: id })
+
+    console.log(myUserModel)
 
     const newTask = new TaskModel({
         sender: myUserModel,
@@ -127,7 +131,6 @@ exports.AcceptTasks = async (req, res) => {
     const { id, receiver } = req.body
     const user = await UserModel.findOne({ user_id: receiver })
     const task = await TaskModel.findOne({ _id: id })
-    console.log(user.name)
     const task_populated = await task.populate({
         path: 'sender',
         select: 'name',

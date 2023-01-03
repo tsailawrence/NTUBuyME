@@ -13,10 +13,6 @@ const sendMessage = (ws, data, status) => {
     sendStatus(status, ws)
 }
 
-const makeName = (name, to) => {
-    return [name, to].sort().join('_')
-}
-
 const chatBoxex = {} // chatBoxex[chatBoxName] = ws
 
 export default {
@@ -27,7 +23,9 @@ export default {
             case 'MESSAGE': {
                 const { who, body, name } = payload
                 ws.box = name
-                const message = new MessageModel({ who, body })
+                console.log(name)
+                console.log(chatBoxex[ws.box])
+                const message = new MessageModel({ sender: who, body })
                 try {
                     await message.save()
                 } catch (e) {
@@ -56,6 +54,7 @@ export default {
                 } else if (!chatBoxex[ws.box].includes(ws)) {
                     chatBoxex[ws.box].push(ws)
                 }
+                console.log(name)
                 console.log(chatBoxex[ws.box])
                 break
             }

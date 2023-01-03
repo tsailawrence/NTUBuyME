@@ -15,7 +15,7 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
 
     // Get Account
     useEffect(() => {
-        getAccount(me)
+        getAccount(id)
     }, [])
 
     const getAccount = async (user_id) => {

@@ -1,23 +1,20 @@
 import styled from 'styled-components'
 
 const StyledMessage = styled.div`
-    
     display: flex;
     flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
     margin: 1px 0px;
-    
 
-    & p: first-child {
+    &p: first-child {
         margin: 0 5px;
     }
-
 
     $p: last-child {
         padding: 2px 5px;
         border-radius: 5px;
         background: #eee;
         color: gray;
-        marginL auto 0;
+        margin: auto 0;
     }
 `
 

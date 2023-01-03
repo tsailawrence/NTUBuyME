@@ -15,11 +15,35 @@ const AppProvider = (props) => {
     const [status, setStatus] = useState([])
     const [id, setId] = useState('')
     const [client, setClient] = useState()
+    const [reconnect, setReconnnect] = useState(false)
 
     // const getAccount = (me) => {
     //     if(!me) throw new Error('Account ID required!');
 
     // }
+    useEffect(() => {
+        const c = new WebSocket('ws://localhost:8080')
+        setClient(c)
+    }, [])
+
+    useEffect(() => {
+        displayStatus(status)
+    }, [status])
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (!isOpen(client)) {
+                client.close()
+                const c = new WebSocket('ws://localhost:8080')
+                setClient(c)
+            }
+            setReconnnect(!reconnect)
+        }, 5000)
+    }, [reconnect])
+
+    const isOpen = (ws) => {
+        return ws.readyState === ws.OPEN
+    }
 
     const displayStatus = (s) => {
         if (s.msg) {
@@ -39,15 +63,6 @@ const AppProvider = (props) => {
             }
         }
     }
-
-    useEffect(() => {
-        const c = new WebSocket('ws://localhost:8080')
-        setClient(c)
-    }, [])
-
-    useEffect(() => {
-        displayStatus(status)
-    }, [status])
 
     return (
         <AppContext.Provider

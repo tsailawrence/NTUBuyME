@@ -51,10 +51,7 @@ function Chat({ collapsed, setCollapsed }) {
         getChats(id)
     }, [])
 
-    useEffect(() => {}, [messages])
-
     const OnChatRoom = async (chatRoom) => {
-        console.log(me)
         setChatOpen(true)
         setMessages(chatRoom.messages)
         setChatBoxName(chatRoom.name)

@@ -23,8 +23,10 @@ function MyTasks({ collapsed, setCollapsed }) {
     const [taskOverload, setTaskOverload] = useState(false)
     const { me, id } = useApp()
 
-    useEffect(() => setCurrentTab('1'))
-
+    useEffect(() => setCurrentTab('1'), [])
+    useEffect(() => {
+        console.log(id)
+    }, [id])
     useEffect(() => {
         if (currentTab === '1') {
             getMyAddedTasks(id, currentPage, nPerPage, maxPageN)

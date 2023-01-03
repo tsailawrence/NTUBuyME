@@ -82,7 +82,7 @@ exports.GetMyAcceptedTasks = async (req, res) => {
     const currentPage = req.query.currentPage
     const nPerPage = req.query.nPerPage
     const maxPageN = req.query.maxPageN
-    const id = req.query.me
+    const id = req.query.id
     const myUserModel = await UserModel.findOne({ user_id: id })
     const myTasks = await TaskModel.find({
         receiver: myUserModel,

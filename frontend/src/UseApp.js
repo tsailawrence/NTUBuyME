@@ -8,11 +8,8 @@ const AppContext = createContext({
     // getAccount: () => {},
 })
 
-const LOCALSTORAGE_KEY = 'save-me'
-const savedMe = localStorage.getItem(LOCALSTORAGE_KEY)
-
 const AppProvider = (props) => {
-    const [me, setMe] = useState(savedMe || '')
+    const [me, setMe] = useState('')
     const [messages, setMessages] = useState([])
     const [signIn, setSignIn] = useState(false)
     const [status, setStatus] = useState([])
@@ -51,12 +48,6 @@ const AppProvider = (props) => {
     useEffect(() => {
         displayStatus(status)
     }, [status])
-
-    useEffect(() => {
-        if (signIn) {
-            localStorage.setItem(LOCALSTORAGE_KEY, me)
-        }
-    }, [signIn])
 
     return (
         <AppContext.Provider

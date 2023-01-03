@@ -42,8 +42,6 @@ function Chat({ collapsed, setCollapsed }) {
     const [chats, setChats] = useState([])
     const [msgSent, setMsgSent] = useState(false)
     const [chatOpen, setChatOpen] = useState(false)
-    const [sender, setSender] = useState('')
-    const [receiver, setReceiver] = useState('')
     const [chatBoxName, setChatBoxName] = useState('')
     const [body, setBody] = useState('')
     const msgFooter = useRef(null)
@@ -51,20 +49,17 @@ function Chat({ collapsed, setCollapsed }) {
 
     useEffect(() => {
         getChats(id)
-        console.log(chats)
     }, [])
 
-    useEffect(() => {
-        console.log(messages)
-    }, [messages])
+    useEffect(() => {}, [messages])
 
-    const OnChatRoom = (chatRoom) => {
+    const OnChatRoom = async (chatRoom) => {
+        console.log(me)
         setChatOpen(true)
         setMessages(chatRoom.messages)
-        setSender(chatRoom.sender)
-        setReceiver(chatRoom.receiver)
         setChatBoxName(chatRoom.name)
-        sendData(['CHAT', { name: chatRoom.name }])
+        await getChats(id)
+        await sendData(['CHAT', { name: chatRoom.name }])
     }
 
     const getChats = async (id) => {
@@ -79,10 +74,10 @@ function Chat({ collapsed, setCollapsed }) {
             {chat.length === 0 ? (
                 <p style={{ color: '#ccc' }}>No messages...</p>
             ) : (
-                chat.map(({ name, body }, i) => (
+                chat.map(({ sender, body }, i) => (
                     <Message
-                        name={name}
-                        isMe={name === me}
+                        name={sender}
+                        isMe={sender === me}
                         message={body}
                         key={i}
                     />
@@ -104,16 +99,12 @@ function Chat({ collapsed, setCollapsed }) {
         setMsgSent(false)
     }, [msgSent])
 
-    useEffect(() => {
-        console.log(chatOpen)
-    }, [chatOpen])
-
     const sendMessage = () => {
         sendData(['MESSAGE', { who: me, body, name: chatBoxName }])
         setBody('')
         setMsgSent(true)
     }
-    const sendData = (data) => {
+    const sendData = async (data) => {
         client.send(JSON.stringify(data))
     }
 
@@ -189,7 +180,6 @@ function Chat({ collapsed, setCollapsed }) {
                         {displayChat(messages)}
 
                         <Input.Search
-                            // ref={msgRef}
                             enterButton="Send"
                             placeholder="Type a message here..."
                             value={body}

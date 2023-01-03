@@ -106,9 +106,13 @@ const Login = ({ setLogin, setCollapsed }) => {
                     width: '50%',
                     justifyContent: 'center',
                     alignItems: 'center',
+                    backgroundColor: 'white',
                 }}
             >
-                <h1 className="title" style={{ marginBottom: 30 }}>
+                <h1
+                    className="title"
+                    style={{ marginBottom: 30, fontSize: 30 }}
+                >
                     Welcome to NTU Buyme!
                 </h1>
                 <Form
@@ -148,8 +152,9 @@ const Login = ({ setLogin, setCollapsed }) => {
                             },
                         ]}
                     >
-                        <Input.Password
+                        <Input
                             value={password}
+                            type="password"
                             onChange={(e) => {
                                 setPassword(e.target.value)
                             }}
@@ -164,7 +169,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+                    <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
                         <Button
                             id="submit"
                             type="primary"

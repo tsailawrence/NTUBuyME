@@ -4,7 +4,7 @@ const sendData = (data, ws) => {
     ws.send(JSON.stringify(data))
 }
 
-const chatBoxex = {} // chatBoxex[chatBoxName] = ws
+const chatBoxes = {} // chatBoxes[chatBoxName] = ws
 
 export default {
     onMessage: (wss, ws) => async (byteString) => {
@@ -13,7 +13,6 @@ export default {
         switch (task) {
             case 'MESSAGE': {
                 const { who, body, name } = payload
-                ws.box = name
                 const message = new MessageModel({ sender: who, body })
                 try {
                     await message.save()
@@ -27,7 +26,7 @@ export default {
                 chatBox.messages = [...chatBox.messages, message]
                 await chatBox.save()
 
-                chatBoxex[ws.box].forEach((ws) =>
+                chatBoxes[ws.box].forEach((ws) =>
                     sendData(['message', { sender: who, body }], ws)
                 )
                 break
@@ -36,10 +35,10 @@ export default {
             case 'CHAT': {
                 const { name } = payload
                 ws.box = name
-                if (!chatBoxex[ws.box]) {
-                    chatBoxex[ws.box] = [ws]
-                } else if (!chatBoxex[ws.box].includes(ws)) {
-                    chatBoxex[ws.box].push(ws)
+                if (!chatBoxes[ws.box]) {
+                    chatBoxes[ws.box] = [ws]
+                } else if (!chatBoxes[ws.box].includes(ws)) {
+                    chatBoxes[ws.box].push(ws)
                 }
                 break
             }

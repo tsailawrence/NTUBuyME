@@ -41,6 +41,9 @@ mongoose
         wss.on('connection', (ws) => {
             ws.box = ''
             ws.onmessage = wsConnect.onMessage(wss, ws)
+            ws.on('error', (err) => {
+                console.warn(`Client disconnected - reason: ${err}`)
+            })
         })
     })
 

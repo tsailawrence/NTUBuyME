@@ -111,6 +111,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                 <h1 className="title" style={{ marginBottom: 30 }}>
                     Welcome to NTU Buyme!
                 </h1>
+                <h1>hi</h1>
                 <Form
                     name="basic"
                     className="loginForm"

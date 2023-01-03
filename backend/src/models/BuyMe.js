@@ -42,7 +42,7 @@ const TaskSchema = Schema(
 const TaskModel = mongoose.model('Task', TaskSchema)
 
 const MessageSchema = new Schema({
-    sender: { type: mongoose.Types.ObjectId, ref: 'User' },
+    sender: { type: String, required: true },
     body: { type: String, required: [true, 'Body field is required!'] },
 })
 

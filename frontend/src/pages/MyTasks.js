@@ -33,12 +33,12 @@ function MyTasks({ collapsed, setCollapsed }) {
         }
     }, [currentTab])
 
-    const getMyAddedTasks = async (me, currentPage, nPerPage, maxPageN) => {
+    const getMyAddedTasks = async (id, currentPage, nPerPage, maxPageN) => {
         const {
             data: { myTasks, taskOverload },
         } = await instance.get('myAddedTasks', {
             params: {
-                me,
+                id,
                 currentPage,
                 nPerPage,
                 maxPageN,
@@ -48,12 +48,12 @@ function MyTasks({ collapsed, setCollapsed }) {
         setTaskOverload(taskOverload)
     }
 
-    const getMyAcceptedTasks = async (me, currentPage, nPerPage, maxPageN) => {
+    const getMyAcceptedTasks = async (id, currentPage, nPerPage, maxPageN) => {
         const {
             data: { myTasks, taskOverload },
         } = await instance.get('myAcceptedTasks', {
             params: {
-                me,
+                id,
                 currentPage,
                 nPerPage,
                 maxPageN,

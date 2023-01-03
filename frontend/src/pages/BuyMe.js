@@ -61,7 +61,6 @@ const BuyMe = () => {
     }, [currentPage, filter])
 
     useEffect(() => {
-        console.log('!')
         setTimeout(() => {
             getAllTasks(currentPage, nPerPage, maxPageN)
             setReload(!reload)
@@ -136,6 +135,7 @@ const BuyMe = () => {
         let arrivalStart = values.arrivalStart
         let arrivalEnd = values.arrivalEnd
         let taskContent = values.content
+        console.log(typeof arrivalStart)
         const {
             data: { message, content },
         } = await instance.post('/createTask', {

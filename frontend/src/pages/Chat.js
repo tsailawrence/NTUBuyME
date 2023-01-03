@@ -9,12 +9,13 @@ import Message from './Message'
 const { Header, Content } = Layout
 
 const ChatBox = styled(Card)`
-    width: 95%;
-    height: 100%;
+    width: 100%;
+    height: 90%;
     background: #eeeeee52;
     border-radius: 10px;
     overflow: auto;
-    padding: 2px;
+    padding: 1px;
+    margin-bottom: 10px;
 `
 
 const ChatBoxWrapper = styled.div`
@@ -28,10 +29,9 @@ const ChatBoxWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     overflow: auto;
     border-radius: 30px;
-    padding: 20px;
+    padding: 15px;
 `
 
 const FootRef = styled.div`
@@ -44,6 +44,7 @@ function Chat({ collapsed, setCollapsed }) {
     const [chatOpen, setChatOpen] = useState(false)
     const [chatBoxName, setChatBoxName] = useState('')
     const [body, setBody] = useState('')
+    const [title, setTitle] = useState('')
     const msgFooter = useRef(null)
     const { id, me, setStatus, messages, setMessages, client } = useApp()
 
@@ -55,6 +56,7 @@ function Chat({ collapsed, setCollapsed }) {
         setChatOpen(true)
         setMessages(chatRoom.messages)
         setChatBoxName(chatRoom.name)
+        setTitle(chatRoom.title)
         await getChats(id)
         await sendData(['CHAT', { name: chatRoom.name }])
     }
@@ -147,7 +149,9 @@ function Chat({ collapsed, setCollapsed }) {
                                 hoverable="true"
                                 onClick={() => OnChatRoom(element)}
                             >
-                                <p>{element.description}</p>
+                                <p>發起人： {element.from}</p>
+                                <p>期間： {element.due_period}</p>
+                                <p>費用: {element.fee}</p>
                             </Card>
                         ))}
                 </div>
@@ -160,7 +164,7 @@ function Chat({ collapsed, setCollapsed }) {
                                 justifyContent: 'center',
                             }}
                         >
-                            <h1>ChatRoom</h1>
+                            <h1>{title}</h1>
                             <Button
                                 type="Dashed"
                                 onClick={() => setChatOpen(false)}

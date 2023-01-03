@@ -115,9 +115,6 @@ function MyTasks({ collapsed, setCollapsed }) {
                             </Space>
                         </Space>
                         <Divider />
-                        <Button onClick={() => seeChat(item._id)}>
-                            查看聊天室
-                        </Button>
                     </Card>
                 )}
             />
@@ -126,10 +123,6 @@ function MyTasks({ collapsed, setCollapsed }) {
 
     const onChange = (key) => {
         setCurrentTab(key)
-    }
-
-    const seeChat = async (id) => {
-        // console.log(id)
     }
 
     return (

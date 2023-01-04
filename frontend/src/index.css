@@ -2,7 +2,7 @@
 html {
     margin: 0;
     padding: 0;
-    font-family: 'Kalam';
+    font-family: 'Futura';
 }
 
 .trigger {
@@ -32,7 +32,7 @@ html {
 }
 
 .ant-menu-item-active {
-    background-color: #fbf7e2 !important;
+    background-color: #fcecca !important;
 }
 
 .ant-menu-item-selected {
@@ -54,7 +54,7 @@ h1 {
 }
 
 .title {
-    font-family: 'Kalam';
+    font-family: 'Pacifico';
 }
 
 .ant-typography {

@@ -61,7 +61,7 @@ function NavBar({ setKey, collapsed }) {
                     left: 0,
                     top: 0,
                     bottom: 0,
-                    marginLeft: '6%',
+                    marginLeft: '10%',
                     borderRadius: 20,
                     backgroundColor: '#f5f5f5',
                     marginRight: '2%',
@@ -90,37 +90,61 @@ function NavBar({ setKey, collapsed }) {
                             key: '1',
                             icon: <CoffeeOutlined />,
                             label: 'BuyMe',
-                            style: { height: 50, fontSize: 16 },
+                            style: {
+                                height: 50,
+                                fontSize: 16,
+                                borderRadius: 50,
+                            },
                         },
                         {
                             key: '2',
                             icon: <SolutionOutlined />,
                             label: 'MyTasks',
-                            style: { height: 50, fontSize: 16 },
+                            style: {
+                                height: 50,
+                                fontSize: 16,
+                                borderRadius: 50,
+                            },
                         },
                         {
                             key: '3',
                             icon: <MessageOutlined />,
                             label: 'Chat',
-                            style: { height: 50, fontSize: 16 },
+                            style: {
+                                height: 50,
+                                fontSize: 16,
+                                borderRadius: 50,
+                            },
                         },
                         {
                             key: '4',
                             icon: <TransactionOutlined />,
                             label: 'Transfer',
-                            style: { height: 50, fontSize: 16 },
+                            style: {
+                                height: 50,
+                                fontSize: 16,
+                                borderRadius: 50,
+                            },
                         },
                         {
                             key: '5',
                             icon: <UserOutlined />,
                             label: 'Account',
-                            style: { height: 50, fontSize: 16 },
+                            style: {
+                                height: 50,
+                                fontSize: 16,
+                                borderRadius: 50,
+                            },
                         },
                         {
                             key: '6',
                             icon: <UserDeleteOutlined />,
                             label: 'Log Out',
-                            style: { height: 50, fontSize: 16 },
+                            style: {
+                                height: 50,
+                                fontSize: 16,
+                                borderRadius: 50,
+                            },
                         },
                     ]}
                 />

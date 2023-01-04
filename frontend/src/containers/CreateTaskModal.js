@@ -1,4 +1,13 @@
-import { Modal, Form, Input, Space, Button, DatePicker, TimePicker } from 'antd'
+import {
+    Modal,
+    Form,
+    Input,
+    InputNumber,
+    Space,
+    Button,
+    DatePicker,
+    TimePicker,
+} from 'antd'
 import { useState } from 'react'
 
 const { TextArea } = Input
@@ -68,7 +77,11 @@ const CreateTaskModal = ({ open, onCreate, onCancel }) => {
                         },
                     ]}
                 >
-                    <Input placeholder="打算付多少外送費？ eg. 10 元、20 元" />
+                    <InputNumber
+                        prefix="$"
+                        placeholder="打算付多少外送費？ eg. 10 元、20 元"
+                        style={{ width: '100%' }}
+                    />
                 </Form.Item>
                 <Form.Item
                     name="arrivalStart"

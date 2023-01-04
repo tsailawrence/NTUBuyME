@@ -13,12 +13,15 @@ html {
     transition: color 0.3s;
 }
 
-.trigger:hover {
+/* .trigger:hover {
     color: #1890ff;
-}
+} */
 
 .site-layout .site-layout-background {
-    background: #fff;
+    background: white;
+}
+.ant-menu-light.ant-menu-root.ant-menu-inline {
+    border-inline-end: 0;
 }
 
 .loginFormContainer {
@@ -29,11 +32,11 @@ html {
 }
 
 .ant-menu-item-active {
-    background-color: #f6c69b !important;
+    background-color: #fbf7e2 !important;
 }
 
 .ant-menu-item-selected {
-    background-color: #dba083 !important;
+    background-color: #ffdaab !important;
 }
 
 .ant-btn-primary {

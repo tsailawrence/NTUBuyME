@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { useApp } from '../UseApp'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, Card, Input, Button } from 'antd'
-import Message from './Message'
+import Message from '../containers/Message'
 const { Header, Content } = Layout
 
 const ChatBox = styled(Card)`
@@ -123,18 +123,19 @@ function Chat({ collapsed, setCollapsed }) {
 
     return (
         <Layout className="site-layout">
-            <Header className="site-layout-background" style={{ padding: 0 }}>
-                {React.createElement(
-                    collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-                    {
-                        className: 'trigger',
-                        onClick: () => setCollapsed(!collapsed),
-                    }
-                )}
-            </Header>
             <Content
                 className="site-layout-background"
-                style={{ margin: '24px 16px', padding: 24, minHeight: 280 }}
+                style={{
+                    // margin: '24px 16px',
+                    padding: 24,
+                    paddingTop: 50,
+                    minHeight: 280,
+                    borderRadius: 50,
+                    marginTop: 50,
+                    marginBottom: 50,
+                    // width: '80%',
+                    marginRight: '10%',
+                }}
             >
                 <div>
                     <h1>Chat</h1>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import '../index.css'
 import { useApp } from '../UseApp'
-import { Button, Checkbox, Form, Input } from 'antd'
+import { Button, Checkbox, Form, Input, Layout } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import instance from '../api'
 
 const bcrypt = require('bcryptjs')
+const { Header, Content } = Layout
 
 const Login = ({ setLogin, setCollapsed }) => {
     const {
@@ -91,11 +92,21 @@ const Login = ({ setLogin, setCollapsed }) => {
     }
 
     return (
-        <div
+        // <div
+        //     style={{
+        //         display: 'flex',
+        //         justifyContent: 'center',
+        //         height: '100vh',
+        //     }}
+        // >
+        <Content
+            className="site-layout-background"
             style={{
-                display: 'flex',
-                justifyContent: 'center',
+                padding: 100,
                 height: '100vh',
+                display: 'flex',
+
+                // filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
             }}
         >
             <div
@@ -105,6 +116,9 @@ const Login = ({ setLogin, setCollapsed }) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#fbf7e2',
+                    borderTopLeftRadius: 50,
+                    borderBottomLeftRadius: 50,
+                    filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
                 }}
             >
                 <img
@@ -124,6 +138,9 @@ const Login = ({ setLogin, setCollapsed }) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: 'white',
+                    borderTopRightRadius: 50,
+                    borderBottomRightRadius: 50,
+                    filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
                 }}
             >
                 <h1
@@ -212,7 +229,8 @@ const Login = ({ setLogin, setCollapsed }) => {
                     </Form.Item>
                 </Form>
             </div>
-        </div>
+        </Content>
+        // </div>
     )
 }
 

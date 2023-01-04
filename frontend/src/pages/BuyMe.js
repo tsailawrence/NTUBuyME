@@ -49,10 +49,6 @@ const BuyMe = () => {
     }, [currentPage, filter])
 
     useEffect(() => {
-<<<<<<< HEAD
-        console.log('reloading...')
-=======
->>>>>>> fe7e700ed015ca0eb526812047d319e447680c31
         setTimeout(() => {
             getAllTasks(currentPage, nPerPage, maxPageN)
             setReload(!reload)

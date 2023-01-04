@@ -16,12 +16,8 @@ const Login = ({ setLogin, setCollapsed }) => {
         setSignIn,
         id,
         setId,
-<<<<<<< HEAD
         LOCALSTORAGE_ID_KEY,
         LOCALSTORAGE_NAME_KEY,
-=======
-        LOCALSTORAGE_KEY,
->>>>>>> fe7e700ed015ca0eb526812047d319e447680c31
         LOCALSTORAGE_STATUS,
     } = useApp()
     const [password, setPassword] = useState('')

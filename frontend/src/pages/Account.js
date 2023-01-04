@@ -3,8 +3,14 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, List, Button, Space } from 'antd'
 import instance from '../api'
 import { useState, useEffect } from 'react'
+<<<<<<< HEAD
+import ChangePwdModal from './ChangePwdModal'
+import EditAccModal from './EditAccModal'
+import { useApp } from '../UseApp'
+=======
 import ChangePwdModal from '../containers/ChangePwdModal'
 import EditAccModal from '../containers/EditAccModal'
+>>>>>>> fe7e700ed015ca0eb526812047d319e447680c31
 const { Header, Content } = Layout
 
 const Account = ({ collapsed, setCollapsed, me, id }) => {
@@ -12,6 +18,10 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
     const [ChangePwdModalOpen, setChangePwdModalOpen] = useState(false)
     const [EditAccModalOpen, setEditAccModalOpen] = useState(false)
     const [onClickItem, setOnClickItem] = useState('')
+
+    useEffect(() => {
+        console.log(me)
+    }, [me])
 
     // Get Account
     useEffect(() => {

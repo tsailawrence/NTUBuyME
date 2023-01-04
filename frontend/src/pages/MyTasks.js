@@ -134,8 +134,8 @@ function MyTasks({ collapsed, setCollapsed }) {
                     borderRadius: 50,
                     marginTop: 50,
                     marginBottom: 50,
-                    // width: '80%',
-                    marginRight: '10%',
+                    marginRight: '16%',
+                    filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
                 }}
             >
                 <h1>MyTasks</h1>

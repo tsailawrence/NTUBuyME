@@ -6,6 +6,7 @@ import WebSocket from 'ws'
 import bodyParser from 'body-parser'
 import http from 'http'
 import wsConnect from './wsConnect'
+import { randomUUID } from 'crypto'
 
 require('dotenv').config()
 
@@ -16,7 +17,6 @@ app.use(cors())
 app.use(express.json())
 app.use(bodyParser.json())
 // app.use('/', routes);
-
 
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
@@ -32,7 +32,6 @@ app.use(function (req, res, next) {
     next()
 })
 
-
 mongoose
     .connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
@@ -42,6 +41,7 @@ mongoose
     .then((res) => {
         wss.on('connection', (ws) => {
             ws.box = ''
+            ws.id = randomUUID()
             ws.onmessage = wsConnect.onMessage(wss, ws)
             ws.on('error', (err) => {
                 console.warn(`Client disconnected - reason: ${err}`)

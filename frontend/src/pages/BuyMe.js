@@ -1,21 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import {
-    LikeOutlined,
-    MessageOutlined,
-    StarOutlined,
-    DownOutlined,
-    DownCircleOutlined,
-} from '@ant-design/icons'
-import {
-    Avatar,
-    List,
-    Space,
-    Button,
-    Dropdown,
-    Typography,
-    Card,
-    Divider,
-} from 'antd'
+import { DownOutlined, DownCircleOutlined } from '@ant-design/icons'
+import { List, Space, Button, Dropdown, Typography, Card, Divider } from 'antd'
 import instance from '../api'
 import CreateTaskModal from './CreateTaskModal'
 import { useApp } from '../UseApp'
@@ -49,8 +34,11 @@ const BuyMe = () => {
     const [filter, setFilter] = useState('allTasksByDuestart')
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
     const [reload, setReload] = useState(false)
-    const { setStatus, id } = useApp()
+    const { setStatus, id, me } = useApp()
 
+    useEffect(() => {
+        console.log(me)
+    }, [me])
     useEffect(() => {
         const twoDayTasks = getTaskNum()
         setMaxPageN(twoDayTasks / nPerPage)
@@ -61,11 +49,11 @@ const BuyMe = () => {
     }, [currentPage, filter])
 
     useEffect(() => {
-        console.log('!')
+        console.log('reloading...')
         setTimeout(() => {
             getAllTasks(currentPage, nPerPage, maxPageN)
             setReload(!reload)
-        }, 5000)
+        }, 1000)
     }, [reload])
 
     const getAllTasks = async (currentPage, nPerPage, maxPageN) => {
@@ -94,9 +82,6 @@ const BuyMe = () => {
     }
 
     const acceptTask = async (taskId) => {
-        // navigate to chatbox
-        // set receiver
-        // create chatroom
         const {
             data: { message, content },
         } = await instance.post('acceptTask', { id: taskId, receiver: id })

@@ -13,7 +13,8 @@ export default {
         switch (task) {
             case 'MESSAGE': {
                 const { who, body, name } = payload
-                const message = new MessageModel({ sender: who, body })
+                ws.box = name
+                const message = new MessageModel({ sender: who, body: body })
                 try {
                     await message.save()
                 } catch (e) {
@@ -26,15 +27,17 @@ export default {
                 chatBox.messages = [...chatBox.messages, message]
                 await chatBox.save()
 
-                chatBoxes[ws.box].forEach((ws) =>
+                chatBoxes[ws.box].forEach((ws) => {
+                    console.log(ws.id)
                     sendData(['message', { sender: who, body }], ws)
-                )
+                })
                 break
             }
 
             case 'CHAT': {
                 const { name } = payload
                 ws.box = name
+                console.log(ws.id)
                 if (!chatBoxes[ws.box]) {
                     chatBoxes[ws.box] = [ws]
                 } else if (!chatBoxes[ws.box].includes(ws)) {

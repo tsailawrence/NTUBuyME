@@ -12,41 +12,64 @@ const ChatBox = styled(Card)`
     width: 100%;
     height: 90%;
     background: #eeeeee52;
-    border-radius: 10px;
+    border-radius: 0 0 8px 8px;
+    border: white solid 1px;
     overflow: auto;
-    padding: 1px;
     margin-bottom: 10px;
 `
 
 const ChatBoxWrapper = styled.div`
     position: fixed;
     top: 20%;
-    left: 50%;
+    left: 45%;
     transform: translate(-30%, 0);
     height: calc(500px - 36px);
     width: 500px;
-    background: gray;
+    background: #ffe3ba;
+    opacity: 0.95;
     display: flex;
     flex-direction: column;
-    align-items: center;
     overflow: auto;
     border-radius: 30px;
     padding: 15px;
 `
 
+const ChatRoomHeader = styled.div`
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px 8px 0 0;
+    border: white 1.5px solid;
+    background: #faf0ca;
+    padding: 2px;
+`
+
 const FootRef = styled.div`
     height: 50px;
+    width: 100%;
 `
 
 function Chat({ collapsed, setCollapsed }) {
-    const [chats, setChats] = useState([])
     const [msgSent, setMsgSent] = useState(false)
     const [chatOpen, setChatOpen] = useState(false)
     const [chatBoxName, setChatBoxName] = useState('')
     const [body, setBody] = useState('')
     const [title, setTitle] = useState('')
     const msgFooter = useRef(null)
-    const { id, me, setStatus, messages, setMessages, client } = useApp()
+    const {
+        id,
+        me,
+        setStatus,
+        messages,
+        setMessages,
+        sendData,
+        sendMessage,
+        chats,
+        setChats,
+    } = useApp()
 
     useEffect(() => {
         getChats(id)
@@ -58,7 +81,7 @@ function Chat({ collapsed, setCollapsed }) {
         setChatBoxName(chatRoom.name)
         setTitle(chatRoom.title)
         await getChats(id)
-        await sendData(['CHAT', { name: chatRoom.name }])
+        sendData(['CHAT', { name: chatRoom.name }])
     }
 
     const getChats = async (id) => {
@@ -97,31 +120,6 @@ function Chat({ collapsed, setCollapsed }) {
         scrollToBottom()
         setMsgSent(false)
     }, [msgSent])
-
-    const sendMessage = () => {
-        sendData(['MESSAGE', { who: me, body, name: chatBoxName }])
-        setBody('')
-        setMsgSent(true)
-    }
-    const sendData = async (data) => {
-        client.send(JSON.stringify(data))
-    }
-
-    client.onmessage = (byteString) => {
-        const { data } = byteString
-        const [task, payload] = JSON.parse(data)
-        switch (task) {
-            case 'chat': {
-                setChats(payload)
-                break
-            }
-
-            case 'message': {
-                setMessages([...messages, payload])
-                break
-            }
-        }
-    }
 
     return (
         <Layout className="site-layout">
@@ -164,18 +162,20 @@ function Chat({ collapsed, setCollapsed }) {
                                 justifyContent: 'center',
                             }}
                         >
-                            <h1>{title}</h1>
                             <Button
                                 type="Dashed"
                                 onClick={() => setChatOpen(false)}
                                 style={{
                                     position: 'fixed',
                                     right: '15px',
-                                    top: '10px',
+                                    top: '13px',
                                 }}
                             >
                                 X
                             </Button>
+                            <ChatRoomHeader>
+                                <p>{title}</p>
+                            </ChatRoomHeader>
                         </div>
 
                         {displayChat(messages)}
@@ -194,7 +194,9 @@ function Chat({ collapsed, setCollapsed }) {
                                     return
                                 }
 
-                                sendMessage()
+                                sendMessage(me, body, chatBoxName)
+                                setBody('')
+                                setMsgSent(true)
                             }}
                         />
                     </ChatBoxWrapper>

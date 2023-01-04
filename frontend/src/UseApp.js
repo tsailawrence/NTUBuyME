@@ -8,46 +8,55 @@ const AppContext = createContext({
     // getAccount: () => {},
 })
 
+const c = new WebSocket('ws://localhost:8080')
 
 const AppProvider = (props) => {
-    const [me, setMe] = useState('')
     const [messages, setMessages] = useState([])
     const [status, setStatus] = useState([])
-    const [client, setClient] = useState()
     const [reconnect, setReconnnect] = useState(false)
     const [signIn, setSignIn] = useState(false)
-
-    const LOCALSTORAGE_KEY = "save-me";
-    const LOCALSTORAGE_STATUS = "status";
-    const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
-    const [id, setId] = useState(savedMe || '')
-
-    // const getAccount = (me) => {
-    //     if(!me) throw new Error('Account ID required!');
-
-    // }
-    useEffect(() => {
-        const c = new WebSocket('ws://localhost:8080')
-        setClient(c)
-    }, [])
+    const [chats, setChats] = useState([])
+    const LOCALSTORAGE_ID_KEY = 'save-id'
+    const LOCALSTORAGE_NAME_KEY = 'save-me'
+    const LOCALSTORAGE_STATUS = 'status'
+    const savedId = localStorage.getItem(LOCALSTORAGE_ID_KEY)
+    const savedMe = localStorage.getItem(LOCALSTORAGE_NAME_KEY)
+    const [id, setId] = useState(savedId || '')
+    const [me, setMe] = useState(savedMe || '')
 
     useEffect(() => {
         displayStatus(status)
     }, [status])
 
-    useEffect(() => {
-        setTimeout(() => {
-            if (!isOpen(client)) {
-                client.close()
-                const c = new WebSocket('ws://localhost:8080')
-                setClient(c)
-            }
-            setReconnnect(!reconnect)
-        }, 5000)
-    }, [reconnect])
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         if (c && !isOpen(c)) {
+    //             console.log('!')
+    //             c.close()
+    //             c = new WebSocket('ws://localhost:8080')
+    //         }
+    //         setReconnnect(!reconnect)
+    //     }, 5000)
+    // }, [reconnect])
 
-    const isOpen = (ws) => {
-        return ws.readyState === ws.OPEN
+    // const isOpen = (ws) => {
+    //     return ws.readyState === 1
+    // }
+
+    c.onmessage = (byteString) => {
+        const { data } = byteString
+        const [task, payload] = JSON.parse(data)
+        switch (task) {
+            case 'chat': {
+                setChats(payload)
+                break
+            }
+
+            case 'message': {
+                setMessages([...messages, payload])
+                break
+            }
+        }
     }
 
     const displayStatus = (s) => {
@@ -69,6 +78,14 @@ const AppProvider = (props) => {
         }
     }
 
+    const sendData = (data) => {
+        c.send(JSON.stringify(data))
+    }
+
+    const sendMessage = (me, body, chatBoxName) => {
+        sendData(['MESSAGE', { who: me, body: body, name: chatBoxName }])
+    }
+
     return (
         <AppContext.Provider
             value={{
@@ -82,9 +99,13 @@ const AppProvider = (props) => {
                 setStatus,
                 messages,
                 setMessages,
-                client,
-                LOCALSTORAGE_KEY,
-                LOCALSTORAGE_STATUS
+                LOCALSTORAGE_ID_KEY,
+                LOCALSTORAGE_NAME_KEY,
+                LOCALSTORAGE_STATUS,
+                sendData,
+                sendMessage,
+                chats,
+                setChats,
             }}
             {...props}
         />

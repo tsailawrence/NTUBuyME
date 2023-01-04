@@ -5,6 +5,7 @@ import instance from '../api'
 import { useState, useEffect } from 'react'
 import ChangePwdModal from './ChangePwdModal'
 import EditAccModal from './EditAccModal'
+import { useApp } from '../UseApp'
 const { Header, Content } = Layout
 
 const Account = ({ collapsed, setCollapsed, me, id }) => {
@@ -12,6 +13,10 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
     const [ChangePwdModalOpen, setChangePwdModalOpen] = useState(false)
     const [EditAccModalOpen, setEditAccModalOpen] = useState(false)
     const [onClickItem, setOnClickItem] = useState('')
+
+    useEffect(() => {
+        console.log(me)
+    }, [me])
 
     // Get Account
     useEffect(() => {

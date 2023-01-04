@@ -8,7 +8,7 @@ import instance from '../api'
 const bcrypt = require('bcryptjs')
 
 const Login = ({ setLogin, setCollapsed }) => {
-    const { me, setMe, status, setStatus, setSignIn, id, setId } = useApp()
+    const { me, setMe, status, setStatus, setSignIn, id, setId, LOCALSTORAGE_KEY, LOCALSTORAGE_STATUS } = useApp()
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
 
@@ -56,6 +56,8 @@ const Login = ({ setLogin, setCollapsed }) => {
                         setMe(content.name)
                         setLogin(true)
                         setSignIn(true)
+                        localStorage.setItem(LOCALSTORAGE_KEY, id)
+                        localStorage.setItem(LOCALSTORAGE_STATUS, 'login')
                         setStatus({
                             type: 'success',
                             msg: 'Login successfully!',
@@ -91,7 +93,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                 }}
             >
                 <img
-                    src={require('../img/logo_animation.gif')}
+                    // src={require('../img/logo_animation.gif')}
                     alt="Logo"
                     style={{
                         width: '100%',

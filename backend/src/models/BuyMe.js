@@ -55,11 +55,9 @@ const ChatBoxSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User',
     },
+    description: { type: String, required: true },
     title: { type: String, required: true },
     messages: [{ type: mongoose.Types.ObjectId, ref: 'Message' }],
-    due_period: { type: String, required: true },
-    fee: { type: String, required: true },
-    from: { type: String, required: true },
 })
 
 const ChatBoxModel = mongoose.model('ChatBox', ChatBoxSchema)

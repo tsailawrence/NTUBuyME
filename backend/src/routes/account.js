@@ -26,7 +26,7 @@ exports.EditUserAccount = async (req, res) => {
                     },
                     {new:true}
                 )
-                res.send({ message: `Updating successfully!`, contents: user })
+                res.status(200).send({ message: `Updating successfully!`, contents: user })
 
             } else {
                 const user = await UserModel.findOneAndUpdate(
@@ -39,13 +39,13 @@ exports.EditUserAccount = async (req, res) => {
                     },
                     {new:true}
                 )
-                res.send({ message: `Updating successfully!`, contents: user })
+                res.status(200).send({ message: `Updating successfully!`, contents: user })
             }
         } catch (e) {
             throw new Error('Account updating error: ' + e)
         }
     } else {
-        res.json({ message: `Account doesn't exist!` })
+        res.status(204).json({ message: `Account doesn't exist!` })
     }
 }
 
@@ -55,7 +55,7 @@ exports.ChangePassword = async (req, res) => {
     const existing = await UserModel.findOne({ user_id })
     if (existing) {
         try {
-            res.json({ message: `Updating ${user_id}'s password!` })
+            res.status(200).json({ message: `Updating ${user_id}'s password!` })
             return UserModel.findOneAndUpdate(
                 {
                     user_id,
@@ -68,6 +68,6 @@ exports.ChangePassword = async (req, res) => {
             throw new Error('Password updating error: ' + e)
         }
     } else {
-        res.json({ message: `Account doesn't exist!` })
+        res.status(204).json({ message: `Account doesn't exist!` })
     }
 }

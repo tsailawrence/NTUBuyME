@@ -105,6 +105,9 @@ exports.CreateTask = async (req, res) => {
     } = req.body
 
     const myUserModel = await UserModel.findOne({ user_id: id })
+
+    console.log(myUserModel)
+
     const newTask = new TaskModel({
         sender: myUserModel,
         created_at: new Date(Date.now()),
@@ -132,8 +135,7 @@ exports.AcceptTasks = async (req, res) => {
         path: 'sender',
         select: 'name',
     })
-    const senderName = task_populated.sender.name
-    const chatBoxName = makeName(user.name, senderName)
+    const chatBoxName = makeName(user.name, task_populated.sender.name)
     await TaskModel.updateOne(
         { _id: id },
         { receiver: user, status: 'accepted' }
@@ -143,13 +145,7 @@ exports.AcceptTasks = async (req, res) => {
         title: task.title,
         sender: task.sender,
         receiver: user,
-        due_period: `${task.due_start.toDateString()} ${task.due_start
-            .toTimeString()
-            .split(' ', 1)} ~ ${task.due_end.toDateString()} ${task.due_end
-            .toTimeString()
-            .split(' ', 1)}`,
-        fee: task.fee,
-        from: senderName,
+        description: `period: ${task.due_start}~${task.due_end} fee: ${task.fee}`,
     })
 
     newChatRoom.save()

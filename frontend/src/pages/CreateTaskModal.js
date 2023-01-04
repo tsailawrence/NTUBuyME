@@ -80,11 +80,7 @@ const CreateTaskModal = ({ open, onCreate, onCancel }) => {
                         },
                     ]}
                 >
-                    <DatePicker
-                        format="YYYY-MM-DD HH:mm:ss"
-                        showTime
-                        placeholder="希望餐點送達時段？"
-                    />
+                    <DatePicker showTime placeholder="希望餐點送達時段？" />
                 </Form.Item>
                 <Form.Item
                     name="arrivalEnd"
@@ -96,11 +92,7 @@ const CreateTaskModal = ({ open, onCreate, onCancel }) => {
                         },
                     ]}
                 >
-                    <DatePicker
-                        format="YYYY-MM-DD HH:mm:ss"
-                        showTime
-                        placeholder="希望餐點送達時段？"
-                    />
+                    <DatePicker showTime placeholder="希望餐點送達時段？" />
                 </Form.Item>
                 <Form.Item
                     name="content"

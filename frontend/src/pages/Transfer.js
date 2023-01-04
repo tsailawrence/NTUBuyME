@@ -11,6 +11,7 @@ function Transfer({ collapsed, setCollapsed }) {
     const { status, setStatus } = useApp()
     const [id, setId] = useState()
     const [idList, setIdList] = useState([])
+    const [qrCode, setQrCode] = useState('')
 
     const searchId = async (id) => {
         const {
@@ -20,6 +21,7 @@ function Transfer({ collapsed, setCollapsed }) {
                 userId: id,
             },
         })
+        // console.log(content)
         switch (message) {
             default:
                 break
@@ -37,6 +39,22 @@ function Transfer({ collapsed, setCollapsed }) {
     // useEffect(() => {
     //     console.log(idList)
     // }, [idList])
+
+    const handleQRcode = (account) =>{
+
+        const corsURL = 'https://cors-anywhere.herokuapp.com/'
+        const apiURL = 'https://i-tw.org/twpay/api?Bank='+account.bank_id+'&Acc='+account.bankaccount_id
+
+        fetch(`${corsURL}${apiURL}`)
+        .then((res) => {
+            const data = res.json();
+            return data;
+        })
+        .then((data) => {
+            setQrCode(<img src={data.QR} alt="new" width="200"/>)
+        });
+
+    }
 
     return (
         <Layout className="site-layout">
@@ -90,6 +108,10 @@ function Transfer({ collapsed, setCollapsed }) {
                                     <b>戶頭帳號: </b>
                                     {item.bankaccount.bankaccount_id}
                                 </Space>
+                                <Space id='QRimage'>{qrCode}</Space>
+                                <Button 
+                                onClick={()=>handleQRcode(item.bankaccount)}
+                                >QR Code</Button>
                             </Space>
                         </Card>
                     )}

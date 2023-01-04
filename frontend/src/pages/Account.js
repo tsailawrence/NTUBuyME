@@ -183,7 +183,7 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
                 open={EditAccModalOpen}
                 onCreate={(values) => {
                     editAccount(
-                        me,
+                        id,
                         Object.keys(values.user),
                         Object.values(values.user)
                     )
@@ -193,10 +193,10 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
                 item={onClickItem}
             />
             <ChangePwdModal
-                user_id={me}
+                user_id={id}
                 open={ChangePwdModalOpen}
                 onCreate={(value) => {
-                    changePassword(me, value)
+                    changePassword(id, value)
                     setChangePwdModalOpen(false)
                 }}
                 onCancel={() => setChangePwdModalOpen(false)}

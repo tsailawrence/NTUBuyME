@@ -8,8 +8,10 @@ import instance from '../api'
 const bcrypt = require('bcryptjs')
 
 const Login = ({ setLogin, setCollapsed }) => {
-    const { me, setMe, status, setStatus, setSignIn, id, setId } = useApp()
+    const { me, setMe, status, setStatus, setSignIn, id, setId, 
+        LOCALSTORAGE_KEY,LOCALSTORAGE_STATUS } = useApp()
     const [password, setPassword] = useState('')
+    const [rememberMe, setRememberMe] = useState(true)
     const navigate = useNavigate()
 
     // useEffect(() => {
@@ -17,6 +19,9 @@ const Login = ({ setLogin, setCollapsed }) => {
     //         document.getElementById('submit').disabled = true
     //     else document.getElementById('submit').disabled = false
     // }, [id, password])
+
+
+    // console.log(rememberMe)
 
     const handleLogin = async () => {
         if (!id) {
@@ -56,6 +61,8 @@ const Login = ({ setLogin, setCollapsed }) => {
                         setMe(content.name)
                         setLogin(true)
                         setSignIn(true)
+                        localStorage.setItem(LOCALSTORAGE_KEY, id)
+                        localStorage.setItem(LOCALSTORAGE_STATUS, 'login')
                         setStatus({
                             type: 'success',
                             msg: 'Login successfully!',
@@ -81,44 +88,20 @@ const Login = ({ setLogin, setCollapsed }) => {
                 height: '100vh',
             }}
         >
-            <div
-                style={{
-                    display: 'flex',
-                    width: '50%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#fbf7e2',
-                }}
-            >
+            <div className="loginFormContainer">
                 <img
-                    src={require('../img/logo_animation.gif')}
+                    src={require('../img/LogoTitle.png')}
                     alt="Logo"
                     style={{
-                        width: '100%',
+                        width: '300px',
                         marginTop: '-100px',
-                        // marginBottom: '50px',
+                        marginBottom: '50px',
                     }}
                 />
-            </div>
-            <div
-                className="loginFormContainer"
-                style={{
-                    width: '50%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: 'white',
-                }}
-            >
-                <h1
-                    className="title"
-                    style={{ marginBottom: 30, fontSize: 30 }}
-                >
-                    Welcome to NTU Buyme!
-                </h1>
                 <Form
                     name="basic"
                     className="loginForm"
-                    labelCol={{ span: 8 }}
+                    labelCol={{ span: 10 }}
                     wrapperCol={{ span: 16 }}
                     initialValues={{ remember: true }}
                     autoComplete="off"
@@ -152,9 +135,8 @@ const Login = ({ setLogin, setCollapsed }) => {
                             },
                         ]}
                     >
-                        <Input
+                        <Input.Password
                             value={password}
-                            type="password"
                             onChange={(e) => {
                                 setPassword(e.target.value)
                             }}
@@ -169,7 +151,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
+                    <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
                         <Button
                             id="submit"
                             type="primary"

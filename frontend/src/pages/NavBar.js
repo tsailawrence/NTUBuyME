@@ -16,7 +16,7 @@ const { Sider } = Layout
 
 function NavBar({ setKey, collapsed }) {
     const navigate = useNavigate()
-    const { setSignIn, setStatus } = useApp()
+    const { setSignIn, LOCALSTORAGE_STATUS } = useApp()
     function navigatePage(key) {
         setKey(key)
         switch (key) {
@@ -34,12 +34,8 @@ function NavBar({ setKey, collapsed }) {
                 break
             case '6':
                 //Logout
-                setSignIn(false)
+                localStorage.setItem(LOCALSTORAGE_STATUS, 'logout')
                 navigate('/login')
-                setStatus({
-                    type: 'success',
-                    msg: 'Logout successfully!',
-                })
                 break
             default:
                 navigate('/')

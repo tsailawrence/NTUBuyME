@@ -12,15 +12,6 @@ exports.GetChat = async (req, res) => {
                 receiver: user,
             },
         ],
-    })
-        .populate('messages')
-        .select([
-            'title',
-            'messages',
-            'description',
-            'sender',
-            'receiver',
-            'name',
-        ])
+    }).populate('messages')
     res.send({ chatRooms: chatRooms })
 }

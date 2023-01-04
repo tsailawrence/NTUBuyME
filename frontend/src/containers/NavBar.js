@@ -16,7 +16,7 @@ const { Sider } = Layout
 
 function NavBar({ setKey, collapsed }) {
     const navigate = useNavigate()
-    const { setSignIn, setStatus } = useApp()
+    const { setSignIn, setStatus, LOCALSTORAGE_STATUS } = useApp()
     function navigatePage(key) {
         setKey(key)
         switch (key) {
@@ -34,7 +34,7 @@ function NavBar({ setKey, collapsed }) {
                 break
             case '6':
                 //Logout
-                setSignIn(false)
+                localStorage.setItem(LOCALSTORAGE_STATUS, 'logout')
                 navigate('/login')
                 setStatus({
                     type: 'success',
@@ -72,7 +72,7 @@ function NavBar({ setKey, collapsed }) {
                     style={{
                         display: 'flex',
                         justifyContent: 'Center',
-                        height: 70,
+                        height: 100,
                         margin: 10,
                     }}
                 >
@@ -90,31 +90,37 @@ function NavBar({ setKey, collapsed }) {
                             key: '1',
                             icon: <CoffeeOutlined />,
                             label: 'BuyMe',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '2',
                             icon: <SolutionOutlined />,
                             label: 'MyTasks',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '3',
                             icon: <MessageOutlined />,
                             label: 'Chat',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '4',
                             icon: <TransactionOutlined />,
                             label: 'Transfer',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '5',
                             icon: <UserOutlined />,
                             label: 'Account',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '6',
                             icon: <UserDeleteOutlined />,
                             label: 'Log Out',
+                            style: { height: 50, fontSize: 16 },
                         },
                     ]}
                 />

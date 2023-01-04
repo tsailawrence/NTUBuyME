@@ -21,6 +21,7 @@ function Transfer({ collapsed, setCollapsed }) {
                 userId: id,
             },
         })
+        // console.log(content)
         switch (message) {
             default:
                 break

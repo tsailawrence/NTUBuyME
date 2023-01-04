@@ -8,14 +8,19 @@ const AppContext = createContext({
     // getAccount: () => {},
 })
 
+
 const AppProvider = (props) => {
     const [me, setMe] = useState('')
     const [messages, setMessages] = useState([])
-    const [signIn, setSignIn] = useState(false)
     const [status, setStatus] = useState([])
-    const [id, setId] = useState('')
     const [client, setClient] = useState()
     const [reconnect, setReconnnect] = useState(false)
+    const [signIn, setSignIn] = useState(false)
+
+    const LOCALSTORAGE_KEY = "save-me";
+    const LOCALSTORAGE_STATUS = "status";
+    const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
+    const [id, setId] = useState(savedMe || '')
 
     // const getAccount = (me) => {
     //     if(!me) throw new Error('Account ID required!');
@@ -78,6 +83,8 @@ const AppProvider = (props) => {
                 messages,
                 setMessages,
                 client,
+                LOCALSTORAGE_KEY,
+                LOCALSTORAGE_STATUS
             }}
             {...props}
         />

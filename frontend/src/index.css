@@ -80,6 +80,9 @@ h1 {
 .ant-checkbox-inner {
     background: #dba083 !important;
 }
+.ant-checkbox-checked .ant-checkbox-inner {
+    border-color: #dba083 !important;
+}
 
 .ant-input:focus {
     border-color: #dba083;
@@ -98,5 +101,20 @@ h1 {
     border-color: #dba083;
 }
 .ant-input[class='password']:hover {
+    border-color: #dba083;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+    color: #dba083;
+    outline: 0;
+}
+
+.ant-pagination .ant-pagination-item-active {
+    border-color: #dba083;
+}
+.ant-input-search .ant-input:focus {
+    border-color: #dba083;
+}
+.ant-input-search .ant-input:hover {
     border-color: #dba083;
 }

@@ -106,7 +106,7 @@ function MyTasks({ collapsed, setCollapsed }) {
                                 {item.taskContent}
                             </Space>
                             <Space>
-                                <b>截止日期: </b>
+                                <b>希望送達時間: </b>
                                 {item.due_start}~{item.due_end}
                             </Space>
                             <Space>

@@ -17,6 +17,7 @@ app.use(express.json())
 app.use(bodyParser.json())
 // app.use('/', routes);
 
+
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
     res.header(
@@ -30,6 +31,7 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Credentials', 'true')
     next()
 })
+
 
 mongoose
     .connect(process.env.MONGO_URL, {

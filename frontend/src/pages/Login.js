@@ -86,6 +86,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                 display: 'flex',
                 width: '50%',
                 justifyContent: 'center',
+                height: '100vh',
                 alignItems: 'center',
                 backgroundColor: '#fbf7e2',
             }}
@@ -100,16 +101,16 @@ const Login = ({ setLogin, setCollapsed }) => {
                         // marginBottom: '50px',
                     }}
                 />
-                </div>
-                <div
-                    className="loginFormContainer"
-                    style={{
-                        width: '50%',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: 'white',
-                    }}
-                >
+            </div>
+            <div
+                className="loginFormContainer"
+                style={{
+                    width: '50%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'white',
+                }}
+            >
                 <h1
                     className="title"
                     style={{ marginBottom: 30, fontSize: 30 }}
@@ -165,12 +166,12 @@ const Login = ({ setLogin, setCollapsed }) => {
                     <Form.Item
                         name="remember"
                         valuePropName="checked"
-                        wrapperCol={{ offset: 8, span: 20 }}
+                        wrapperCol={{ offset: 8, span: 16 }}
                     >
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+                    <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
                         <Button
                             id="submit"
                             type="primary"

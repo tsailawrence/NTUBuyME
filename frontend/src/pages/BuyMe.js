@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { DownOutlined, DownCircleOutlined } from '@ant-design/icons'
 import { List, Space, Button, Dropdown, Typography, Card, Divider } from 'antd'
 import instance from '../api'
-import CreateTaskModal from './CreateTaskModal'
+import CreateTaskModal from '../containers/CreateTaskModal'
 import { useApp } from '../UseApp'
 
 const IconText = ({ icon, text }) => (
@@ -49,7 +49,10 @@ const BuyMe = () => {
     }, [currentPage, filter])
 
     useEffect(() => {
+<<<<<<< HEAD
         console.log('reloading...')
+=======
+>>>>>>> fe7e700ed015ca0eb526812047d319e447680c31
         setTimeout(() => {
             getAllTasks(currentPage, nPerPage, maxPageN)
             setReload(!reload)
@@ -237,7 +240,7 @@ const BuyMe = () => {
                                 {item.due_start}~{item.due_end}
                             </Space>
                             <Space>
-                                <b>外送費: </b>
+                                <b>外送費: $</b>
                                 {item.fee}
                             </Space>
                         </Space>

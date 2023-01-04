@@ -3,9 +3,14 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, List, Button, Space } from 'antd'
 import instance from '../api'
 import { useState, useEffect } from 'react'
+<<<<<<< HEAD
 import ChangePwdModal from './ChangePwdModal'
 import EditAccModal from './EditAccModal'
 import { useApp } from '../UseApp'
+=======
+import ChangePwdModal from '../containers/ChangePwdModal'
+import EditAccModal from '../containers/EditAccModal'
+>>>>>>> fe7e700ed015ca0eb526812047d319e447680c31
 const { Header, Content } = Layout
 
 const Account = ({ collapsed, setCollapsed, me, id }) => {
@@ -104,18 +109,19 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
 
     return (
         <Layout className="site-layout">
-            <Header className="site-layout-background" style={{ padding: 0 }}>
-                {React.createElement(
-                    collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-                    {
-                        className: 'trigger',
-                        onClick: () => setCollapsed(!collapsed),
-                    }
-                )}
-            </Header>
             <Content
                 className="site-layout-background"
-                style={{ margin: '24px 16px', padding: 24, minHeight: 280 }}
+                style={{
+                    // margin: '24px 16px',
+                    padding: 24,
+                    paddingTop: 50,
+                    minHeight: 280,
+                    borderRadius: 50,
+                    marginTop: 50,
+                    marginBottom: 50,
+                    // width: '80%',
+                    marginRight: '10%',
+                }}
             >
                 <h1>Account</h1>
                 <List size="large" bordered>

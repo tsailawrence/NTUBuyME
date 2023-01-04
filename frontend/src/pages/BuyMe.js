@@ -17,7 +17,7 @@ import {
     Divider,
 } from 'antd'
 import instance from '../api'
-import CreateTaskModal from './CreateTaskModal'
+import CreateTaskModal from '../containers/CreateTaskModal'
 import { useApp } from '../UseApp'
 
 const IconText = ({ icon, text }) => (
@@ -61,7 +61,6 @@ const BuyMe = () => {
     }, [currentPage, filter])
 
     useEffect(() => {
-        console.log('!')
         setTimeout(() => {
             getAllTasks(currentPage, nPerPage, maxPageN)
             setReload(!reload)
@@ -252,7 +251,7 @@ const BuyMe = () => {
                                 {item.due_start}~{item.due_end}
                             </Space>
                             <Space>
-                                <b>外送費: </b>
+                                <b>外送費: $</b>
                                 {item.fee}
                             </Space>
                         </Space>

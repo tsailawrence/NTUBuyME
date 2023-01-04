@@ -49,7 +49,7 @@ function NavBar({ setKey, collapsed }) {
     return (
         <>
             <Sider
-                // width={250}
+                width={250}
                 trigger={null}
                 collapsible
                 collapsed={collapsed}
@@ -61,9 +61,10 @@ function NavBar({ setKey, collapsed }) {
                     left: 0,
                     top: 0,
                     bottom: 0,
-                    background: '#ffdaab',
-                    // marginLeft: 200,
-                    // marginRight: 200,
+                    marginLeft: '6%',
+                    borderRadius: 20,
+                    backgroundColor: '#f5f5f5',
+                    marginRight: '2%',
                 }}
             >
                 <div
@@ -79,7 +80,7 @@ function NavBar({ setKey, collapsed }) {
                 </div>
                 <Menu
                     style={{
-                        background: '#ffdaab',
+                        background: '#f5f5f5',
                     }}
                     mode="inline"
                     defaultSelectedKeys={['1']}

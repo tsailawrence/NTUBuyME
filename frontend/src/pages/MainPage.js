@@ -35,8 +35,7 @@ function MainPage({ collapsed, setCollapsed, login, me, id }) {
                         borderRadius: 50,
                         marginTop: 50,
                         marginBottom: 50,
-                        // width: '80%',
-                        marginRight: '10%',
+                        marginRight: '16%',
                     }}
                 >
                     <BuyMe me={me} id={id} />

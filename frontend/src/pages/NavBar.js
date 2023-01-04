@@ -49,6 +49,7 @@ function NavBar({ setKey, collapsed }) {
     return (
         <>
             <Sider
+                // width={250}
                 trigger={null}
                 collapsible
                 collapsed={collapsed}
@@ -61,6 +62,8 @@ function NavBar({ setKey, collapsed }) {
                     top: 0,
                     bottom: 0,
                     background: '#ffdaab',
+                    // marginLeft: 200,
+                    // marginRight: 200,
                 }}
             >
                 <div
@@ -68,7 +71,7 @@ function NavBar({ setKey, collapsed }) {
                     style={{
                         display: 'flex',
                         justifyContent: 'Center',
-                        height: 70,
+                        height: 100,
                         margin: 10,
                     }}
                 >
@@ -86,31 +89,37 @@ function NavBar({ setKey, collapsed }) {
                             key: '1',
                             icon: <CoffeeOutlined />,
                             label: 'BuyMe',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '2',
                             icon: <SolutionOutlined />,
                             label: 'MyTasks',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '3',
                             icon: <MessageOutlined />,
                             label: 'Chat',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '4',
                             icon: <TransactionOutlined />,
                             label: 'Transfer',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '5',
                             icon: <UserOutlined />,
                             label: 'Account',
+                            style: { height: 50, fontSize: 16 },
                         },
                         {
                             key: '6',
                             icon: <UserDeleteOutlined />,
                             label: 'Log Out',
+                            style: { height: 50, fontSize: 16 },
                         },
                     ]}
                 />

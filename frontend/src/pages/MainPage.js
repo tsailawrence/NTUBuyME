@@ -10,7 +10,7 @@ const { Header, Content } = Layout
 function MainPage({ collapsed, setCollapsed, login, me, id }) {
     const { LOCALSTORAGE_STATUS } = useApp()
 
-    return localStorage.getItem(LOCALSTORAGE_STATUS)==='login' ? (
+    return localStorage.getItem(LOCALSTORAGE_STATUS) === 'login' ? (
         <Layout className="site-layout">
             <Header className="site-layout-background" style={{ padding: 0 }}>
                 {React.createElement(

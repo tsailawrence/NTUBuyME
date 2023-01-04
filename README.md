@@ -2,20 +2,16 @@
 
 ## TODO:
 
-1. Status modal
-2. Transfer modal，前後端串起來了，但是還要想辦法讓 db 顯示圖片
-3. Chat modal
-4. my tasks 取回該 user 的 task
+1. Transfer modal 打 qr code 功能還沒做
+2. Chat modal
+3. my tasks 取回該 user 的 task
+4. 介面美化
 
-## Done
-
-1. Login + Register
-2. Account
-3. createTask
 
 ## Bug
 
 1. 登入以後要能記住 status
+2. buyme page refresh 不要登出
 
 ## Reminder Log
 

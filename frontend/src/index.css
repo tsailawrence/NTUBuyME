@@ -2,6 +2,7 @@
 html {
     margin: 0;
     padding: 0;
+    font-family: 'Kalam';
 }
 
 .trigger {
@@ -28,27 +29,26 @@ html {
 }
 
 .ant-menu-item-active {
-    background-color: #fac898 !important;
+    background-color: #f6c69b !important;
 }
 
 .ant-menu-item-selected {
-    background-color: #db9683 !important;
+    background-color: #dba083 !important;
 }
 
 .ant-btn-primary {
-    background-color: #fac898 !important;
+    background-color: #ffdaab !important;
     color: black;
 }
 
 .ant-btn:hover {
-    color: #db9683 !important;
-    border-color: #db9683 !important;
+    color: #dba083 !important;
+    border-color: #dba083 !important;
 }
 
 h1 {
     margin-bottom: 10px;
 }
-
 
 .title {
     font-family: 'Kalam';

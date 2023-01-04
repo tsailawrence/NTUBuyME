@@ -8,10 +8,8 @@ import instance from '../api'
 const bcrypt = require('bcryptjs')
 
 const Login = ({ setLogin, setCollapsed }) => {
-    const { me, setMe, status, setStatus, setSignIn, id, setId, 
-        LOCALSTORAGE_KEY,LOCALSTORAGE_STATUS } = useApp()
+    const { me, setMe, status, setStatus, setSignIn, id, setId } = useApp()
     const [password, setPassword] = useState('')
-    const [rememberMe, setRememberMe] = useState(true)
     const navigate = useNavigate()
 
     // useEffect(() => {
@@ -19,9 +17,6 @@ const Login = ({ setLogin, setCollapsed }) => {
     //         document.getElementById('submit').disabled = true
     //     else document.getElementById('submit').disabled = false
     // }, [id, password])
-
-
-    // console.log(rememberMe)
 
     const handleLogin = async () => {
         if (!id) {
@@ -61,8 +56,6 @@ const Login = ({ setLogin, setCollapsed }) => {
                         setMe(content.name)
                         setLogin(true)
                         setSignIn(true)
-                        localStorage.setItem(LOCALSTORAGE_KEY, id)
-                        localStorage.setItem(LOCALSTORAGE_STATUS, 'login')
                         setStatus({
                             type: 'success',
                             msg: 'Login successfully!',
@@ -84,14 +77,19 @@ const Login = ({ setLogin, setCollapsed }) => {
         <div
             style={{
                 display: 'flex',
-                width: '50%',
                 justifyContent: 'center',
                 height: '100vh',
-                alignItems: 'center',
-                backgroundColor: '#fbf7e2',
             }}
         >
-            <div className="loginFormContainer">
+            <div
+                style={{
+                    display: 'flex',
+                    width: '50%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#fbf7e2',
+                }}
+            >
                 <img
                     src={require('../img/logo_animation.gif')}
                     alt="Logo"

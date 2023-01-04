@@ -226,7 +226,7 @@ const BuyMe = () => {
                 }}
                 dataSource={tasks}
                 renderItem={(item) => (
-                    <Card style={{ marginTop: 20 }}>
+                    <Card style={{ marginTop: 20, display: 'flex' }}>
                         <DownCircleOutlined
                             style={{ fontSize: '15px', color: '#228B22' }}
                         />
@@ -248,7 +248,7 @@ const BuyMe = () => {
                                 {item.taskContent}
                             </Space>
                             <Space>
-                                <b>截止日期: </b>
+                                <b>希望送達時間: </b>
                                 {item.due_start}~{item.due_end}
                             </Space>
                             <Space>

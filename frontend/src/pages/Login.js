@@ -84,24 +84,42 @@ const Login = ({ setLogin, setCollapsed }) => {
         <div
             style={{
                 display: 'flex',
+                width: '50%',
                 justifyContent: 'center',
-                height: '100vh',
+                alignItems: 'center',
+                backgroundColor: '#fbf7e2',
             }}
         >
             <div className="loginFormContainer">
                 <img
-                    src={require('../img/LogoTitle.png')}
+                    src={require('../img/logo_animation.gif')}
                     alt="Logo"
                     style={{
-                        width: '300px',
+                        width: '100%',
                         marginTop: '-100px',
-                        marginBottom: '50px',
+                        // marginBottom: '50px',
                     }}
                 />
+                </div>
+                <div
+                    className="loginFormContainer"
+                    style={{
+                        width: '50%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'white',
+                    }}
+                >
+                <h1
+                    className="title"
+                    style={{ marginBottom: 30, fontSize: 30 }}
+                >
+                    Welcome to NTU Buyme!
+                </h1>
                 <Form
                     name="basic"
                     className="loginForm"
-                    labelCol={{ span: 10 }}
+                    labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
                     initialValues={{ remember: true }}
                     autoComplete="off"
@@ -135,8 +153,9 @@ const Login = ({ setLogin, setCollapsed }) => {
                             },
                         ]}
                     >
-                        <Input.Password
+                        <Input
                             value={password}
+                            type="password"
                             onChange={(e) => {
                                 setPassword(e.target.value)
                             }}
@@ -146,7 +165,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                     <Form.Item
                         name="remember"
                         valuePropName="checked"
-                        wrapperCol={{ offset: 8, span: 16 }}
+                        wrapperCol={{ offset: 8, span: 20 }}
                     >
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>

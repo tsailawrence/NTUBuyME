@@ -2,7 +2,6 @@
 html {
     margin: 0;
     padding: 0;
-    font-family: 'Kalam';
 }
 
 .trigger {
@@ -29,74 +28,23 @@ html {
 }
 
 .ant-menu-item-active {
-    background-color: #f6c69b !important;
+    background-color: #fac898 !important;
 }
 
 .ant-menu-item-selected {
-    background-color: #dba083 !important;
+    background-color: #db9683 !important;
 }
 
 .ant-btn-primary {
-    background-color: #ffdaab !important;
+    background-color: #fac898 !important;
     color: black;
 }
 
 .ant-btn:hover {
-    color: #dba083 !important;
-    border-color: #dba083 !important;
+    color: #db9683 !important;
+    border-color: #db9683 !important;
 }
 
 h1 {
     margin-bottom: 10px;
-}
-
-.title {
-    font-family: 'Kalam';
-}
-
-.ant-typography {
-    color: #dba083 !important;
-}
-
-.ant-dropdown-menu-item-selected {
-    color: black !important;
-    background-color: #ffdaab !important;
-}
-
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #dba083 !important;
-}
-.ant-tabs-tab-btn:active {
-    color: #f1a48f !important;
-}
-.ant-tabs-tab:hover {
-    color: #f1a48f !important;
-}
-
-.ant-tabs-ink-bar {
-    background: #dba083 !important;
-}
-
-.ant-checkbox-inner {
-    background: #dba083 !important;
-}
-
-.ant-input:focus {
-    border-color: #dba083;
-    outline: 0;
-    -webkit-box-shadow: 0 0 0 2px #dba083;
-    box-shadow: 0 0 0 2px #ffdaab;
-}
-.ant-input:hover {
-    border-color: #dba083;
-}
-
-.ant-picker-input:focus {
-    border-color: #dba083;
-}
-.ant-input:hover {
-    border-color: #dba083;
-}
-.ant-input[class='password']:hover {
-    border-color: #dba083;
 }

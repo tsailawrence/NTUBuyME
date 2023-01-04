@@ -93,7 +93,7 @@ const Login = ({ setLogin, setCollapsed }) => {
         >
             <div className="loginFormContainer">
                 <img
-                    src={require('../img/logo_animation.gif')}
+                    // src={require('../img/logo_animation.gif')}
                     alt="Logo"
                     style={{
                         width: '100%',

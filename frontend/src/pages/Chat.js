@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React from 'react'
 import instance from '../api'
+import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useApp } from '../UseApp'
 import { Layout, Card, Input, Button } from 'antd'
@@ -10,27 +11,26 @@ const { Header, Content } = Layout
 const ChatBox = styled(Card)`
     width: 100%;
     height: 90%;
-    background: #eeeeee52;
-    border-radius: 0 0 8px 8px;
-    border: white solid 1px;
+    background: #fcecca;
+    border-radius: 50px;
     overflow: auto;
     margin-bottom: 10px;
+    height: 'calc(500px - 36px)';
 `
 
 const ChatBoxWrapper = styled.div`
-    position: fixed;
-    top: 20%;
-    left: 45%;
     transform: translate(-30%, 0);
     height: calc(500px - 36px);
     width: 500px;
-    background: #ffe3ba;
+    background: #ffdaab;
     opacity: 0.95;
     display: flex;
     flex-direction: column;
     overflow: auto;
-    border-radius: 30px;
-    padding: 15px;
+    border-radius: 50px;
+    padding: 25px;
+    z-index: 15;
+    margin: -100px 0 0 -150px;
 `
 
 const ChatRoomHeader = styled.div`
@@ -40,14 +40,14 @@ const ChatRoomHeader = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 8px 8px 0 0;
-    border: white 1.5px solid;
-    background: #faf0ca;
+    border-radius: 50px;
+    background: #fcecca;
     padding: 2px;
+    margin-bottom: 10px;
 `
 
 const FootRef = styled.div`
-    height: 50px;
+    height: 10px;
     width: 100%;
 `
 
@@ -130,7 +130,6 @@ function Chat({ collapsed, setCollapsed }) {
             <Content
                 className="site-layout-background"
                 style={{
-                    // margin: '24px 16px',
                     padding: 24,
                     paddingTop: 50,
                     minHeight: 280,
@@ -159,52 +158,65 @@ function Chat({ collapsed, setCollapsed }) {
                         ))}
                 </div>
                 {chatOpen && (
-                    <ChatBoxWrapper>
-                        <div
-                            style={{
-                                width: '100%',
-                                display: 'flex',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <Button
-                                type="Dashed"
-                                onClick={() => setChatOpen(false)}
+                    <div
+                        style={{
+                            display: 'flex',
+                            width: '500px',
+                            position: 'absolute',
+                            zIndex: '15',
+                            top: '50%',
+                            left: '50%',
+                            margin: '-15% 0 0 -10%',
+                            filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
+                        }}
+                    >
+                        <ChatBoxWrapper>
+                            <div
                                 style={{
-                                    position: 'fixed',
-                                    right: '15px',
-                                    top: '13px',
+                                    width: '100%',
+                                    display: 'flex',
+                                    justifyContent: 'center',
                                 }}
                             >
-                                X
-                            </Button>
-                            <ChatRoomHeader>
-                                <p>{title}</p>
-                            </ChatRoomHeader>
-                        </div>
+                                <Button
+                                    type="Dashed"
+                                    onClick={() => setChatOpen(false)}
+                                    style={{
+                                        position: 'fixed',
+                                        right: '25px',
+                                        // top: '13px',
+                                    }}
+                                >
+                                    X
+                                </Button>
+                                <ChatRoomHeader>
+                                    <p>{title}</p>
+                                </ChatRoomHeader>
+                            </div>
 
-                        {displayChat(messages)}
+                            {displayChat(messages)}
 
-                        <Input.Search
-                            enterButton="Send"
-                            placeholder="Type a message here..."
-                            value={body}
-                            onChange={(e) => setBody(e.target.value)}
-                            onSearch={(message) => {
-                                if (!message) {
-                                    setStatus({
-                                        type: 'error',
-                                        msg: 'Please enter a message body.',
-                                    })
-                                    return
-                                }
+                            <Input.Search
+                                enterButton="Send"
+                                placeholder="Type a message here..."
+                                value={body}
+                                onChange={(e) => setBody(e.target.value)}
+                                onSearch={(message) => {
+                                    if (!message) {
+                                        setStatus({
+                                            type: 'error',
+                                            msg: 'Please enter a message body.',
+                                        })
+                                        return
+                                    }
 
-                                sendMessage(me, body, chatBoxName)
-                                setBody('')
-                                setMsgSent(true)
-                            }}
-                        />
-                    </ChatBoxWrapper>
+                                    sendMessage(me, body, chatBoxName)
+                                    setBody('')
+                                    setMsgSent(true)
+                                }}
+                            />
+                        </ChatBoxWrapper>
+                    </div>
                 )}
             </Content>
         </Layout>

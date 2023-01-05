@@ -5,6 +5,11 @@ html {
     font-family: 'Futura';
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
 .trigger {
     padding: 0 24px;
     font-size: 18px;
@@ -12,10 +17,6 @@ html {
     cursor: pointer;
     transition: color 0.3s;
 }
-
-/* .trigger:hover {
-    color: #1890ff;
-} */
 
 .site-layout .site-layout-background {
     background: white;

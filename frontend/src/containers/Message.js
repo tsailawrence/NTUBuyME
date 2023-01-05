@@ -16,12 +16,12 @@ const StyledMessage = styled.div`
     }
 `
 const StyledMsg = styled.p`
-    background: ${({ isMe }) => (isMe ? 'white' : '#3d94ff')};
-    color: ${({ isMe }) => (isMe ? 'black' : '#faf5f5')};
-    // max-width: 60%;
+    background: ${({ isMe }) => (isMe ? 'white' : '#dba083')};
+    color: ${({ isMe }) => (isMe ? 'black' : 'white')};
     word-wrap: break-word;
-    padding: 2px 5px;
-    border-radius: 4px;
+    padding: 3px 8px;
+    border-radius: 8px;
+    margin: 2px;
 `
 
 const Message = ({ name, isMe, message }) => {

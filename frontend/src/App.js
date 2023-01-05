@@ -16,9 +16,8 @@ import { useEffect } from 'react'
 function App() {
     const [login, setLogin] = useState(false)
     const [collapsed, setCollapsed] = useState(false)
-    const [key, setKey] = useState(1)
     const { pathname } = useLocation()
-    const { me, id, setStatus, client } = useApp()
+    const { me, id, setStatus, client, key, setKey } = useApp()
 
     return (
         <Layout>

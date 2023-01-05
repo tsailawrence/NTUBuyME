@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useApp } from '../UseApp'
 import { Layout, Card, Input, Button } from 'antd'
+import FulfillModal from '../containers/FulfillModal'
 import Message from '../containers/Message'
 const { Header, Content } = Layout
 
@@ -56,6 +57,9 @@ function Chat({ collapsed, setCollapsed }) {
     const [chatBoxName, setChatBoxName] = useState('')
     const [body, setBody] = useState('')
     const [title, setTitle] = useState('')
+    const [senderID, setSenderID] = useState('')
+    const [receiverID, setReceiverID] = useState('')
+    const [taskID, setTaskID] = useState('')
     const msgFooter = useRef(null)
     const {
         id,
@@ -67,17 +71,27 @@ function Chat({ collapsed, setCollapsed }) {
         sendMessage,
         chats,
         setChats,
+        fulfill,
+        setFulfill,
+        orderFulfillisInitializer,
     } = useApp()
 
     useEffect(() => {
         getChats(id)
     }, [])
 
+    useEffect(() => {
+        console.log(fulfill)
+    }, [fulfill])
+
     const OnChatRoom = async (chatRoom) => {
         setChatOpen(true)
         setMessages(chatRoom.messages)
         setChatBoxName(chatRoom.name)
         setTitle(chatRoom.title)
+        setSenderID(chatRoom.sender)
+        setReceiverID(chatRoom.receiver)
+        setTaskID(chatRoom.task_id)
         await getChats(id)
         sendData(['CHAT', { name: chatRoom.name }])
     }
@@ -89,6 +103,21 @@ function Chat({ collapsed, setCollapsed }) {
         setChats(chatRooms)
     }
 
+    const onFulfill = () => {
+        sendData(['FULFILL', { id }])
+    }
+
+    const confirmFulfill = async () => {
+        const {
+            data: { chatRooms },
+        } = await instance.post('fulfillOrder', {
+            userID: id,
+            senderID: senderID,
+            receiverID: receiverID,
+            taskID: taskID,
+        })
+        setChats(chatRooms)
+    }
     const displayChat = (chat) => (
         <ChatBox>
             {chat.length === 0 ? (
@@ -134,6 +163,15 @@ function Chat({ collapsed, setCollapsed }) {
                     filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
                 }}
             >
+                {fulfill && (
+                    <FulfillModal
+                        fulfill={fulfill}
+                        setFulfill={setFulfill}
+                        confirmFulfill={confirmFulfill}
+                        setChatOpen={setChatOpen}
+                        isInitializer={id === orderFulfillisInitializer}
+                    />
+                )}
                 <div>
                     <h1>Chat</h1>
                     {chats.length !== 0 &&
@@ -209,6 +247,12 @@ function Chat({ collapsed, setCollapsed }) {
                                     setMsgSent(true)
                                 }}
                             />
+                            <Button
+                                style={{ marginTop: '10px' }}
+                                onClick={onFulfill}
+                            >
+                                完成訂單
+                            </Button>
                         </ChatBoxWrapper>
                     </div>
                 )}

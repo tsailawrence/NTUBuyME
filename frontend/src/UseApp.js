@@ -12,6 +12,9 @@ const c = new WebSocket('ws://localhost:8080')
 
 const AppProvider = (props) => {
     const [messages, setMessages] = useState([])
+    const [fulfill, setFulfill] = useState(false)
+    const [orderFulfillisInitializer, setOrderFulfillisInitializer] =
+        useState('')
     const [status, setStatus] = useState([])
     const [reconnect, setReconnnect] = useState(false)
     const [signIn, setSignIn] = useState(false)
@@ -56,6 +59,12 @@ const AppProvider = (props) => {
             case 'message': {
                 setMessages([...messages, payload])
                 break
+            }
+
+            case 'fulfill': {
+                setFulfill(true)
+                console.log(payload)
+                setOrderFulfillisInitializer(payload)
             }
         }
     }
@@ -107,6 +116,11 @@ const AppProvider = (props) => {
                 sendMessage,
                 chats,
                 setChats,
+                fulfill,
+                setFulfill,
+                key,
+                setKey,
+                orderFulfillisInitializer,
             }}
             {...props}
         />

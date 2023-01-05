@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React from 'react'
 import instance from '../api'
+import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useApp } from '../UseApp'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, Card, Input, Button } from 'antd'
 import Message from '../containers/Message'
 const { Header, Content } = Layout
@@ -10,42 +10,66 @@ const { Header, Content } = Layout
 const ChatBox = styled(Card)`
     width: 100%;
     height: 90%;
-    background: #eeeeee52;
-    border-radius: 10px;
+    background: #fcecca;
+    border-radius: 50px;
+    border: white solid 1px;
     overflow: auto;
-    padding: 1px;
     margin-bottom: 10px;
+    height: 'calc(500px - 36px)';
 `
 
 const ChatBoxWrapper = styled.div`
-    position: fixed;
-    top: 20%;
-    left: 50%;
     transform: translate(-30%, 0);
     height: calc(500px - 36px);
     width: 500px;
-    background: gray;
+    background: #ffdaab;
+    opacity: 0.95;
     display: flex;
     flex-direction: column;
-    align-items: center;
     overflow: auto;
-    border-radius: 30px;
-    padding: 15px;
+    border-radius: 50px;
+    padding: 25px;
+    z-index: 15;
+    margin: -100px 0 0 -150px;
+`
+
+const ChatRoomHeader = styled.div`
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border: white 1.5px solid;
+    background: #fcecca;
+    padding: 5px;
+    margin-bottom: 10px;
 `
 
 const FootRef = styled.div`
-    height: 50px;
+    height: 10px;
+    width: 100%;
 `
 
 function Chat({ collapsed, setCollapsed }) {
-    const [chats, setChats] = useState([])
     const [msgSent, setMsgSent] = useState(false)
     const [chatOpen, setChatOpen] = useState(false)
     const [chatBoxName, setChatBoxName] = useState('')
     const [body, setBody] = useState('')
     const [title, setTitle] = useState('')
     const msgFooter = useRef(null)
-    const { id, me, setStatus, messages, setMessages, client } = useApp()
+    const {
+        id,
+        me,
+        setStatus,
+        messages,
+        setMessages,
+        sendData,
+        sendMessage,
+        chats,
+        setChats,
+    } = useApp()
 
     useEffect(() => {
         getChats(id)
@@ -57,7 +81,7 @@ function Chat({ collapsed, setCollapsed }) {
         setChatBoxName(chatRoom.name)
         setTitle(chatRoom.title)
         await getChats(id)
-        await sendData(['CHAT', { name: chatRoom.name }])
+        sendData(['CHAT', { name: chatRoom.name }])
     }
 
     const getChats = async (id) => {
@@ -97,31 +121,6 @@ function Chat({ collapsed, setCollapsed }) {
         setMsgSent(false)
     }, [msgSent])
 
-    const sendMessage = () => {
-        sendData(['MESSAGE', { who: me, body, name: chatBoxName }])
-        setBody('')
-        setMsgSent(true)
-    }
-    const sendData = async (data) => {
-        client.send(JSON.stringify(data))
-    }
-
-    client.onmessage = (byteString) => {
-        const { data } = byteString
-        const [task, payload] = JSON.parse(data)
-        switch (task) {
-            case 'chat': {
-                setChats(payload)
-                break
-            }
-
-            case 'message': {
-                setMessages([...messages, payload])
-                break
-            }
-        }
-    }
-
     return (
         <Layout className="site-layout">
             <Content
@@ -156,48 +155,65 @@ function Chat({ collapsed, setCollapsed }) {
                         ))}
                 </div>
                 {chatOpen && (
-                    <ChatBoxWrapper>
-                        <div
-                            style={{
-                                width: '100%',
-                                display: 'flex',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <h1>{title}</h1>
-                            <Button
-                                type="Dashed"
-                                onClick={() => setChatOpen(false)}
+                    <div
+                        style={{
+                            display: 'flex',
+                            width: '500px',
+                            position: 'absolute',
+                            zIndex: '15',
+                            top: '50%',
+                            left: '50%',
+                            margin: '-15% 0 0 -10%',
+                            filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
+                        }}
+                    >
+                        <ChatBoxWrapper>
+                            <div
                                 style={{
-                                    position: 'fixed',
-                                    right: '15px',
-                                    top: '10px',
+                                    width: '100%',
+                                    display: 'flex',
+                                    justifyContent: 'center',
                                 }}
                             >
-                                X
-                            </Button>
-                        </div>
+                                <Button
+                                    type="Dashed"
+                                    onClick={() => setChatOpen(false)}
+                                    style={{
+                                        position: 'fixed',
+                                        right: '25px',
+                                        // top: '13px',
+                                    }}
+                                >
+                                    X
+                                </Button>
+                                <ChatRoomHeader>
+                                    <p>{title}</p>
+                                </ChatRoomHeader>
+                            </div>
 
-                        {displayChat(messages)}
+                            {displayChat(messages)}
 
-                        <Input.Search
-                            enterButton="Send"
-                            placeholder="Type a message here..."
-                            value={body}
-                            onChange={(e) => setBody(e.target.value)}
-                            onSearch={(message) => {
-                                if (!message) {
-                                    setStatus({
-                                        type: 'error',
-                                        msg: 'Please enter a message body.',
-                                    })
-                                    return
-                                }
+                            <Input.Search
+                                enterButton="Send"
+                                placeholder="Type a message here..."
+                                value={body}
+                                onChange={(e) => setBody(e.target.value)}
+                                onSearch={(message) => {
+                                    if (!message) {
+                                        setStatus({
+                                            type: 'error',
+                                            msg: 'Please enter a message body.',
+                                        })
+                                        return
+                                    }
 
-                                sendMessage()
-                            }}
-                        />
-                    </ChatBoxWrapper>
+                                    sendMessage(me, body, chatBoxName)
+                                    setBody('')
+                                    setMsgSent(true)
+                                }}
+                            />
+                        </ChatBoxWrapper>
+                    </div>
                 )}
             </Content>
         </Layout>

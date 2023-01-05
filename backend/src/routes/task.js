@@ -128,10 +128,12 @@ exports.AcceptTasks = async (req, res) => {
     const { id, receiver } = req.body
     const user = await UserModel.findOne({ user_id: receiver })
     const task = await TaskModel.findOne({ _id: id })
+    console.log(task)
     const task_populated = await task.populate({
         path: 'sender',
         select: 'name',
     })
+    console.log(task_populated)
     const senderName = task_populated.sender.name
     const chatBoxName = makeName(user.name, senderName)
     await TaskModel.updateOne(
@@ -150,6 +152,7 @@ exports.AcceptTasks = async (req, res) => {
             .split(' ', 1)}`,
         fee: task.fee,
         from: senderName,
+        task_id: task._id,
     })
 
     newChatRoom.save()

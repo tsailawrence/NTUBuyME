@@ -12,7 +12,6 @@ const ChatBox = styled(Card)`
     height: 90%;
     background: #fcecca;
     border-radius: 50px;
-    border: white solid 1px;
     overflow: auto;
     margin-bottom: 10px;
     height: 'calc(500px - 36px)';
@@ -40,10 +39,10 @@ const ChatRoomHeader = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 8px 8px 0 0;
-    border: white 1.5px solid;
-    background: #faf0ca;
+    border-radius: 50px;
+    background: #fcecca;
     padding: 2px;
+    margin-bottom: 10px;
 `
 
 const FootRef = styled.div`
@@ -125,7 +124,6 @@ function Chat({ collapsed, setCollapsed }) {
             <Content
                 className="site-layout-background"
                 style={{
-                    // margin: '24px 16px',
                     padding: 24,
                     paddingTop: 50,
                     minHeight: 280,

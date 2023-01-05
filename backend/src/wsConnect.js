@@ -1,7 +1,11 @@
 import { ChatBoxModel, MessageModel, UserModel } from './models/BuyMe'
 
 const sendData = (data, ws) => {
-    ws.send(JSON.stringify(data))
+    if (ws.readyState === 1) {
+        ws.send(JSON.stringify(data))
+    } else {
+        //do something
+    }
 }
 
 const chatBoxes = {} // chatBoxes[chatBoxName] = ws

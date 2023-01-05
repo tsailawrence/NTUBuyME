@@ -40,14 +40,13 @@ const { Header, Content } = Layout
 const BuyMe = () => {
     const [tasks, setTasks] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
-    const [nPerPage, setNPerPage] = useState(7)
+    const [nPerPage, setNPerPage] = useState(5)
     const [maxPageN, setMaxPageN] = useState(10)
     const [filter, setFilter] = useState('allTasksByDuestart')
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
     const [reload, setReload] = useState(false)
-    const { setStatus, id, me, setKey } = useApp()
+    const { setStatus, id, me, key, setKey } = useApp()
     const navigate = useNavigate()
-
 
     useEffect(() => {
         console.log(me)
@@ -104,15 +103,12 @@ const BuyMe = () => {
         })
 
         navigateToChat(taskId)
-
         getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
-    const navigateToChat = async (taskId) => {
+    const navigateToChat = (taskId) => {
         setKey('3')
         navigate('/chat')
-        
-
     }
 
     const DeleteAllTasks = async () => {

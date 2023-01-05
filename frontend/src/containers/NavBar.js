@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     UserOutlined,
     MessageOutlined,
@@ -14,9 +14,12 @@ import { useApp } from '../UseApp'
 
 const { Sider } = Layout
 
-function NavBar({ setKey, collapsed }) {
+function NavBar({ collapsed }) {
     const navigate = useNavigate()
-    const { setSignIn, setStatus, LOCALSTORAGE_STATUS } = useApp()
+    const { key, setKey, setSignIn, setStatus, LOCALSTORAGE_STATUS, clickRef } =
+        useApp()
+
+    console.log(key)
     function navigatePage(key) {
         setKey(key)
         switch (key) {
@@ -45,6 +48,35 @@ function NavBar({ setKey, collapsed }) {
                 navigate('/')
         }
     }
+    // useEffect(() => {
+    //     console.log(key)
+    //     setKey(key)
+    //     switch (key) {
+    //         case '2':
+    //             navigate('/mytasks')
+    //             break
+    //         case '3':
+    //             navigate('/chat')
+    //             break
+    //         case '4':
+    //             navigate('/transfer')
+    //             break
+    //         case '5':
+    //             navigate('/account')
+    //             break
+    //         case '6':
+    //             //Logout
+    //             localStorage.setItem(LOCALSTORAGE_STATUS, 'logout')
+    //             navigate('/login')
+    //             setStatus({
+    //                 type: 'success',
+    //                 msg: 'Logout successfully!',
+    //             })
+    //             break
+    //         default:
+    //             navigate('/')
+    //     }
+    // }, [key])
 
     return (
         <>
@@ -79,11 +111,13 @@ function NavBar({ setKey, collapsed }) {
                     <img src={logo}></img>
                 </div>
                 <Menu
+                    className="tabBar"
                     style={{
                         background: '#f5f5f5',
                     }}
                     mode="inline"
-                    defaultSelectedKeys={['1']}
+                    // defaultSelectedKeys={[key]}
+                    selectedKeys={[key]}
                     onClick={(e) => navigatePage(e.key)}
                     items={[
                         {
@@ -147,7 +181,7 @@ function NavBar({ setKey, collapsed }) {
                             },
                         },
                     ]}
-                />
+                ></Menu>
             </Sider>
         </>
     )

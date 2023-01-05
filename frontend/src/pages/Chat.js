@@ -3,7 +3,7 @@ import instance from '../api'
 import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useApp } from '../UseApp'
-import { Layout, Card, Input, Button } from 'antd'
+import { Layout, Card, Input, Button, List } from 'antd'
 import FulfillModal from '../containers/FulfillModal'
 import Message from '../containers/Message'
 import { useNavigate } from 'react-router-dom'
@@ -31,7 +31,7 @@ const ChatBoxWrapper = styled.div`
     border-radius: 50px;
     padding: 25px;
     z-index: 15;
-    margin: -100px 0 0 -150px;
+    margin: -70% 0 0 -30%;
 `
 
 const ChatRoomHeader = styled.div`
@@ -62,6 +62,9 @@ function Chat({ collapsed, setCollapsed }) {
     const [receiverID, setReceiverID] = useState('')
     const [taskID, setTaskID] = useState('')
     const [senderName, setSenderName] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [nPerPage, setNPerPage] = useState(5)
+    const [maxPageN, setMaxPageN] = useState(10)
     const msgFooter = useRef(null)
     const navigate = useNavigate()
     const {
@@ -188,20 +191,33 @@ function Chat({ collapsed, setCollapsed }) {
                 )}
                 <div>
                     <h1>Chat</h1>
-                    {chats.length !== 0 &&
-                        chats.map((element, key) => (
-                            <Card
-                                title={element.title}
-                                style={{ margin: 20 }}
-                                key={key}
-                                hoverable="true"
-                                onClick={() => OnChatRoom(element)}
-                            >
-                                <p>發起人： {element.from}</p>
-                                <p>期間： {element.due_period}</p>
-                                <p>費用: {element.fee}</p>
-                            </Card>
-                        ))}
+                    {chats.length !== 0 && (
+                        <List
+                            itemLayout="vertical"
+                            size="large"
+                            pagination={{
+                                onChange: (page) => {
+                                    setCurrentPage(page)
+                                },
+                                pageSize: nPerPage,
+                            }}
+                            dataSource={chats}
+                            renderItem={(element, key) => (
+                                <Card
+                                    title={element.title}
+                                    style={{ margin: 20 }}
+                                    key={key}
+                                    hoverable="true"
+                                    onClick={() => OnChatRoom(element)}
+                                >
+                                    <p>發起人： {element.from}</p>
+                                    <p>期間： {element.due_period}</p>
+                                    <p>費用: {element.fee}</p>
+                                </Card>
+                            )}
+                            // chats.map((element, key) => (
+                        />
+                    )}
                 </div>
                 {chatOpen && (
                     <div

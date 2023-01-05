@@ -13,6 +13,7 @@ import {
 import instance from '../api'
 import CreateTaskModal from '../containers/CreateTaskModal'
 import { useApp } from '../UseApp'
+import { useNavigate } from 'react-router-dom'
 
 const IconText = ({ icon, text }) => (
     <Space>
@@ -44,7 +45,9 @@ const BuyMe = () => {
     const [filter, setFilter] = useState('allTasksByDuestart')
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
     const [reload, setReload] = useState(false)
-    const { setStatus, id, me } = useApp()
+    const { setStatus, id, me, setKey } = useApp()
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         console.log(me)
@@ -99,7 +102,17 @@ const BuyMe = () => {
             type: message,
             msg: content,
         })
+
+        navigateToChat(taskId)
+
         getAllTasks(currentPage, nPerPage, maxPageN)
+    }
+
+    const navigateToChat = async (taskId) => {
+        setKey('3')
+        navigate('/chat')
+        
+
     }
 
     const DeleteAllTasks = async () => {

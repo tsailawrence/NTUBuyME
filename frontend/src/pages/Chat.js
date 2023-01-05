@@ -59,6 +59,7 @@ function Chat({ collapsed, setCollapsed }) {
     const [title, setTitle] = useState('')
     const [senderID, setSenderID] = useState('')
     const [receiverID, setReceiverID] = useState('')
+    const [taskID, setTaskID] = useState('')
     const msgFooter = useRef(null)
     const {
         id,
@@ -72,6 +73,7 @@ function Chat({ collapsed, setCollapsed }) {
         setChats,
         fulfill,
         setFulfill,
+        orderFulfillisInitializer,
     } = useApp()
 
     useEffect(() => {
@@ -89,6 +91,7 @@ function Chat({ collapsed, setCollapsed }) {
         setTitle(chatRoom.title)
         setSenderID(chatRoom.sender)
         setReceiverID(chatRoom.receiver)
+        setTaskID(chatRoom.task_id)
         await getChats(id)
         sendData(['CHAT', { name: chatRoom.name }])
     }
@@ -101,7 +104,7 @@ function Chat({ collapsed, setCollapsed }) {
     }
 
     const onFulfill = () => {
-        sendData(['FULFILL', {}])
+        sendData(['FULFILL', { id }])
     }
 
     const confirmFulfill = async () => {
@@ -111,6 +114,7 @@ function Chat({ collapsed, setCollapsed }) {
             userID: id,
             senderID: senderID,
             receiverID: receiverID,
+            taskID: taskID,
         })
         setChats(chatRooms)
     }
@@ -164,6 +168,8 @@ function Chat({ collapsed, setCollapsed }) {
                         fulfill={fulfill}
                         setFulfill={setFulfill}
                         confirmFulfill={confirmFulfill}
+                        setChatOpen={setChatOpen}
+                        isInitializer={id === orderFulfillisInitializer}
                     />
                 )}
                 <div>

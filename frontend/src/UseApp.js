@@ -13,6 +13,8 @@ const c = new WebSocket('ws://localhost:8080')
 const AppProvider = (props) => {
     const [messages, setMessages] = useState([])
     const [fulfill, setFulfill] = useState(false)
+    const [orderFulfillisInitializer, setOrderFulfillisInitializer] =
+        useState('')
     const [status, setStatus] = useState([])
     const [reconnect, setReconnnect] = useState(false)
     const [signIn, setSignIn] = useState(false)
@@ -24,6 +26,7 @@ const AppProvider = (props) => {
     const savedMe = localStorage.getItem(LOCALSTORAGE_NAME_KEY)
     const [id, setId] = useState(savedId || '')
     const [me, setMe] = useState(savedMe || '')
+    const [key, setKey] = useState(1)
 
     useEffect(() => {
         displayStatus(status)
@@ -60,6 +63,8 @@ const AppProvider = (props) => {
 
             case 'fulfill': {
                 setFulfill(true)
+                console.log(payload)
+                setOrderFulfillisInitializer(payload)
             }
         }
     }
@@ -113,6 +118,9 @@ const AppProvider = (props) => {
                 setChats,
                 fulfill,
                 setFulfill,
+                key,
+                setKey,
+                orderFulfillisInitializer,
             }}
             {...props}
         />

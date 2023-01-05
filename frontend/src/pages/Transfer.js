@@ -40,22 +40,15 @@ function Transfer({ collapsed, setCollapsed }) {
     //     console.log(idList)
     // }, [idList])
 
-    const handleQRcode = (account) => {
-        const corsURL = 'https://cors-anywhere.herokuapp.com/'
-        const apiURL =
-            'https://i-tw.org/twpay/api?Bank=' +
-            account.bank_id +
-            '&Acc=' +
-            account.bankaccount_id
-
-        fetch(`${corsURL}${apiURL}`)
-            .then((res) => {
-                const data = res.json()
-                return data
-            })
-            .then((data) => {
-                setQrCode(<img src={data.QR} alt="new" width="200" />)
-            })
+    const handleQRcode = async (account) => {
+        const {
+            data,
+        } = await axios.get('/qrcode', {
+            params: {
+                account,
+            },
+        })
+        setQrCode(<img src={data.QR} alt="new" width="200" />)
     }
 
     return (

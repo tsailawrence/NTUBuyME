@@ -20,12 +20,22 @@ exports.FulfillOrder = async (req, res) => {
     const senderID = req.body.senderID
     const receiverID = req.body.receiverID
     const userID = req.body.userID
+    const taskID = req.body.taskID
 
     try {
-        await TaskModel.findOneAndDelete({
-            sender: senderID,
-            receiver: receiverID,
-        })
+        await TaskModel.findOneAndUpdate(
+            {
+                sender: senderID,
+                receiver: receiverID,
+            },
+            { status: 'completed' }
+        )
+    } catch (e) {
+        console.log(e)
+    }
+
+    try {
+        await ChatBoxModel.findOneAndDelete({ task_id: taskID })
     } catch (e) {
         console.log(e)
     }

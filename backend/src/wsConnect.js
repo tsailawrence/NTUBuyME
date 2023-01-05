@@ -47,10 +47,10 @@ export default {
             }
 
             case 'FULFILL': {
-                console.log('sanity check')
+                const { id } = payload
                 chatBoxes[ws.box].forEach((ws) => {
                     console.log(ws.id)
-                    sendData(['fulfill'], ws)
+                    sendData(['fulfill', id], ws)
                 })
             }
         }

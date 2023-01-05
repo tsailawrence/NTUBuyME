@@ -1,22 +1,32 @@
 import { Modal } from 'antd'
-import { useState } from 'react'
-const FulfillModal = ({ fulfill, setFulfill, confirmFulfill }) => {
+import { useNavigate } from 'react-router-dom'
+const FulfillModal = ({
+    fulfill,
+    setFulfill,
+    confirmFulfill,
+    setChatOpen,
+    isInitializer,
+}) => {
+    console.log(isInitializer)
+    const navigate = useNavigate()
     return (
         <Modal
-            title="Modal"
+            title="完成訂單"
             open={fulfill}
+            okButtonProps={{ disabled: isInitializer }}
             onOk={() => {
                 confirmFulfill()
+                setFulfill(false)
+                setChatOpen(false)
+                navigate('/transfer')
             }}
             onCancel={() => {
                 setFulfill(false)
             }}
-            okText="确认"
+            okText="確認"
             cancelText="取消"
         >
-            <p>Bla bla ...</p>
-            <p>Bla bla ...</p>
-            <p>Bla bla ...</p>
+            <p>送出後將結束訂單，請確認您的訂單已經完成。</p>
         </Modal>
     )
 }

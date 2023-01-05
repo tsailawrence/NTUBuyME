@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Input, Layout, Space, List, Card, Divider, Button } from 'antd'
 import { useApp } from '../UseApp'
-import axios from '../api'
+import { instance } from '../api'
 import { useLocation } from 'react-router-dom'
 
 const { Header, Content } = Layout
@@ -26,7 +26,7 @@ function Transfer({ collapsed, setCollapsed }) {
     const getReceiverID = async (objId) => {
         const {
             data: { message, content },
-        } = await axios.get('/getReceiverId', {
+        } = await instance.get('/getReceiverId', {
             params: {
                 userObjId: objId,
             },
@@ -37,7 +37,7 @@ function Transfer({ collapsed, setCollapsed }) {
     const searchId = async (id) => {
         const {
             data: { message, content },
-        } = await axios.get('/transfer', {
+        } = await instance.get('/transfer', {
             params: {
                 userId: id,
             },
@@ -61,7 +61,7 @@ function Transfer({ collapsed, setCollapsed }) {
     // }, [idList])
 
     const handleQRcode = async (account) => {
-        const { data } = await axios.get('/qrcode', {
+        const { data } = await instance.get('/qrcode', {
             params: {
                 account,
             },

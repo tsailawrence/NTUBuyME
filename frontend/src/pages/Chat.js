@@ -1,5 +1,5 @@
 import React from 'react'
-import instance from '../api'
+import { instance } from '../api'
 import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useApp } from '../UseApp'

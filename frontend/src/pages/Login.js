@@ -3,7 +3,7 @@ import '../index.css'
 import { useApp } from '../UseApp'
 import { Button, Checkbox, Form, Input, Layout } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import instance from '../api'
+import { instance } from '../api'
 
 const bcrypt = require('bcryptjs')
 const { Header, Content } = Layout

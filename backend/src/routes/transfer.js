@@ -1,11 +1,28 @@
 import { UserModel } from '../models/BuyMe'
 
-exports.GetTransferAccount = async (req, res) => {
-    const { userId } = req.query
-    // console.log(userId)
-    let user = await UserModel.findOne({ user_id: userId })
+exports.GetReceiverId = async (req, res) => {
+    console.log(req.query.userObjId)
+    let user = await UserModel.findOne({ _id: req.query.userObjId })
     if (!user) {
         // console.log('not found')
+        res.status(200).send({
+            message: 'error',
+            content: 'Cannot find user with this ID!',
+        })
+    } else {
+        res.status(200).send({
+            message: 'success',
+            content: {
+                id: user.user_id
+            },
+        })
+    }
+}
+
+exports.GetTransferAccount = async (req, res) => {
+    const { userId } = req.query
+    let user = await UserModel.findOne({ user_id: userId })
+    if (!user) {
         res.status(200).send({
             message: 'error',
             content: 'Cannot find user with this ID!',

@@ -18,6 +18,7 @@ function main(app) {
     app.post('/api/account', wrap(accountRoute.EditUserAccount))
     app.post('/api/changePassword', wrap(accountRoute.ChangePassword))
     app.get('/api/transfer', wrap(transferRoute.GetTransferAccount))
+    app.get('/api/getReceiverId', wrap(transferRoute.GetReceiverId))
     app.get('/api/allTasksByDueStart', wrap(buymeRoute.FilterTasksByDueStart))
     app.get('/api/allTasksByFee', wrap(buymeRoute.FilterTasksByFee))
     app.post('/api/delete', wrap(buymeRoute.DeleteAllTasks))

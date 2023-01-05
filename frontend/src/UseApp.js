@@ -5,7 +5,6 @@ const AppContext = createContext({
     status: {},
     me: '',
     signIn: false,
-    // getAccount: () => {},
 })
 
 const c = new WebSocket('ws://localhost:8080')
@@ -30,21 +29,6 @@ const AppProvider = (props) => {
     useEffect(() => {
         displayStatus(status)
     }, [status])
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         if (c && !isOpen(c)) {
-    //             console.log('!')
-    //             c.close()
-    //             c = new WebSocket('ws://localhost:8080')
-    //         }
-    //         setReconnnect(!reconnect)
-    //     }, 5000)
-    // }, [reconnect])
-
-    // const isOpen = (ws) => {
-    //     return ws.readyState === 1
-    // }
 
     c.onmessage = (byteString) => {
         const { data } = byteString

@@ -20,7 +20,10 @@ const ChatBox = styled(Card)`
 `
 
 const ChatBoxWrapper = styled.div`
-    transform: translate(-30%, 0);
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    transform: translate(-20%, 0);
     height: calc(500px - 36px);
     width: 500px;
     background: #ffdaab;
@@ -30,9 +33,9 @@ const ChatBoxWrapper = styled.div`
     overflow: auto;
     border-radius: 50px;
     padding: 25px;
-    z-index: 15;
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2)
     margin: -70% 0 0 -30%;
-`
+    `
 
 const ChatRoomHeader = styled.div`
     width: 100%;
@@ -220,71 +223,70 @@ function Chat({ collapsed, setCollapsed }) {
                     )}
                 </div>
                 {chatOpen && (
-                    <div
-                        style={{
-                            display: 'flex',
-                            width: '500px',
-                            position: 'absolute',
-                            zIndex: '15',
-                            top: '50%',
-                            left: '50%',
-                            margin: '-15% 0 0 -10%',
-                            filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
-                        }}
-                    >
-                        <ChatBoxWrapper>
-                            <div
-                                style={{
-                                    width: '100%',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <Button
-                                    type="Dashed"
-                                    onClick={() => setChatOpen(false)}
-                                    style={{
-                                        position: 'fixed',
-                                        right: '25px',
-                                        // top: '13px',
-                                    }}
-                                >
-                                    X
-                                </Button>
-                                <ChatRoomHeader>
-                                    <p>{title}</p>
-                                </ChatRoomHeader>
-                            </div>
-
-                            {displayChat(messages)}
-
-                            <Input.Search
-                                enterButton="Send"
-                                placeholder="Type a message here..."
-                                value={body}
-                                onChange={(e) => setBody(e.target.value)}
-                                onSearch={(message) => {
-                                    if (!message) {
-                                        setStatus({
-                                            type: 'error',
-                                            msg: 'Please enter a message body.',
-                                        })
-                                        return
-                                    }
-
-                                    sendMessage(me, body, chatBoxName)
-                                    setBody('')
-                                    setMsgSent(true)
-                                }}
-                            />
+                    // <div
+                    //     style={{
+                    //         display: 'flex',
+                    //         width: '500px',
+                    //         position: 'absolute',
+                    //         zIndex: '15',
+                    //         top: '50%',
+                    //         left: '50%',
+                    //         margin: '-15% 0 0 -10%',
+                    //         filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
+                    //     }}
+                    // >
+                    <ChatBoxWrapper>
+                        <div
+                            style={{
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}
+                        >
                             <Button
-                                style={{ marginTop: '10px' }}
-                                onClick={onFulfill}
+                                type="Dashed"
+                                onClick={() => setChatOpen(false)}
+                                style={{
+                                    position: 'fixed',
+                                    right: '25px',
+                                    // top: '13px',
+                                }}
                             >
-                                完成訂單
+                                X
                             </Button>
-                        </ChatBoxWrapper>
-                    </div>
+                            <ChatRoomHeader>
+                                <p>{title}</p>
+                            </ChatRoomHeader>
+                        </div>
+
+                        {displayChat(messages)}
+
+                        <Input.Search
+                            enterButton="Send"
+                            placeholder="Type a message here..."
+                            value={body}
+                            onChange={(e) => setBody(e.target.value)}
+                            onSearch={(message) => {
+                                if (!message) {
+                                    setStatus({
+                                        type: 'error',
+                                        msg: 'Please enter a message body.',
+                                    })
+                                    return
+                                }
+
+                                sendMessage(me, body, chatBoxName)
+                                setBody('')
+                                setMsgSent(true)
+                            }}
+                        />
+                        <Button
+                            style={{ marginTop: '10px', borderRadius: '50px' }}
+                            onClick={onFulfill}
+                        >
+                            完成訂單
+                        </Button>
+                    </ChatBoxWrapper>
                 )}
             </Content>
         </Layout>

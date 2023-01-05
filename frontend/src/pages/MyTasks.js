@@ -104,7 +104,10 @@ function MyTasks({ collapsed, setCollapsed }) {
                             </Space>
                             <Space>
                                 <b>希望送達時間: </b>
-                                {item.due_start}~{item.due_end}
+                                {item.due_start.split('T')[0]}
+                                {item.due_start.split('T')[1].slice(0, -5)}~
+                                {item.due_end.split('T')[0]}
+                                {item.due_end.split('T')[1].slice(0, -5)}
                             </Space>
                             <Space>
                                 <b>外送費: </b>

@@ -171,7 +171,7 @@ const Login = ({ setLogin, setCollapsed }) => {
                             value={id}
                             id="userID"
                             onChange={(e) => {
-                                setId(e.target.value)
+                                setId(e.target.value.toUpperCase())
                             }}
                         />
                     </Form.Item>

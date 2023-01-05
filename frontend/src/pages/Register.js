@@ -39,6 +39,8 @@ const Register = ({ setLogin }) => {
     const onFinish = async (value) => {
         const password = value.user.password
         value.user.password = await encryptPassword(password)
+        value.user.id = value.user.id.toUpperCase()
+
         const {
             data: { message, content },
         } = await instance.post('/register', value)

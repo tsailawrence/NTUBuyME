@@ -45,9 +45,8 @@ const BuyMe = () => {
     const [filter, setFilter] = useState('allTasksByDuestart')
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
     const [reload, setReload] = useState(false)
-    const { setStatus, id, me, setKey } = useApp()
+    const { setStatus, id, me, key, setKey } = useApp()
     const navigate = useNavigate()
-
 
     useEffect(() => {
         console.log(me)
@@ -104,15 +103,12 @@ const BuyMe = () => {
         })
 
         navigateToChat(taskId)
-
         getAllTasks(currentPage, nPerPage, maxPageN)
     }
 
-    const navigateToChat = async (taskId) => {
+    const navigateToChat = (taskId) => {
         setKey('3')
         navigate('/chat')
-        
-
     }
 
     const DeleteAllTasks = async () => {

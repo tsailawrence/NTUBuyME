@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 import { message } from 'antd'
 
 const AppContext = createContext({
@@ -26,7 +26,7 @@ const AppProvider = (props) => {
     const savedMe = localStorage.getItem(LOCALSTORAGE_NAME_KEY)
     const [id, setId] = useState(savedId || '')
     const [me, setMe] = useState(savedMe || '')
-    const [key, setKey] = useState(1)
+    const [key, setKey] = useState('1')
 
     useEffect(() => {
         displayStatus(status)

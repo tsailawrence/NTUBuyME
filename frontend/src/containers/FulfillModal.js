@@ -1,31 +1,23 @@
-import React, { useState } from 'react'
-import { Button, Modal, Space } from 'antd'
-const FulfillModal = () => {
-    const [open, setOpen] = useState(false)
-    const showModal = () => {
-        setOpen(true)
-    }
-    const hideModal = () => {
-        setOpen(false)
-    }
+import { Modal } from 'antd'
+import { useState } from 'react'
+const FulfillModal = ({ fulfill, setFulfill, confirmFulfill }) => {
     return (
-        <>
-            <Button type="primary" onClick={showModal}>
-                Modal
-            </Button>
-            <Modal
-                title="Modal"
-                open={open}
-                onOk={hideModal}
-                onCancel={hideModal}
-                okText="确认"
-                cancelText="取消"
-            >
-                <p>Bla bla ...</p>
-                <p>Bla bla ...</p>
-                <p>Bla bla ...</p>
-            </Modal>
-        </>
+        <Modal
+            title="Modal"
+            open={fulfill}
+            onOk={() => {
+                confirmFulfill()
+            }}
+            onCancel={() => {
+                setFulfill(false)
+            }}
+            okText="确认"
+            cancelText="取消"
+        >
+            <p>Bla bla ...</p>
+            <p>Bla bla ...</p>
+            <p>Bla bla ...</p>
+        </Modal>
     )
 }
 export default FulfillModal

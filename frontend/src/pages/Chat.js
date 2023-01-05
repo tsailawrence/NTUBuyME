@@ -57,6 +57,8 @@ function Chat({ collapsed, setCollapsed }) {
     const [chatBoxName, setChatBoxName] = useState('')
     const [body, setBody] = useState('')
     const [title, setTitle] = useState('')
+    const [senderID, setSenderID] = useState('')
+    const [receiverID, setReceiverID] = useState('')
     const msgFooter = useRef(null)
     const {
         id,
@@ -76,11 +78,17 @@ function Chat({ collapsed, setCollapsed }) {
         getChats(id)
     }, [])
 
+    useEffect(() => {
+        console.log(fulfill)
+    }, [fulfill])
+
     const OnChatRoom = async (chatRoom) => {
         setChatOpen(true)
         setMessages(chatRoom.messages)
         setChatBoxName(chatRoom.name)
         setTitle(chatRoom.title)
+        setSenderID(chatRoom.sender)
+        setReceiverID(chatRoom.receiver)
         await getChats(id)
         sendData(['CHAT', { name: chatRoom.name }])
     }
@@ -94,6 +102,17 @@ function Chat({ collapsed, setCollapsed }) {
 
     const onFulfill = () => {
         sendData(['FULFILL', {}])
+    }
+
+    const confirmFulfill = async () => {
+        const {
+            data: { chatRooms },
+        } = await instance.post('fulfillOrder', {
+            userID: id,
+            senderID: senderID,
+            receiverID: receiverID,
+        })
+        setChats(chatRooms)
     }
     const displayChat = (chat) => (
         <ChatBox>
@@ -140,6 +159,13 @@ function Chat({ collapsed, setCollapsed }) {
                     filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
                 }}
             >
+                {fulfill && (
+                    <FulfillModal
+                        fulfill={fulfill}
+                        setFulfill={setFulfill}
+                        confirmFulfill={confirmFulfill}
+                    />
+                )}
                 <div>
                     <h1>Chat</h1>
                     {chats.length !== 0 &&
@@ -215,6 +241,12 @@ function Chat({ collapsed, setCollapsed }) {
                                     setMsgSent(true)
                                 }}
                             />
+                            <Button
+                                style={{ marginTop: '10px' }}
+                                onClick={onFulfill}
+                            >
+                                完成訂單
+                            </Button>
                         </ChatBoxWrapper>
                     </div>
                 )}

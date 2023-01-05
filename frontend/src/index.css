@@ -141,20 +141,13 @@ a:hover {
 a {
     color: #dba083;
 }
-
 .ant-picker-dropdown
-    .ant-picker-cell-in-view:is(
-        :where(.css-dev-only-do-not-override-1l14yfp).ant-picker-dropdown
-            .ant-picker-cell-today
-    )
+    .ant-picker-cell-in-view:is(.ant-picker-dropdown .ant-picker-cell-today)
     .ant-picker-cell-inner::before {
     border-color: #dba083;
 }
 .ant-picker-dropdown
-    .ant-picker-cell-in-view:is(
-        :where(.css-dev-only-do-not-override-1l14yfp).ant-picker-dropdown
-            .ant-picker-cell-selected
-    )
+    .ant-picker-cell-in-view:is(.ant-picker-dropdown .ant-picker-cell-selected)
     .ant-picker-cell-inner {
     background-color: #dba083;
 }
@@ -164,6 +157,11 @@ a {
     > li.ant-picker-time-panel-cell-selected
     .ant-picker-time-panel-cell-inner {
     background-color: #ffdaab;
+}
+.ant-picker-dropdown
+    .ant-picker-cell-in-view:is(.ant-picker-dropdown .ant-picker-cell-selected)
+    .ant-picker-cell-inner {
+    background-color: #dba083;
 }
 
 .ant-pagination .ant-pagination-item-active a {

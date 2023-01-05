@@ -8,7 +8,6 @@ import http from 'http'
 import wsConnect from './wsConnect'
 import { randomUUID } from 'crypto'
 import path from 'path'
-import db from './db'
 
 require('dotenv').config()
 

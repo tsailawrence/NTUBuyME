@@ -6,6 +6,7 @@ import { useApp } from '../UseApp'
 import { Layout, Card, Input, Button } from 'antd'
 import FulfillModal from '../containers/FulfillModal'
 import Message from '../containers/Message'
+import { useNavigate } from 'react-router-dom'
 const { Header, Content } = Layout
 
 const ChatBox = styled(Card)`
@@ -60,7 +61,9 @@ function Chat({ collapsed, setCollapsed }) {
     const [senderID, setSenderID] = useState('')
     const [receiverID, setReceiverID] = useState('')
     const [taskID, setTaskID] = useState('')
+    const [senderName, setSenderName] = useState('')
     const msgFooter = useRef(null)
+    const navigate = useNavigate()
     const {
         id,
         me,
@@ -92,6 +95,7 @@ function Chat({ collapsed, setCollapsed }) {
         setSenderID(chatRoom.sender)
         setReceiverID(chatRoom.receiver)
         setTaskID(chatRoom.task_id)
+        setSenderName(chatRoom.from)
         await getChats(id)
         sendData(['CHAT', { name: chatRoom.name }])
     }
@@ -117,7 +121,16 @@ function Chat({ collapsed, setCollapsed }) {
             taskID: taskID,
         })
         setChats(chatRooms)
+        navigate('/transfer')
+        setFulfill(false)
+        setChatOpen(false)
     }
+
+    const askForPayMent = () => {
+        setFulfill(false)
+        setChatOpen(false)
+    }
+
     const displayChat = (chat) => (
         <ChatBox>
             {chat.length === 0 ? (
@@ -168,8 +181,9 @@ function Chat({ collapsed, setCollapsed }) {
                         fulfill={fulfill}
                         setFulfill={setFulfill}
                         confirmFulfill={confirmFulfill}
+                        askForPayMent={askForPayMent}
                         setChatOpen={setChatOpen}
-                        isInitializer={id === orderFulfillisInitializer}
+                        isSender={me === senderName}
                     />
                 )}
                 <div>

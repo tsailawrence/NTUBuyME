@@ -13,6 +13,10 @@ const Account = ({ collapsed, setCollapsed, me, id }) => {
     const [EditAccModalOpen, setEditAccModalOpen] = useState(false)
     const [onClickItem, setOnClickItem] = useState('')
 
+    useEffect(() => {
+        console.log(me)
+    }, [me])
+
     // Get Account
     useEffect(() => {
         getAccount(id)

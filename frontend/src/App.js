@@ -18,7 +18,7 @@ function App() {
     const [collapsed, setCollapsed] = useState(false)
     const [key, setKey] = useState(1)
     const { pathname } = useLocation()
-    const { me, id, setStatus } = useApp()
+    const { me, id, setStatus, client } = useApp()
 
     return (
         <Layout>
@@ -67,6 +67,7 @@ function App() {
                         <Chat
                             collapsed={collapsed}
                             setCollapsed={setCollapsed}
+                            c={client}
                         />
                     }
                 />

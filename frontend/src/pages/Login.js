@@ -17,7 +17,8 @@ const Login = ({ setLogin, setCollapsed }) => {
         setSignIn,
         id,
         setId,
-        LOCALSTORAGE_KEY,
+        LOCALSTORAGE_ID_KEY,
+        LOCALSTORAGE_NAME_KEY,
         LOCALSTORAGE_STATUS,
     } = useApp()
     const [password, setPassword] = useState('')
@@ -67,7 +68,11 @@ const Login = ({ setLogin, setCollapsed }) => {
                         setMe(content.name)
                         setLogin(true)
                         setSignIn(true)
-                        localStorage.setItem(LOCALSTORAGE_KEY, id)
+                        localStorage.setItem(LOCALSTORAGE_ID_KEY, id)
+                        localStorage.setItem(
+                            LOCALSTORAGE_NAME_KEY,
+                            content.name
+                        )
                         localStorage.setItem(LOCALSTORAGE_STATUS, 'login')
                         setStatus({
                             type: 'success',

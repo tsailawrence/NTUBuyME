@@ -35,16 +35,15 @@ const ChatBoxWrapper = styled.div`
 
 const ChatRoomHeader = styled.div`
     width: 100%;
-    height: 40px;
+    height: 30px;
     font-size: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50px;
+    border-radius: 8px 8px 0 0;
     border: white 1.5px solid;
-    background: #fcecca;
-    padding: 5px;
-    margin-bottom: 10px;
+    background: #faf0ca;
+    padding: 2px;
 `
 
 const FootRef = styled.div`

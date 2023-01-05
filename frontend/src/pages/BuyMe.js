@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { DownOutlined, DownCircleOutlined } from '@ant-design/icons'
 import {
-    LikeOutlined,
-    MessageOutlined,
-    StarOutlined,
-    DownOutlined,
-    DownCircleOutlined,
-} from '@ant-design/icons'
-import {
-    Avatar,
     List,
     Space,
     Button,
@@ -15,6 +8,7 @@ import {
     Typography,
     Card,
     Divider,
+    Layout,
 } from 'antd'
 import instance from '../api'
 import CreateTaskModal from '../containers/CreateTaskModal'
@@ -41,6 +35,7 @@ const items = [
         label: 'Other',
     },
 ]
+const { Header, Content } = Layout
 const BuyMe = () => {
     const [tasks, setTasks] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -49,8 +44,11 @@ const BuyMe = () => {
     const [filter, setFilter] = useState('allTasksByDuestart')
     const [CreateTaskModalOpen, setCreateTaskModalOpen] = useState(false)
     const [reload, setReload] = useState(false)
-    const { setStatus, id } = useApp()
+    const { setStatus, id, me } = useApp()
 
+    useEffect(() => {
+        console.log(me)
+    }, [me])
     useEffect(() => {
         const twoDayTasks = getTaskNum()
         setMaxPageN(twoDayTasks / nPerPage)
@@ -64,7 +62,7 @@ const BuyMe = () => {
         setTimeout(() => {
             getAllTasks(currentPage, nPerPage, maxPageN)
             setReload(!reload)
-        }, 5000)
+        }, 1000)
     }, [reload])
 
     const getAllTasks = async (currentPage, nPerPage, maxPageN) => {
@@ -93,9 +91,6 @@ const BuyMe = () => {
     }
 
     const acceptTask = async (taskId) => {
-        // navigate to chatbox
-        // set receiver
-        // create chatroom
         const {
             data: { message, content },
         } = await instance.post('acceptTask', { id: taskId, receiver: id })
@@ -151,7 +146,20 @@ const BuyMe = () => {
     }
 
     return (
-        <>
+        <Content
+            className="site-layout-background"
+            style={{
+                // margin: '24px 16px',
+                padding: 24,
+                paddingTop: 50,
+                minHeight: 280,
+                borderRadius: 50,
+                marginTop: 50,
+                marginBottom: 50,
+                marginRight: '16%',
+                filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
+            }}
+        >
             <div
                 style={{
                     display: 'flex',
@@ -262,7 +270,7 @@ const BuyMe = () => {
                     </Card>
                 )}
             ></List>
-        </>
+        </Content>
     )
 }
 

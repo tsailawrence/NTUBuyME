@@ -44,6 +44,9 @@
 -   蔡立倫
     -   此專案中我主要負責 navbar、create task、transfer、login、register 等頁面的製作，以及整體的 ui 設計、logo 製作等部分。除了實作上課學的 react、react router、axios、express 等內容之外，我也花了許多時間閱讀 ant design 的 document，並上網瀏覽其他人的 ui 設計，以調整 ui 至我們喜歡的樣子。其中因 ant design 的 component 原始設定為藍色，因此我也花了許多時間在每一個 component 的顏色設定，如更改 menu item 在 hover 時的顏色、按鈕的 border color 等。
 -   賴彥良
+    -   從 0 開始開發一個應用好花時間，第一次和團隊一起開發專案，種種的 bug 和令人抓狂的版本控制都讓 cowork 的過程充滿挑戰。 Deploy 的時候超級緊張，深怕會出什麼意外，還好最後有圓滿完成，謝謝我的組員們！
+-   吳品萱
+    -   這次期末專案的過程我們利用上課所學的 web socket, html 技術結合 Taiwan pay API 撰寫人力媒合平台「NTU BuyMe」。過程中除了自己刻畫面、撰寫前後端功能，也練習串接已經撰寫好的 API，也因此更了解了 CORS 相關的政策。很開心能夠透過這次機會學習到不同的網頁技術以及練習和組員合作進行專案。過程中雖然遇到許多困難，但是最後看到成果覺得非常有成就感！
 
 ### 如何在 localhost 安裝與測試之詳細步驟
 

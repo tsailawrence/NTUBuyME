@@ -45,6 +45,14 @@ export default {
                 }
                 break
             }
+
+            case 'FULFILL': {
+                console.log('sanity check')
+                chatBoxes[ws.box].forEach((ws) => {
+                    console.log(ws.id)
+                    sendData(['fulfill'], ws)
+                })
+            }
         }
     },
 }

@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import instance from '../api'
 import styled from 'styled-components'
 import { useApp } from '../UseApp'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, Card, Input, Button } from 'antd'
+import FulfillModal from '../containers/FulfillModal'
 import Message from '../containers/Message'
 const { Header, Content } = Layout
 
@@ -68,6 +68,8 @@ function Chat({ collapsed, setCollapsed }) {
         sendMessage,
         chats,
         setChats,
+        fulfill,
+        setFulfill,
     } = useApp()
 
     useEffect(() => {
@@ -90,6 +92,9 @@ function Chat({ collapsed, setCollapsed }) {
         setChats(chatRooms)
     }
 
+    const onFulfill = () => {
+        sendData(['FULFILL', {}])
+    }
     const displayChat = (chat) => (
         <ChatBox>
             {chat.length === 0 ? (

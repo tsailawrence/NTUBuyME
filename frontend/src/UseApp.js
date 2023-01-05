@@ -23,6 +23,7 @@ const AppProvider = (props) => {
     const savedMe = localStorage.getItem(LOCALSTORAGE_NAME_KEY)
     const [id, setId] = useState(savedId || '')
     const [me, setMe] = useState(savedMe || '')
+    const [key, setKey] = useState(1)
 
     useEffect(() => {
         displayStatus(status)
@@ -106,6 +107,8 @@ const AppProvider = (props) => {
                 sendMessage,
                 chats,
                 setChats,
+                key,
+                setKey,
             }}
             {...props}
         />

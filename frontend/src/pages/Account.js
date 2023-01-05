@@ -1,7 +1,7 @@
 import React from 'react'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, List, Button, Space } from 'antd'
-import instance from '../api'
+import { instance } from '../api'
 import { useState, useEffect } from 'react'
 import ChangePwdModal from '../containers/ChangePwdModal'
 import EditAccModal from '../containers/EditAccModal'

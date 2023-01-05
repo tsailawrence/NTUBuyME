@@ -10,7 +10,7 @@ import {
     Divider,
     Layout,
 } from 'antd'
-import instance from '../api'
+import { instance } from '../api'
 import CreateTaskModal from '../containers/CreateTaskModal'
 import { useApp } from '../UseApp'
 import { useNavigate } from 'react-router-dom'

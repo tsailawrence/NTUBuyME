@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useApp } from '../UseApp'
 import { Button, Form, Input, Select, Layout, Divider } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import instance from '../api'
+import { instance } from '../api'
 
 const layout = {
     labelCol: {

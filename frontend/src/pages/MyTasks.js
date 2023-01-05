@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons'
 import { List, Space, Layout, Button, Tabs, Card, Divider } from 'antd'
 import { useState, useEffect } from 'react'
-import instance from '../api'
+import { instance } from '../api'
 import { useApp } from '../UseApp'
 
 const { Header, Content } = Layout

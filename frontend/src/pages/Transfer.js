@@ -3,6 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Input, Layout, Space, List, Card, Divider, Button } from 'antd'
 import { useApp } from '../UseApp'
 import axios from '../api'
+import { useLocation } from 'react-router-dom'
 
 const { Header, Content } = Layout
 const { Search } = Input
@@ -12,6 +13,26 @@ function Transfer({ collapsed, setCollapsed }) {
     const [id, setId] = useState()
     const [idList, setIdList] = useState([])
     const [qrCode, setQrCode] = useState('')
+    const location = useLocation();
+    // const receiverID = location.state.receiverID;
+
+    useEffect(()=>{
+        if(location.state){
+            const receiverObjID = location.state.receiverID;
+            getReceiverID(receiverObjID)
+        }
+    },[location.state])
+
+    const getReceiverID = async (objId) => {
+        const {
+            data: { message, content },
+        } = await axios.get('/getReceiverId', {
+            params: {
+                userObjId: objId,
+            },
+        })
+        searchId(content.id)
+    }
 
     const searchId = async (id) => {
         const {

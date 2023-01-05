@@ -83,6 +83,7 @@ function Chat({ collapsed, setCollapsed }) {
         fulfill,
         setFulfill,
         orderFulfillisInitializer,
+        setKey
     } = useApp()
 
     useEffect(() => {
@@ -127,7 +128,11 @@ function Chat({ collapsed, setCollapsed }) {
             taskID: taskID,
         })
         setChats(chatRooms)
-        navigate('/transfer')
+        console.log(receiverID)
+        setKey('4')
+        navigate('/transfer', { state: {receiverID: receiverID} })
+
+
         setFulfill(false)
         setChatOpen(false)
     }

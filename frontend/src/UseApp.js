@@ -7,7 +7,7 @@ const AppContext = createContext({
     signIn: false,
 })
 
-const c = new WebSocket('ws://localhost:8080')
+const c = new WebSocket('ws://:8080')
 
 const AppProvider = (props) => {
     const [messages, setMessages] = useState([])

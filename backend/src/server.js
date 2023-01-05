@@ -12,7 +12,6 @@ import path from 'path'
 require('dotenv').config()
 
 const app = express()
-console.log(process.env.NODE_ENV)
 
 // if (process.env.NODE_ENV === "development") {
 //     app.use(cors());

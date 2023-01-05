@@ -45,6 +45,14 @@ export default {
                 }
                 break
             }
+
+            case 'FULFILL': {
+                const { id } = payload
+                chatBoxes[ws.box].forEach((ws) => {
+                    console.log(ws.id)
+                    sendData(['fulfill', id], ws)
+                })
+            }
         }
     },
 }

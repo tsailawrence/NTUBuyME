@@ -30,6 +30,7 @@ function main(app) {
     app.post('/api/createTask', wrap(buymeRoute.CreateTask))
     app.post('/api/acceptTask', wrap(buymeRoute.AcceptTasks))
     app.get('/api/getChat', wrap(chatRoute.GetChat))
+    app.post('/api/fulfillOrder', wrap(chatRoute.FulfillOrder))
     app.get('/api/qrcode', wrap(qrCodeRoute.GetQRCode))
 }
 

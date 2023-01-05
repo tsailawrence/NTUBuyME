@@ -8,7 +8,6 @@ import http from 'http'
 import wsConnect from './wsConnect'
 import { randomUUID } from 'crypto'
 import path from 'path'
-import db from './db'
 
 require('dotenv').config()
 
@@ -18,14 +17,14 @@ console.log(process.env.NODE_ENV)
 // if (process.env.NODE_ENV === "development") {
 //     app.use(cors());
 // }
-app.use(cors());
+app.use(cors())
 
 app.use(express.json())
 // app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 
 routes(app)
-app.use('/api', routes);
+app.use('/api', routes)
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
     res.header(
@@ -40,23 +39,19 @@ app.use(function (req, res, next) {
     next()
 })
 
-
-if (process.env.NODE_ENV === "production") {
-    const __dirname = path.resolve();
-    app.use(express.static(path.join(__dirname, "../frontend", "build")));
-    app.get("/*", function (req, res) {
-        res.sendFile(path.join(__dirname, "../frontend", "build", "index.js"));
-    });
+if (process.env.NODE_ENV === 'production') {
+    const __dirname = path.resolve()
+    app.use(express.static(path.join(__dirname, '../frontend', 'build')))
+    app.get('/*', function (req, res) {
+        res.sendFile(path.join(__dirname, '../frontend', 'build', 'index.js'))
+    })
 }
 
-const port = process.env.PORT || 4000;
-app.listen(port, () =>
-    console.log(`Example app listening on port ${port}!`),
-);
+const port = process.env.PORT || 4000
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
-
 
 mongoose
     .connect(process.env.MONGO_URL, {

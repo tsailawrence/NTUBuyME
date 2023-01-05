@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { DownOutlined, DownCircleOutlined } from '@ant-design/icons'
-import { List, Space, Button, Dropdown, Typography, Card, Divider } from 'antd'
+import {
+    List,
+    Space,
+    Button,
+    Dropdown,
+    Typography,
+    Card,
+    Divider,
+    Layout,
+} from 'antd'
 import instance from '../api'
 import CreateTaskModal from '../containers/CreateTaskModal'
 import { useApp } from '../UseApp'
@@ -26,6 +35,7 @@ const items = [
         label: 'Other',
     },
 ]
+const { Header, Content } = Layout
 const BuyMe = () => {
     const [tasks, setTasks] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -136,7 +146,20 @@ const BuyMe = () => {
     }
 
     return (
-        <>
+        <Content
+            className="site-layout-background"
+            style={{
+                // margin: '24px 16px',
+                padding: 24,
+                paddingTop: 50,
+                minHeight: 280,
+                borderRadius: 50,
+                marginTop: 50,
+                marginBottom: 50,
+                marginRight: '16%',
+                filter: 'drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.2))',
+            }}
+        >
             <div
                 style={{
                     display: 'flex',
@@ -247,7 +270,7 @@ const BuyMe = () => {
                     </Card>
                 )}
             ></List>
-        </>
+        </Content>
     )
 }
 

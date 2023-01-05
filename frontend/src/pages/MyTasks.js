@@ -18,7 +18,7 @@ function MyTasks({ collapsed, setCollapsed }) {
     const [currentTab, setCurrentTab] = useState('')
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [nPerPage, setNPerPage] = useState(10)
+    const [nPerPage, setNPerPage] = useState(5)
     const [maxPageN, setMaxPageN] = useState(2)
     const [taskOverload, setTaskOverload] = useState(false)
     const { me, id } = useApp()

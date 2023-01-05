@@ -28,7 +28,6 @@ export default {
                 await chatBox.save()
 
                 chatBoxes[ws.box].forEach((ws) => {
-                    console.log(ws.id)
                     sendData(['message', { sender: who, body }], ws)
                 })
                 break
@@ -37,7 +36,6 @@ export default {
             case 'CHAT': {
                 const { name } = payload
                 ws.box = name
-                console.log(ws.id)
                 if (!chatBoxes[ws.box]) {
                     chatBoxes[ws.box] = [ws]
                 } else if (!chatBoxes[ws.box].includes(ws)) {
@@ -49,7 +47,6 @@ export default {
             case 'FULFILL': {
                 const { id } = payload
                 chatBoxes[ws.box].forEach((ws) => {
-                    console.log(ws.id)
                     sendData(['fulfill', id], ws)
                 })
             }

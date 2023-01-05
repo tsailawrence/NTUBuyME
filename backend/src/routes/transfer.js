@@ -1,10 +1,8 @@
 import { UserModel } from '../models/BuyMe'
 
 exports.GetReceiverId = async (req, res) => {
-    console.log(req.query.userObjId)
     let user = await UserModel.findOne({ _id: req.query.userObjId })
     if (!user) {
-        // console.log('not found')
         res.status(200).send({
             message: 'error',
             content: 'Cannot find user with this ID!',
@@ -13,7 +11,7 @@ exports.GetReceiverId = async (req, res) => {
         res.status(200).send({
             message: 'success',
             content: {
-                id: user.user_id
+                id: user.user_id,
             },
         })
     }

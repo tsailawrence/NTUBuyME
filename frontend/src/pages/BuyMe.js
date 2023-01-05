@@ -15,13 +15,6 @@ import CreateTaskModal from '../containers/CreateTaskModal'
 import { useApp } from '../UseApp'
 import { useNavigate } from 'react-router-dom'
 
-const IconText = ({ icon, text }) => (
-    <Space>
-        {React.createElement(icon)}
-        {text}
-    </Space>
-)
-
 const items = [
     {
         key: 'Due Start Time',
@@ -44,9 +37,6 @@ const BuyMe = () => {
     const { setStatus, id, me, key, setKey } = useApp()
     const navigate = useNavigate()
 
-    useEffect(() => {
-        console.log(me)
-    }, [me])
     useEffect(() => {
         const twoDayTasks = getTaskNum()
         setMaxPageN(twoDayTasks / nPerPage)
@@ -164,6 +154,7 @@ const BuyMe = () => {
         >
             <div
                 style={{
+                    width: '100%',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -190,7 +181,7 @@ const BuyMe = () => {
                     onCancel={() => setCreateTaskModalOpen(false)}
                     // item={onClickItem}
                 />
-                <Button
+                {/* <Button
                     style={{
                         marginRight: 50,
                         backgroundColor: '#ffdaab',
@@ -207,7 +198,7 @@ const BuyMe = () => {
                     onClick={DeleteAllTasks}
                 >
                     - Delete All
-                </Button>
+                </Button> */}
                 <Dropdown
                     menu={{
                         items,

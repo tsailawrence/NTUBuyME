@@ -83,16 +83,12 @@ function Chat({ collapsed, setCollapsed }) {
         fulfill,
         setFulfill,
         orderFulfillisInitializer,
-        setKey
+        setKey,
     } = useApp()
 
     useEffect(() => {
         getChats(id)
     }, [])
-
-    useEffect(() => {
-        console.log(fulfill)
-    }, [fulfill])
 
     const OnChatRoom = async (chatRoom) => {
         setChatOpen(true)
@@ -128,10 +124,8 @@ function Chat({ collapsed, setCollapsed }) {
             taskID: taskID,
         })
         setChats(chatRooms)
-        console.log(receiverID)
         setKey('4')
-        navigate('/transfer', { state: {receiverID: receiverID} })
-
+        navigate('/transfer', { state: { receiverID: receiverID } })
 
         setFulfill(false)
         setChatOpen(false)

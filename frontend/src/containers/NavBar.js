@@ -19,7 +19,6 @@ function NavBar({ collapsed }) {
     const { key, setKey, setSignIn, setStatus, LOCALSTORAGE_STATUS, clickRef } =
         useApp()
 
-    console.log(key)
     function navigatePage(key) {
         setKey(key)
         switch (key) {
@@ -48,35 +47,6 @@ function NavBar({ collapsed }) {
                 navigate('/')
         }
     }
-    // useEffect(() => {
-    //     console.log(key)
-    //     setKey(key)
-    //     switch (key) {
-    //         case '2':
-    //             navigate('/mytasks')
-    //             break
-    //         case '3':
-    //             navigate('/chat')
-    //             break
-    //         case '4':
-    //             navigate('/transfer')
-    //             break
-    //         case '5':
-    //             navigate('/account')
-    //             break
-    //         case '6':
-    //             //Logout
-    //             localStorage.setItem(LOCALSTORAGE_STATUS, 'logout')
-    //             navigate('/login')
-    //             setStatus({
-    //                 type: 'success',
-    //                 msg: 'Logout successfully!',
-    //             })
-    //             break
-    //         default:
-    //             navigate('/')
-    //     }
-    // }, [key])
 
     return (
         <>
@@ -116,7 +86,6 @@ function NavBar({ collapsed }) {
                         background: '#f5f5f5',
                     }}
                     mode="inline"
-                    // defaultSelectedKeys={[key]}
                     selectedKeys={[key]}
                     onClick={(e) => navigatePage(e.key)}
                     items={[

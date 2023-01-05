@@ -13,15 +13,15 @@ function Transfer({ collapsed, setCollapsed }) {
     const [id, setId] = useState()
     const [idList, setIdList] = useState([])
     const [qrCode, setQrCode] = useState('')
-    const location = useLocation();
+    const location = useLocation()
     // const receiverID = location.state.receiverID;
 
-    useEffect(()=>{
-        if(location.state){
-            const receiverObjID = location.state.receiverID;
+    useEffect(() => {
+        if (location.state) {
+            const receiverObjID = location.state.receiverID
             getReceiverID(receiverObjID)
         }
-    },[location.state])
+    }, [location.state])
 
     const getReceiverID = async (objId) => {
         const {
@@ -42,7 +42,6 @@ function Transfer({ collapsed, setCollapsed }) {
                 userId: id,
             },
         })
-        // console.log(content)
         switch (message) {
             default:
                 break
@@ -62,9 +61,7 @@ function Transfer({ collapsed, setCollapsed }) {
     // }, [idList])
 
     const handleQRcode = async (account) => {
-        const {
-            data,
-        } = await axios.get('/qrcode', {
+        const { data } = await axios.get('/qrcode', {
             params: {
                 account,
             },

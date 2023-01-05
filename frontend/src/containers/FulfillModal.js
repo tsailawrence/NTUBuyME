@@ -11,7 +11,6 @@ const FulfillModal = ({
         <Modal
             title="完成訂單"
             open={fulfill}
-            // okButtonProps={{ disabled: isInitializer }}
             onOk={isSender ? () => confirmFulfill() : () => askForPayMent()}
             onCancel={() => {
                 setFulfill(false)

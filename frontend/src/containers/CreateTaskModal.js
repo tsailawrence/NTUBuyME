@@ -34,12 +34,8 @@ const CreateTaskModal = ({ open, onCreate, onCancel }) => {
             width={800}
             onOk={() => {
                 form.validateFields().then((values) => {
-                    // form.resetFields()
                     onCreate(values)
                 })
-                // .catch((e) => {
-                //     window.alert(e)
-                // })
             }}
         >
             <Form {...layout} name="nest-messages" form={form}>

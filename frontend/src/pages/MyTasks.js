@@ -8,7 +8,6 @@ import { List, Space, Layout, Button, Tabs, Card, Divider } from 'antd'
 import { useState, useEffect } from 'react'
 import instance from '../api'
 import { useApp } from '../UseApp'
-// import styled from "styled-components"
 
 const { Header, Content } = Layout
 

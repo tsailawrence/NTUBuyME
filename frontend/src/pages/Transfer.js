@@ -50,7 +50,7 @@ function Transfer({ collapsed, setCollapsed }) {
                     type: 'error',
                     msg: content,
                 })
-                alert(content)
+                // alert(content)
                 break
             case 'success':
                 setIdList([content])

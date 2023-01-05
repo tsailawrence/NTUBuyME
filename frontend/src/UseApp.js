@@ -70,7 +70,11 @@ const AppProvider = (props) => {
     }
 
     const sendData = (data) => {
-        c.send(JSON.stringify(data))
+        if (ws.readyState === 1) {
+            c.send(JSON.stringify(data))
+        } else {
+            //do something
+        }
     }
 
     const sendMessage = (me, body, chatBoxName) => {

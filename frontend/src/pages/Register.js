@@ -155,7 +155,15 @@ const Register = ({ setLogin }) => {
                         label="Bank account"
                         style={{ marginLeft: '-20%', fontWeight: 'bold' }}
                     />
-                    <Form.Item name={['user', 'bank_id']} label="Bank id">
+                    <Form.Item
+                        name={['user', 'bank_id']}
+                        label="Bank id"
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
                         <Select
                             style={{
                                 width: 155,
@@ -183,6 +191,11 @@ const Register = ({ setLogin }) => {
                     <Form.Item
                         name={['user', 'bankaccount_id']}
                         label="Bank account id"
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
                     >
                         <Input />
                     </Form.Item>

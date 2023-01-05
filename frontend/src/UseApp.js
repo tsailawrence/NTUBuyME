@@ -70,7 +70,7 @@ const AppProvider = (props) => {
     }
 
     const sendData = (data) => {
-        if (ws.readyState === 1) {
+        if (c.readyState === 1) {
             c.send(JSON.stringify(data))
         } else {
             //do something

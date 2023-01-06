@@ -6,8 +6,9 @@ const AppContext = createContext({
     me: '',
     signIn: false,
 })
-
-const c = new WebSocket(`wss://${window.location.host}:8080`)
+let portNum = window.location.port
+const c = new WebSocket(`wss://${window.location.host}:${portNum}`)
+c.onopen = () => console.log('Backend socket server connected!')
 
 const AppProvider = (props) => {
     const [messages, setMessages] = useState([])

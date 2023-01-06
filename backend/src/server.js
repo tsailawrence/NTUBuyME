@@ -46,10 +46,9 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-const port = process.env.PORT || 4000
-app.listen(port, () =>
-    console.log(`This Example app listening on port ${port}!`)
-)
+// app.listen(port, () =>
+//   console.log(`This Example app listening on port ${port}!`)
+// );
 
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
@@ -71,6 +70,7 @@ mongoose
         })
     })
 
-server.listen(8080, () => {
-    console.log('listening on port 8080')
+const port = process.env.PORT || 4000
+server.listen(port, () => {
+    console.log(`listening on port ${port}`)
 })

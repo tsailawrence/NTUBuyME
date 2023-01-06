@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { message } from 'antd'
+// import { ws } from './api'
 
 const AppContext = createContext({
     status: {},
@@ -31,7 +32,7 @@ const AppProvider = (props) => {
         displayStatus(status)
     }, [status])
 
-    c.onmessage = (byteString) => {
+    ws.onmessage = (byteString) => {
         const { data } = byteString
         const [task, payload] = JSON.parse(data)
         switch (task) {
@@ -71,8 +72,8 @@ const AppProvider = (props) => {
     }
 
     const sendData = (data) => {
-        if (c.readyState === 1) {
-            c.send(JSON.stringify(data))
+        if (ws.readyState === 1) {
+            ws.send(JSON.stringify(data))
         } else {
             //do something
         }

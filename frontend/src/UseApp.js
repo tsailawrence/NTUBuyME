@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { message } from 'antd'
-import { ws } from './api'
+// import { ws } from './api'
 
 const AppContext = createContext({
     status: {},
@@ -8,7 +8,7 @@ const AppContext = createContext({
     signIn: false,
 })
 
-// const c = new WebSocket(`wss://${window.location.host}:8080`)
+const ws = new WebSocket(`wss://${window.location.host}:8080`)
 
 const AppProvider = (props) => {
     const [messages, setMessages] = useState([])

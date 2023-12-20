@@ -9,7 +9,7 @@ const AppContext = createContext({
     signIn: false,
 })
 let portNum = window.location.port
-const c = new WebSocket(`wss://${window.location.host}:${portNum}`)
+const c = new WebSocket(`wss://${window.location.host}`)
 c.onopen = () => console.log('Backend socket server connected!')
 
 const AppProvider = (props) => {
